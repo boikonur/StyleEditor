@@ -1981,55 +1981,42 @@ function FocusOn(id, event) {
 </head>
 
 <body onload="initGL()">
-<table>
-<tbody><tr>
-  <td valign="top" width="50%">
-    <canvas id="canvas_id" width="1280" height="473" style="width: 1280px; height: 473.5px;"> </canvas>
-    <br>
-    <div class="controls">
-      <input name="on" type="button" value="Power" onclick="STATE_ON = !STATE_ON; STATE_LOCKUP=0;">
-      <input name="clash" type="button" value="Clash" onclick="STATE_CLASH=1;">
-      <input name="blast" type="button" value="Blast" onclick="AddBlast()" ;="">
-      <input name="lockup" type="button" value="Lockup" onclick="STATE_LOCKUP = STATE_LOCKUP == 1 ? 0 : 1;">
-      <input name="drag" type="button" value="Drag" onclick="STATE_LOCKUP = STATE_LOCKUP == 2 ? 0 : 2;">
-      <input name="drag" type="button" value="Rotate" onclick="STATE_ROTATE = !STATE_ROTATE;">
-    </div>
-       
-    <span id="error_message"></span>
-    <br>
+  <div class="content">
 
-<input id="style" type="text" size="100" onkeydown="if (event.keyCode == 13) Run();"><input name="run" type="button" value="Submit" onclick="Run()"><br>
+      <canvas id="canvas_id" width="1280" height="473" style="width: 1280px; height: 473.5px;"> </canvas>
+      <div class="controls">
+        <input name="Power" type="button" value="Power" onclick="STATE_ON = !STATE_ON; STATE_LOCKUP=0;">
+        <input name="Clash" type="button" value="Clash" onclick="STATE_CLASH=1;">
+        <input name="Blast" type="button" value="Blast" onclick="AddBlast()" ;="">
+        <input name="Lockup" type="button" value="Lockup" onclick="STATE_LOCKUP = STATE_LOCKUP == 1 ? 0 : 1;">
+        <input name="Drag" type="button" value="Drag" onclick="STATE_LOCKUP = STATE_LOCKUP == 2 ? 0 : 2;">
+        <input name="Rotate" type="button" value="Rotate" onclick="STATE_ROTATE = !STATE_ROTATE;">
+      </div>       
+      <span id="error_message"></span>
+      <input id="style" type="text" size="100" onkeydown="if (event.keyCode == 13) Run();">
+      <input name="run" type="button" value="Submit" onclick="Run()">
+      
+      <div id="template_links">
+        <h2>Templates</h2>
+      </div>
+      <div id="effect_links">
+        <h2>Effects</h2>
+      </div>
+      <div id="color_links">
+        <h2>Colors</h2>
+      </div>
+      
+      <div id="version">
+           <span>10.6.2018</span>
+      </div>
 
-<div id="template_links"><h2>Templates</h2>
-</div>
+      <div class=output>
+          <h4>Structured view, click to edit</h4>
+          <input name="Copy" type="button" value="Copy" onclick="Run()">
+          <div id="pp">
+          </div>
+      </div>
+  </div> <!-- end content -->
 
-<div id="effect_links"><h2>Effects</h2>
-</div>
-
-<div id="color_links"><h2>Colors</h2>
-</div>
-
-
-
-    <div>
-      <font face="helvetica,arial" size="-1">
-      This page has been accessed 946 times since
- 	March
-         30th,
-         2018.<br>
-      Last modified:
- 	June
-         10th,
-         2018
-      </font>
-    </div>
-  </td>
-  <td valign="top">
-    <b>Structured view, click to edit</b>
-    <div id="pp">
-    </div>
-  </td>
-  </tr>
-</tbody></table>
-
-</body></html>
+</body>
+</html>
