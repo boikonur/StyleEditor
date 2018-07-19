@@ -2,9 +2,12 @@
 <!-- saved from url=(0054)https://fredrik.hubbe.net/lightsaber/style_editor.html -->
 <html>
 <head>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/style.css">
-<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
 
 <title>Style Editor</title>
 
@@ -353,6 +356,14 @@ var pp_is_url = 0;
 var next_id = 102834;
 var style_ids = {};
 
+
+function Copy() {
+  var copyText =  document.getElementById("style");
+  copyText.select();
+  document.execCommand("copy");
+  alert("Copy to Clipboard" + copyText.value);
+}
+
 class ARG {
   constructor(name, type, comment) {
     this.name = name;
@@ -372,6 +383,8 @@ class STYLE {
     this.ID = next_id;
     next_id ++;
   }
+
+
 
   add_arg(name, expected_type, comment, default_value) {
     console.log(name);
@@ -611,22 +624,22 @@ function enc(s) {
   return s.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
-function mkbutton(name, type, color) {
-  return "<input class=\"" + type + "\" type=button style=\"background-color:" + color + ";\" onclick='SetTo(\""+name+"\")' value='"+enc(name)+"'>\n";
+function mkbutton(name, type, color, value) {
+  return "<input class=\"" + type + "\" type=button style=\"background-color:" + color + ";\" onclick='SetTo(\""+value+"\")' value='"+enc(name)+"'>\n";
   //  return "<span class=btn onclick='SetTo(\""+name+"\")'>"+enc(name)+"</span>\n";
 }
 function AddTemplate(name) {
-  template_links += mkbutton(name, "template", "#FFF");
+  template_links += mkbutton(name, "template", "#FFF", name);
 }
 function AddEffect(name) {
-  effect_links += mkbutton(name, "effect", "#FFF");
+  effect_links += mkbutton(name, "effect", "#FFF", name);
 }
 function AddColor(name, r, g, b) {
   colorNames[r+","+g+","+b] = name;
  
   var color = new RgbClass(r, g, b);
    all_colors[name] = color;
-  qlinks += mkbutton(name, "color", rgbToHex(r,g,b));
+  qlinks += mkbutton(name, "color", rgbToHex(r,g,b), "");
   
 }
 
@@ -641,7 +654,7 @@ AddTemplate("StyleRainbowPtr<300, 800>");
 AddTemplate("StyleStrobePtr<WHITE, Rainbow, 15, 300, 800>");
 AddTemplate("StyleFirePtr<RED, YELLOW>");
 
-AddEffect("Rgb<100,100,100>");
+AddEffect("Rgb<255,255,255>");
 AddEffect("Rainbow");
 AddEffect("OnSpark<GREEN, WHITE, 200>");
 AddEffect("Pulsing<BLUE, RED, 800>");
@@ -1182,7 +1195,7 @@ class StyleFireClass extends STYLE {
     this.add_arg("COLOR1", "COLOR", "Warm color");
     this.add_arg("COLOR2", "COLOR", "Hot color");
     this.add_arg("DELAY", "INT", "Delay", 0);
-    this.add_arg("SPEED", "INT", "Seeed", 2);
+    this.add_arg("SPEED", "INT", "Seed", 2);
     this.add_arg("NORM", "FireConfig", "Config when on", FireConfig(0, 2000, 5));
     this.add_arg("CLASH", "FireConfig", "Config during clash", FireConfig(3000, 0, 0));
     this.add_arg("LOCK", "FireConfig", "Config during lockup", FireConfig(0, 5000, 10));
@@ -1977,6 +1990,9 @@ function FocusOn(id, event) {
   return true;
 }
 
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
 
 </script>
 </head>
@@ -1989,18 +2005,32 @@ function FocusOn(id, event) {
 
       <div class="row no-gutters">
         <div class="col col-md-8">
-          <div class="controls">
-            <input name="Power" type="button" value="Power" onclick="STATE_ON = !STATE_ON; STATE_LOCKUP=0;">
-            <input name="Clash" type="button" value="Clash" onclick="STATE_CLASH=1;">
-            <input name="Blast" type="button" value="Blast" onclick="AddBlast()" ;="">
-            <input name="Lockup" type="button" value="Lockup" onclick="STATE_LOCKUP = STATE_LOCKUP == 1 ? 0 : 1;">
-            <input name="Drag" type="button" value="Drag" onclick="STATE_LOCKUP = STATE_LOCKUP == 2 ? 0 : 2;">
-            <input name="Rotate" type="button" value="Rotate" onclick="STATE_ROTATE = !STATE_ROTATE;">
-          </div>       
-          <span id="error_message"></span>
-          <input id="style" type="text" size="100" onkeydown="if (event.keyCode == 13) Run();">
-          <input name="run" type="button" value="Submit" onclick="Run()">
+            <div class="controls"  aria-label="...">
+              <button type="button" class="btn btn-secondary name="Power" data-toggle="tooltip" title="On/Off" type="button" value="Power" onclick="STATE_ON = !STATE_ON; STATE_LOCKUP=0;">
+              <input type="button" name="Clash" type="button" value="Clash" onclick="STATE_CLASH=1;">
+              <input type="button" name="Blast" type="button" value="Blast" onclick="AddBlast()" ;="">
+              <input type="button" name="Lockup" type="button" value="Lockup" onclick="STATE_LOCKUP = STATE_LOCKUP == 1 ? 0 : 1;">
+              <input type="button" name="Drag" type="button" value="Drag" onclick="STATE_LOCKUP = STATE_LOCKUP == 2 ? 0 : 2;">
+              <input type="button" name="Rotate" type="button" value="Rotate" onclick="STATE_ROTATE = !STATE_ROTATE;">
+            </div>            
+    
+
+          <div class="row">
+            <span id="error_message"></span>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-11">
+            <div class="input-group">
+              <input id="style" type="text" class="form-control" placeholder="Search for..." onkeydown="if (event.keyCode == 13) Run();">
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" name="run" type="button" value="Submit" onclick="Run()">Update</button>
+                <button class="btn btn-secondary" name="copy" type="button" onclick="Copy()">Copy</button>
+              </span>
+            </div>
+          </div>   
       
+
           <div id="template_links">
             <h2>Templates</h2>
           </div>
@@ -2017,10 +2047,9 @@ function FocusOn(id, event) {
         </div>
 
         <div class="col col-md-3">
-              <div class=output>
-          <h4>Structured view, click to edit</h4>
-          <input name="Copy" type="button" value="Copy" onclick="Run()">
-          <div id="pp">
+          <div class=output>
+            <h4>Structured view, click to edit</h4>
+            <div id="pp">
           </div>
       </div>
         </div>
