@@ -1986,12 +1986,15 @@ function FocusOn(id, event) {
   <td valign="top" width="50%">
     <canvas id="canvas_id" width="1280" height="473" style="width: 1280px; height: 473.5px;"> </canvas>
     <br>
-    <input name="on" type="button" value="Power" onclick="STATE_ON = !STATE_ON; STATE_LOCKUP=0;">
-    <input name="clash" type="button" value="Clash" onclick="STATE_CLASH=1;">
-    <input name="blast" type="button" value="Blast" onclick="AddBlast()" ;="">
-    <input name="lockup" type="button" value="Lockup" onclick="STATE_LOCKUP = STATE_LOCKUP == 1 ? 0 : 1;">
-    <input name="drag" type="button" value="Drag" onclick="STATE_LOCKUP = STATE_LOCKUP == 2 ? 0 : 2;">
-    <input name="drag" type="button" value="Rotate" onclick="STATE_ROTATE = !STATE_ROTATE;">
+    <div class="controls">
+      <input name="on" type="button" value="Power" onclick="STATE_ON = !STATE_ON; STATE_LOCKUP=0;">
+      <input name="clash" type="button" value="Clash" onclick="STATE_CLASH=1;">
+      <input name="blast" type="button" value="Blast" onclick="AddBlast()" ;="">
+      <input name="lockup" type="button" value="Lockup" onclick="STATE_LOCKUP = STATE_LOCKUP == 1 ? 0 : 1;">
+      <input name="drag" type="button" value="Drag" onclick="STATE_LOCKUP = STATE_LOCKUP == 2 ? 0 : 2;">
+      <input name="drag" type="button" value="Rotate" onclick="STATE_ROTATE = !STATE_ROTATE;">
+    </div>
+       
     <span id="error_message"></span>
     <br>
 
