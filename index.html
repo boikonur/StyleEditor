@@ -197,6 +197,8 @@ var t = 0.0;
 var width;
 var height;
 
+var startup_template="InOutHelper<SimpleClash<Lockup<Blast<Blue,White>,AudioFlicker<Blue,White>>,White>, 300, 800>";
+
 // Create n textures of about 1MB each.
 function initGL()
 { 
@@ -226,7 +228,7 @@ function initGL()
 
   var str = new URL(window.location.href).searchParams.get("S");
   if (!str) {
-    str = "InOutHelper<SimpleClash<Lockup<Blast<Blue,White>,AudioFlicker<Blue,White>>,White>, 300, 800>";
+    str = startup_template;
   }
   document.getElementById("style").value = str;
 
