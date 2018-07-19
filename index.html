@@ -1,11 +1,10 @@
 
 <!-- saved from url=(0054)https://fredrik.hubbe.net/lightsaber/style_editor.html -->
 <html>
+<head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-<head>
-
-</style>
 
 <title>Style Editor</title>
 
@@ -527,9 +526,9 @@ class CONFIG extends STYLE {
   }
 };
 
-var qlinks = "<b>Colors</b><br>";
-var effect_links = "<b>Effects</b><br>";
-var template_links = "<b>Templates</b><br>";
+var qlinks = "<h2>Colors</h2>";
+var effect_links = "<h2>Effects</h2>";
+var template_links = "<h2>Templates</h2>";
 var all_colors = {};
 var colorNames = {};
 
@@ -563,6 +562,10 @@ class RgbClass extends STYLE {
 
 function Rgb(r,g,b) {
   return new RgbClass(r,g,b);
+}
+
+function rgbToHex(r, g, b) {
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 
 class Rgb16Class extends STYLE {
@@ -606,20 +609,23 @@ function enc(s) {
   return s.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
-function mkbutton(name) {
-  return "<input type=button onclick='SetTo(\""+name+"\")' value='"+enc(name)+"'>\n";
+function mkbutton(name, type, color) {
+  return "<input class=\"" + type + "\" type=button style=\"background-color:" + color + ";\" onclick='SetTo(\""+name+"\")' value='"+enc(name)+"'>\n";
   //  return "<span class=btn onclick='SetTo(\""+name+"\")'>"+enc(name)+"</span>\n";
 }
 function AddTemplate(name) {
-  template_links += mkbutton(name);
+  template_links += mkbutton(name, "template", "#FFF");
 }
 function AddEffect(name) {
-  effect_links += mkbutton(name);
+  effect_links += mkbutton(name, "effect", "#FFF");
 }
 function AddColor(name, r, g, b) {
   colorNames[r+","+g+","+b] = name;
-  qlinks += mkbutton(name);
-  all_colors[name] = new RgbClass(r, g, b);
+ 
+  var color = new RgbClass(r, g, b);
+   all_colors[name] = color;
+  qlinks += mkbutton(name, "color", rgbToHex(r,g,b));
+  
 }
 
 AddTemplate("InOutHelper<SimpleClash<Lockup<Blast<Blue,White>,AudioFlicker<Blue,WHITE>>,White>, 300, 800>");
@@ -1974,99 +1980,54 @@ function FocusOn(id, event) {
 </head>
 
 <body onload="initGL()">
-<table>
-<tbody><tr>
-  <td valign="top" width="50%">
-    <canvas id="canvas_id" width="1280" height="473" style="width: 1280px; height: 473.5px;"> </canvas>
-    <br>
-    <input name="on" type="button" value="Power" onclick="STATE_ON = !STATE_ON; STATE_LOCKUP=0;">
-    <input name="clash" type="button" value="Clash" onclick="STATE_CLASH=1;">
-    <input name="blast" type="button" value="Blast" onclick="AddBlast()" ;="">
-    <input name="lockup" type="button" value="Lockup" onclick="STATE_LOCKUP = STATE_LOCKUP == 1 ? 0 : 1;">
-    <input name="drag" type="button" value="Drag" onclick="STATE_LOCKUP = STATE_LOCKUP == 2 ? 0 : 2;">
-    <input name="drag" type="button" value="Rotate" onclick="STATE_ROTATE = !STATE_ROTATE;">
-    <span id="error_message"></span>
-    <br>
 
-<input id="style" type="text" size="100" onkeydown="if (event.keyCode == 13) Run();"><input name="run" type="button" value="Submit" onclick="Run()"><br>
+       <div class="row no-gutters">
+              <canvas id="canvas_id" width="100%" height="473" style="width: 1280px; height: 473.5px;"> </canvas>
+       </div>
 
-<div id="template_links"><h2>Templates</h2>
-</div>
+      <div class="row no-gutters">
+        <div class="col col-md-8">
+          <div class="controls">
+            <input name="Power" type="button" value="Power" onclick="STATE_ON = !STATE_ON; STATE_LOCKUP=0;">
+            <input name="Clash" type="button" value="Clash" onclick="STATE_CLASH=1;">
+            <input name="Blast" type="button" value="Blast" onclick="AddBlast()" ;="">
+            <input name="Lockup" type="button" value="Lockup" onclick="STATE_LOCKUP = STATE_LOCKUP == 1 ? 0 : 1;">
+            <input name="Drag" type="button" value="Drag" onclick="STATE_LOCKUP = STATE_LOCKUP == 2 ? 0 : 2;">
+            <input name="Rotate" type="button" value="Rotate" onclick="STATE_ROTATE = !STATE_ROTATE;">
+          </div>       
+          <span id="error_message"></span>
+          <input id="style" type="text" size="100" onkeydown="if (event.keyCode == 13) Run();">
+          <input name="run" type="button" value="Submit" onclick="Run()">
+      
+          <div id="template_links">
+            <h2>Templates</h2>
+          </div>
+          <div id="effect_links">
+            <h2>Effects</h2>
+          </div>
+          <div id="color_links">
+            <h2>Colors</h2>
+          </div>
+          
+          <div id="version">
+               <span>10.6.2018</span>
+          </div>
+        </div>
 
-<div id="effect_links"><h2>Effects</h2>
-</div>
+        <div class="col col-md-3">
+              <div class=output>
+          <h4>Structured view, click to edit</h4>
+          <input name="Copy" type="button" value="Copy" onclick="Run()">
+          <div id="pp">
+          </div>
+      </div>
+        </div>
 
-<div id="color_links"><h2>Colors</h2>
-</div>
-    <div>
-      <font face="helvetica,arial" size="-1">
-      This page has been accessed 946 times since
- 	March
-         30th,
-         2018.<br>
-      Last modified:
- 	June
-         10th,
-         2018
-      </font>
-    </div>
-  </td>
-  <td valign="top">
-    <b>Structured view, click to edit</b>
-    <div id="pp"><div id="X102914" style="border-style:solid;border-width:1px;border-color:gray;" onclick="FocusOn(102914,event)">
-<span title="Implements extention/retraction">InOutHelper</span>&lt;
-<div style="margin-left:2em">
-/* base color */<br>
-<div id="X102913" style="border-style:solid;border-width:1px;border-color:gray;" onclick="FocusOn(102913,event)">
-<span title="Implements the clash effect">SimpleClash</span>&lt;
-<div style="margin-left:2em">
-/* base color */<br>
-<div id="X102911" style="border-style:solid;border-width:1px;border-color:gray;" onclick="FocusOn(102911,event)">
-<span title="Implements the lockup and drag effects.">Lockup</span>&lt;
-<div style="margin-left:2em">
-/* base color */<br>
-<div id="X102907" style="border-style:solid;border-width:1px;border-color:gray;" onclick="FocusOn(102907,event)">
-<span title="Implements the blast effect">Blast</span>&lt;
-<div style="margin-left:2em">
-/* base color */<br>
-<div id="X102905" style="border-style:solid;border-width:1px;border-color:gray;" onclick="FocusOn(102905,event)">
-<span title="Color">Blue</span>
-</div>
-,<br>/* blast color */<br>
-<div id="X102906" style="border-style:solid;border-width:1px;border-color:gray;" onclick="FocusOn(102906,event)">
-<span title="Color">White</span>
-</div>
-</div>&gt;</div>
-,<br>/* lockup color */<br>
-<div id="X102910" style="border-style:solid;border-width:1px;border-color:gray;" onclick="FocusOn(102910,event)">
-<span title="Selects between A and B based on audio. Higher volumes means more B.">AudioFlicker</span>&lt;
-<div style="margin-left:2em">
-/* A */<br>
-<div id="X102908" style="border-style:solid;border-width:1px;border-color:gray;" onclick="FocusOn(102908,event)">
-<span title="Color">Blue</span>
-</div>
-,<br>/* B */<br>
-<div id="X102909" style="border-style:solid;border-width:1px;border-color:gray;" onclick="FocusOn(102909,event)">
-<span title="Color">White</span>
-</div>
-</div>&gt;</div>
-</div>&gt;</div>
-,<br>/* Clash color */<br>
-<div id="X102912" style="border-style:solid;border-width:1px;border-color:gray;" onclick="FocusOn(102912,event)">
-<span title="Color">White</span>
-</div>
-,<br>40 /* How many MS to show the clash color for. */
-</div>&gt;</div>
-,<br>300 /* extention length in milliseconds */
-,<br>800 /* retraction length in milliseconds */
-,<br>/* Color when retracted */<br>
-<div id="X102889" style="border-style:solid;border-width:1px;border-color:gray;" onclick="FocusOn(102889,event)">
-<span title="Color">Black</span>
-</div>
-</div>&gt;</div>
-</div>
-  </td>
-  </tr>
-</tbody></table>
+  
 
-</body></html>
+      </div>
+     
+
+
+</body>
+</html>
