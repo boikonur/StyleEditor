@@ -51,6 +51,10 @@ height: 40px;
 #color_links{
 }
 
+#effect_links input{
+min-width: 180px;
+}
+
 #color_links input{
 width: 100px;
 border: none;

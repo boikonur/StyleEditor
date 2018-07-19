@@ -631,20 +631,19 @@ function mkbutton(name, type, color, value) {
 function AddTemplate(name) {
   template_links += mkbutton(name, "template", "#FFF", name);
 }
-function AddEffect(name) {
-  effect_links += mkbutton(name, "effect", "#FFF", name);
+function AddEffect(name, value) {
+  effect_links += mkbutton(name, "effect", "#FFF", value);
 }
-function AddColor(name, r, g, b) {
-  colorNames[r+","+g+","+b] = name;
- 
+function AddColor(value, r, g, b) {
+  colorNames[r+","+g+","+b] = value; 
   var color = new RgbClass(r, g, b);
-   all_colors[name] = color;
-  qlinks += mkbutton(name, "color", rgbToHex(r,g,b), "");
+  all_colors[value] = color;
+
+  qlinks += mkbutton("", "color", rgbToHex(r,g,b), value); //name, type, color, value
   
 }
 
 AddTemplate("InOutHelper<SimpleClash<Lockup<Blast<Blue,White>,AudioFlicker<Blue,WHITE>>,White>, 300, 800>");
-// AddTemplate("StyleFirePtr<RED, YELLOW>");
 AddTemplate("InOutHelper<EasyBlade<OnSpark<GREEN>, WHITE>, 300, 800> >");
 AddTemplate("StyleNormalPtr<AudioFlicker<YELLOW, WHITE>, BLUE, 300, 800>");
 AddTemplate("InOutSparkTip<EasyBlade<MAGENTA, WHITE>, 300, 800> >");
@@ -654,26 +653,26 @@ AddTemplate("StyleRainbowPtr<300, 800>");
 AddTemplate("StyleStrobePtr<WHITE, Rainbow, 15, 300, 800>");
 AddTemplate("StyleFirePtr<RED, YELLOW>");
 
-AddEffect("Rgb<255,255,255>");
-AddEffect("Rainbow");
-AddEffect("OnSpark<GREEN, WHITE, 200>");
-AddEffect("Pulsing<BLUE, RED, 800>");
-AddEffect("Strobe<BLACK, WHITE, 15, 1>");
-AddEffect("Gradient<RED, BLUE>");
-AddEffect("AudioFlicker<WHITE, BLUE>");
-AddEffect("Blast<BLUE, WHITE>");
-AddEffect("SimpleClash<RED, WHITE, 40>");
-AddEffect("Lockup<GREEN, RED>");
-AddEffect("InOutHelper<WHITE, 300, 800, BLACK>");
-AddEffect("InOutSparkTip<RED, 1000, 800, WHITE>");
-AddEffect("ColorCycle<BLUE,  0, 1, CYAN,  100, 3000, 5000>");
-AddEffect("Cylon<RED, 5, 20>");
-AddEffect("RandomFlicker<YELLOW, BLUE>");
-AddEffect("RandomPerLEDFlicker<GREEN, Magenta>");
-AddEffect("BrownNoiseFlicker<GREEN, Magenta, 50>");
-AddEffect("HumpFlicker<GREEN, Magenta, 50>");
-AddEffect("RgbCycle");
-AddEffect("StyleFire<BLUE, CYAN>");
+AddEffect("RGB", "Rgb<255,255,255>");
+AddEffect("Rainbow", "Rainbow");
+AddEffect("OnSpark", "OnSpark<GREEN, WHITE, 200>");
+AddEffect("Pulsing", "Pulsing<BLUE, RED, 800>");
+AddEffect("Strobe", "Strobe<BLACK, WHITE, 15, 1>");
+AddEffect("Gradient", "Gradient<RED, BLUE>");
+AddEffect("AudioFlicker", "AudioFlicker<WHITE, BLUE>");
+AddEffect("Blast", "Blast<BLUE, WHITE>");
+AddEffect("SimpleClash", "SimpleClash<RED, WHITE, 40>");
+AddEffect("Lockup","Lockup<GREEN, RED>");
+AddEffect("InOutHelper", "InOutHelper<WHITE, 300, 800, BLACK>");
+AddEffect("InOutSparkTip", "InOutSparkTip<RED, 1000, 800, WHITE>");
+AddEffect("ColorCycle", "ColorCycle<BLUE,  0, 1, CYAN,  100, 3000, 5000>");
+AddEffect("Cylon", "Cylon<RED, 5, 20>");
+AddEffect("RandomFlicker", "RandomFlicker<YELLOW, BLUE>");
+AddEffect("RandomPerLEDFlicke", "RandomPerLEDFlicker<GREEN, Magenta>");
+AddEffect("BrownNoiseFlicker", "BrownNoiseFlicker<GREEN, Magenta, 50>");
+AddEffect("HumpFlicker", "HumpFlicker<GREEN, Magenta, 50>");
+AddEffect("RgbCycle", "RgbCycle");
+AddEffect("StyleFire", "StyleFire<BLUE, CYAN>");
 
 AddColor("AliceBlue", 223, 239, 255);
 AddColor("Aqua", 0, 255, 255);
