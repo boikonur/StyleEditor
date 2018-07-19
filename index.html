@@ -2004,61 +2004,60 @@ $(document).ready(function(){
 <![endif]-->
 
   <div class="container-fluid">
+    
     <div class="row top-buffer">
-      <canvas id="canvas_id" width="100%" height="473" style="width: 1280px; height: 473.5px;"> </canvas>
+      <canvas id="canvas_id"  style="width: 1280px; height: 473.5px;"> </canvas>
     </div>
 
     <div class="row top-buffer">
       <div class="col col-md-8">
         <div class="controls"  aria-label="...">
-          <input type="button" name="Power" data-toggle="tooltip" title="On/Off" type="button" value="Power" onclick="STATE_ON = !STATE_ON; STATE_LOCKUP=0;">
-          <input type="button" name="Clash" type="button" value="Clash" onclick="STATE_CLASH=1;">
-          <input type="button" name="Blast" type="button" value="Blast" onclick="AddBlast()" ;="">
-          <input type="button" name="Lockup" type="button" value="Lockup" onclick="STATE_LOCKUP = STATE_LOCKUP == 1 ? 0 : 1;">
-          <input type="button" name="Drag" type="button" value="Drag" onclick="STATE_LOCKUP = STATE_LOCKUP == 2 ? 0 : 2;">
-          <input type="button" name="Rotate" type="button" value="Rotate" onclick="STATE_ROTATE = !STATE_ROTATE;">
+          <input type="button" name="Power" value="Power" data-toggle="tooltip" title="On/Off" onclick="STATE_ON = !STATE_ON; STATE_LOCKUP=0;">
+          <input type="button" name="Clash" value="Clash" onclick="STATE_CLASH=1;">
+          <input type="button" name="Blast" value="Blast" onclick="AddBlast()">
+          <input type="button" name="Lockup" value="Lockup" onclick="STATE_LOCKUP = STATE_LOCKUP == 1 ? 0 : 1;">
+          <input type="button" name="Drag" value="Drag" onclick="STATE_LOCKUP = STATE_LOCKUP == 2 ? 0 : 2;">
+          <input type="button" name="Rotate" value="Rotate" onclick="STATE_ROTATE = !STATE_ROTATE;">
         </div>            
-      <div class="row  top-buffer">
-        <span id="error_message"></span>
-      </div>
-
-      <div class="row">
-        <div class="col-sm-11">
-          <div class="input-group">
-            <input id="style" type="text" class="form-control" placeholder="Search for..." onkeydown="if (event.keyCode == 13) Run();">
-            <span class="input-group-btn">
-              <button class="btn btn-secondary" name="run" type="button" value="Submit" onclick="Run()">Update</button>
-              <button class="btn btn-secondary" name="copy" type="button" onclick="Copy()">Copy</button>
-            </span>
-          </div>
+        <div class="row  top-buffer">
+          <span id="error_message"></span>
         </div>
-      </div>  
+
+        <div class="row">
+          <div class="col-sm-11">
+            <div class="input-group">
+              <input id="style" type="text" class="form-control" placeholder="Search for..." onkeydown="if (event.keyCode == 13) Run();">
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" name="run" type="button" value="Submit" onclick="Run()">Update</button>
+                <button class="btn btn-secondary" name="copy" type="button" onclick="Copy()">Copy</button>
+              </span>
+            </div>
+          </div>
+        </div>  
       
-      <div class="row" id="template_links">
-        <h2>Templates</h2>
-      </div>
+        <div class="row" id="template_links">
+          <h2>Templates</h2>
+        </div>
 
-      <div class="row" id="effect_links">
-        <h2>Effects</h2>
-      </div>
+        <div class="row" id="effect_links">
+          <h2>Effects</h2>
+        </div>
 
-      <div class="row" id="color_links">
-         <h2>Colors</h2>
-      </div>
+        <div class="row" id="color_links">
+          <h2>Colors</h2>
+        </div>
 
-      <div id="version">
-        <span>10.6.2018</span>
+        <div  class="row" id="version">
+          <span>10.6.2018</span>
+        </div>
       </div>
-
-    </div>
-    <div class="col-sm-12 col-md-4 output">
+    
+      <div class="col-sm-12 col-md-4 output">
       <!-- <h4>Structured view, click to edit</h4> -->
-      <div id="pp">
-      </div>
-    </div> 
-  </div> <!--end container -->
-     
-
-
+        <div id="pp">
+        </div>
+      </div> 
+    </div>
+  </div> <!--end container -->  
 </body>
 </html>
