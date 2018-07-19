@@ -61,6 +61,31 @@ height: 40px;
 
 }
 
+#pp{
+
+color: #d0d0d0;
+background-color: black;
+}
+#pp div{
+border-top-left-radius: 5px;
+border-bottom-left-radius: 5px;
+padding-left: 5px;
+font-size: 1em;
+color: #d0d0d0;
+background-color: black;
+}
+
+#pp div:focus{
+	color: black;
+	background-color: red;
+	}
+
+#error_message{
+ font-size: 1.2em;
+ color: #000;
+  background-color: red;
+}
+
 .controls{
 }
 
