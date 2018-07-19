@@ -2,7 +2,7 @@ body{
 width:100%;
 background-color: #202020;
 color: #202020;
-padding-top:-10px;
+padding-top:50px;
 /*font-family: Arial, Helvetica, sans-serif;*/
 }
 
@@ -26,6 +26,12 @@ canvas {
 	border-radius: 0;
 }
 
+.comment{
+	color:red;
+}
+.comment2{
+	color:blue;
+}
 #template_links, #effect_links, #color_links{
 
 }

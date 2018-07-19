@@ -235,7 +235,7 @@ function initGL()
     dpr = 1;
   }
 
-  //width = width * 2 / 3;
+  width = width * 2 / 3;
   height /= 2;
   canvas.width = width * dpr;
   canvas.height = height * dpr;
@@ -478,9 +478,9 @@ class STYLE {
 	arg = arg.pp();
       }
       if (arg.indexOf("<br>") == -1 && arg.indexOf("<div") == -1) {
-	ret += arg+" /* "+note+" */\n";
+	ret += arg+" <span class=\"comment\"> "+note+"</span>\n";
       } else {
-	ret += "/* "+note+" */<br>\n" + arg;
+	ret += "<span class=\"comment2\"> "+note+"</span><br>\n" + arg;
       }
     }
     ret += "</div>&gt;</div>\n";
@@ -497,7 +497,7 @@ class STYLE {
     ret += "<span title='"+ note +"'>" + name + "</span>\n";
 
     if (arguments.length > 2) {
-      ret += "&lt;";
+      //ret += "&lt;";
       var comma = false;
       for (var i = 2; i < arguments.length; i += 2) {
 	if (comma) ret += ",";
@@ -511,7 +511,7 @@ class STYLE {
 	  ret += arg.pp();
 	}
       }
-      ret += "&gt;";
+      // ret += "&gt;";
     }
     ret += "</div>\n";
 
@@ -2061,14 +2061,16 @@ $(document).ready(function(){
   </nav>
   <div class="container-fluid">
   
-    <div class="row top-buffer">
-      <canvas id="canvas_id" > </canvas>
-    </div>
-
+  
     
 
     <div class="row top-buffer">
       <div class="col col-md-8">
+
+          <div class="row top-buffer">
+              <canvas id="canvas_id" > </canvas>
+            </div>
+        
         <div class="controls"  aria-label="...">
           <input type="button" name="Power" value="Power" data-toggle="tooltip" title="On/Off" onclick="STATE_ON = !STATE_ON; STATE_LOCKUP=0;">
           <input type="button" name="Clash" value="Clash" onclick="STATE_CLASH=1;">
