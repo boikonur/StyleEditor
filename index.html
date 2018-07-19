@@ -625,7 +625,7 @@ function enc(s) {
 }
 
 function mkbutton(name, type, color, value) {
-  return "<input class=\"" + type + "\" type=button style=\"background-color:" + color + ";\" onclick='SetTo(\""+value+"\")' value='"+enc(name)+"'>\n";
+  return "<input class=\"col col-sm-12 col-md-4 " + type + "\" type=button style=\"background-color:" + color + ";\" onclick='SetTo(\""+value+"\")' value='"+enc(name)+"'>\n";
   //  return "<span class=btn onclick='SetTo(\""+name+"\")'>"+enc(name)+"</span>\n";
 }
 function AddTemplate(name) {
@@ -1911,7 +1911,8 @@ function ReplaceCurrentFocus(str) {
     current_focus = focus_catcher;
     var id = current_focus.get_id();
     var container = document.getElementById("X"+id);
-    container.style.backgroundColor = 'lightblue';
+    container.style.backgroundColor = '#d0d0d0';
+    container.style.color = '#202020';
   }
 }
 
@@ -1979,7 +1980,8 @@ function FocusOn(id, event) {
   console.log(style);
   current_focus = style;
   var container = document.getElementById("X"+id);
-  container.style.backgroundColor = 'lightblue';
+  container.style.backgroundColor = '#d0d0d0';
+  container.style.color = '#202020';
   pp_is_url++;
   var url = style.pp();
   pp_is_url--;
@@ -1998,68 +2000,63 @@ $(document).ready(function(){
 
 <body onload="initGL()">
 <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+  <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
 
-    <div class="container-fluid">
-       <div class="row no-gutters">
-              <canvas id="canvas_id" width="100%" height="473" style="width: 1280px; height: 473.5px;"> </canvas>
-       </div>
-
-      <div class="row no-gutters">
-        <div class="col col-md-8">
-            <div class="controls"  aria-label="...">
-              <input type="button" name="Power" data-toggle="tooltip" title="On/Off" type="button" value="Power" onclick="STATE_ON = !STATE_ON; STATE_LOCKUP=0;">
-              <input type="button" name="Clash" type="button" value="Clash" onclick="STATE_CLASH=1;">
-              <input type="button" name="Blast" type="button" value="Blast" onclick="AddBlast()" ;="">
-              <input type="button" name="Lockup" type="button" value="Lockup" onclick="STATE_LOCKUP = STATE_LOCKUP == 1 ? 0 : 1;">
-              <input type="button" name="Drag" type="button" value="Drag" onclick="STATE_LOCKUP = STATE_LOCKUP == 2 ? 0 : 2;">
-              <input type="button" name="Rotate" type="button" value="Rotate" onclick="STATE_ROTATE = !STATE_ROTATE;">
-            </div>            
-    
-
-          <div class="row">
-            <span id="error_message"></span>
-          </div>
-
-          <div class="row">
-            <div class="col-sm-11">
-            <div class="input-group">
-              <input id="style" type="text" class="form-control" placeholder="Search for..." onkeydown="if (event.keyCode == 13) Run();">
-              <span class="input-group-btn">
-                <button class="btn btn-secondary" name="run" type="button" value="Submit" onclick="Run()">Update</button>
-                <button class="btn btn-secondary" name="copy" type="button" onclick="Copy()">Copy</button>
-              </span>
-            </div>
-          </div>   
-      
-
-          <div id="template_links">
-            <h2>Templates</h2>
-          </div>
-          <div id="effect_links">
-            <h2>Effects</h2>
-          </div>
-          <div id="color_links">
-            <h2>Colors</h2>
-          </div>
-          
-          <div id="version">
-               <span>10.6.2018</span>
-          </div>
-        </div>
-      </div>
-        <div class="col-sm-4">
-          <div class=output>
-            <h4>Structured view, click to edit</h4>
-            <div id="pp">
-          </div>
-      </div>
-        </div>
-
-  
-    </div>    
+  <div class="container-fluid">
+    <div class="row top-buffer">
+      <canvas id="canvas_id" width="100%" height="473" style="width: 1280px; height: 473.5px;"> </canvas>
     </div>
+
+    <div class="row top-buffer">
+      <div class="col col-md-8">
+        <div class="controls"  aria-label="...">
+          <input type="button" name="Power" data-toggle="tooltip" title="On/Off" type="button" value="Power" onclick="STATE_ON = !STATE_ON; STATE_LOCKUP=0;">
+          <input type="button" name="Clash" type="button" value="Clash" onclick="STATE_CLASH=1;">
+          <input type="button" name="Blast" type="button" value="Blast" onclick="AddBlast()" ;="">
+          <input type="button" name="Lockup" type="button" value="Lockup" onclick="STATE_LOCKUP = STATE_LOCKUP == 1 ? 0 : 1;">
+          <input type="button" name="Drag" type="button" value="Drag" onclick="STATE_LOCKUP = STATE_LOCKUP == 2 ? 0 : 2;">
+          <input type="button" name="Rotate" type="button" value="Rotate" onclick="STATE_ROTATE = !STATE_ROTATE;">
+        </div>            
+      <div class="row  top-buffer">
+        <span id="error_message"></span>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-11">
+          <div class="input-group">
+            <input id="style" type="text" class="form-control" placeholder="Search for..." onkeydown="if (event.keyCode == 13) Run();">
+            <span class="input-group-btn">
+              <button class="btn btn-secondary" name="run" type="button" value="Submit" onclick="Run()">Update</button>
+              <button class="btn btn-secondary" name="copy" type="button" onclick="Copy()">Copy</button>
+            </span>
+          </div>
+        </div>
+      </div>  
+      
+      <div class="row" id="template_links">
+        <h2>Templates</h2>
+      </div>
+
+      <div class="row" id="effect_links">
+        <h2>Effects</h2>
+      </div>
+
+      <div class="row" id="color_links">
+         <h2>Colors</h2>
+      </div>
+
+      <div id="version">
+        <span>10.6.2018</span>
+      </div>
+
+    </div>
+    <div class="col-sm-12 col-md-4 output">
+      <!-- <h4>Structured view, click to edit</h4> -->
+      <div id="pp">
+      </div>
+    </div> 
+  </div> <!--end container -->
      
 
 
