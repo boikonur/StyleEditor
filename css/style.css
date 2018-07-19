@@ -1,22 +1,22 @@
 body{
-	width:100%;
-	background-color: #000;
-	color: #d0d0d0;
-	font-family: Arial, Helvetica, sans-serif;
+width:100%;
+background-color: #000;
+color: black;
+font-family: Arial, Helvetica, sans-serif;
 }
 
-    input:focus, textarea:focus, select:focus{
-       background-color: red !important;
-    }
+input:focus, textarea:focus, select:focus{
+background-color: red !important;
+}
 
 input[type="button" i] {
-	border: 0;
-	padding: 1px !important;
+border: 0;
+padding: 1px !important;
 }
 
 input:focus, input:active {
-    outline:none !important;
-    background-color: red !important;
+outline:none !important;
+background-color: red !important;
 }
 input[type="button"]:hover {
 background-color: red;
@@ -24,14 +24,9 @@ background-color: red;
 
 
 h2{
- color:red;
- font-size: 1.3em;
+color:red;
+font-size: 1.3em;
 
-}
-
-.btn {
-  border-radius: 2px;
-  background: lightblue;
 }
 
 #template_links, #effect_links, #color_links{
@@ -57,8 +52,35 @@ height: 40px;
 }
 
 #color_links input{
- width: 100px;
+width: 100px;
+border: none;
+padding:0px;
 
+}
+
+#pp{
+
+color: #d0d0d0;
+background-color: black;
+}
+#pp div{
+border-top-left-radius: 5px;
+border-bottom-left-radius: 5px;
+padding-left: 5px;
+font-size: 1em;
+color: #d0d0d0;
+background-color: black;
+}
+
+#pp div:focus{
+color: black;
+background-color: red;
+}
+
+#error_message{
+font-size: 1.2em;
+color: #000;
+background-color: red;
 }
 
 .controls{
@@ -75,7 +97,9 @@ min-width: 100px;
 
 
 .container-full {
-  margin: 0 auto;
-  width: 100%;
+margin: 0 auto;
+width: 100%;
 }
+
+
 
