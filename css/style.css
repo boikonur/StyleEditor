@@ -1,4 +1,52 @@
+body{
+	width:100%;
+	background-color: #000;
+	color: #d0d0d0;
+}
+input[type="button" i] {
+	border: 0;
+	padding: 1px !important;
+}
+
 .btn {
   border-radius: 2px;
   background: lightblue;
 }
+
+#template_links, #effect_links, #color_links{
+
+
+}
+
+#template_links input, #effect_links input, #color_links input{
+border: 1px solid black;
+
+height: 40px;
+
+}
+
+#template_links input:hover, #effect_links input:hover, #color_links input:hover{
+border: 1px solid #45F3D3;
+
+}
+
+#template_links{
+
+
+}
+
+#effect_links{
+
+}
+
+
+#color_links{
+
+
+}
+
+#color_links input{
+ width: 100px;
+
+}
+
