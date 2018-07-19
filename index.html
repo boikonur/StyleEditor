@@ -668,7 +668,7 @@ AddEffect("InOutSparkTip", "InOutSparkTip<RED, 1000, 800, WHITE>");
 AddEffect("ColorCycle", "ColorCycle<BLUE,  0, 1, CYAN,  100, 3000, 5000>");
 AddEffect("Cylon", "Cylon<RED, 5, 20>");
 AddEffect("RandomFlicker", "RandomFlicker<YELLOW, BLUE>");
-AddEffect("RandomPerLEDFlicke", "RandomPerLEDFlicker<GREEN, Magenta>");
+AddEffect("RandomPerLEDFlicker", "RandomPerLEDFlicker<GREEN, Magenta>");
 AddEffect("BrownNoiseFlicker", "BrownNoiseFlicker<GREEN, Magenta, 50>");
 AddEffect("HumpFlicker", "HumpFlicker<GREEN, Magenta, 50>");
 AddEffect("RgbCycle", "RgbCycle");
@@ -2009,7 +2009,7 @@ $(document).ready(function(){
       <div class="row no-gutters">
         <div class="col col-md-8">
             <div class="controls"  aria-label="...">
-              <button type="button" class="btn btn-secondary name="Power" data-toggle="tooltip" title="On/Off" type="button" value="Power" onclick="STATE_ON = !STATE_ON; STATE_LOCKUP=0;">
+              <input type="button" name="Power" data-toggle="tooltip" title="On/Off" type="button" value="Power" onclick="STATE_ON = !STATE_ON; STATE_LOCKUP=0;">
               <input type="button" name="Clash" type="button" value="Clash" onclick="STATE_CLASH=1;">
               <input type="button" name="Blast" type="button" value="Blast" onclick="AddBlast()" ;="">
               <input type="button" name="Lockup" type="button" value="Lockup" onclick="STATE_LOCKUP = STATE_LOCKUP == 1 ? 0 : 1;">
@@ -2023,7 +2023,7 @@ $(document).ready(function(){
           </div>
 
           <div class="row">
-            <div class="col-lg-11">
+            <div class="col-sm-11">
             <div class="input-group">
               <input id="style" type="text" class="form-control" placeholder="Search for..." onkeydown="if (event.keyCode == 13) Run();">
               <span class="input-group-btn">
@@ -2048,8 +2048,8 @@ $(document).ready(function(){
                <span>10.6.2018</span>
           </div>
         </div>
-
-        <div class="col col-md-3">
+      </div>
+        <div class="col-sm-4">
           <div class=output>
             <h4>Structured view, click to edit</h4>
             <div id="pp">
@@ -2058,8 +2058,8 @@ $(document).ready(function(){
         </div>
 
   
-
-      </div>
+    </div>    
+    </div>
      
 
 
