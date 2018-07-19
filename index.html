@@ -1,11 +1,10 @@
 
 <!-- saved from url=(0054)https://fredrik.hubbe.net/lightsaber/style_editor.html -->
 <html>
+<head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-<head>
-
-</style>
 
 <title>Style Editor</title>
 
@@ -1981,42 +1980,54 @@ function FocusOn(id, event) {
 </head>
 
 <body onload="initGL()">
-  <div class="content">
 
-      <canvas id="canvas_id" width="1280" height="473" style="width: 1280px; height: 473.5px;"> </canvas>
-      <div class="controls">
-        <input name="Power" type="button" value="Power" onclick="STATE_ON = !STATE_ON; STATE_LOCKUP=0;">
-        <input name="Clash" type="button" value="Clash" onclick="STATE_CLASH=1;">
-        <input name="Blast" type="button" value="Blast" onclick="AddBlast()" ;="">
-        <input name="Lockup" type="button" value="Lockup" onclick="STATE_LOCKUP = STATE_LOCKUP == 1 ? 0 : 1;">
-        <input name="Drag" type="button" value="Drag" onclick="STATE_LOCKUP = STATE_LOCKUP == 2 ? 0 : 2;">
-        <input name="Rotate" type="button" value="Rotate" onclick="STATE_ROTATE = !STATE_ROTATE;">
-      </div>       
-      <span id="error_message"></span>
-      <input id="style" type="text" size="100" onkeydown="if (event.keyCode == 13) Run();">
-      <input name="run" type="button" value="Submit" onclick="Run()">
-      
-      <div id="template_links">
-        <h2>Templates</h2>
-      </div>
-      <div id="effect_links">
-        <h2>Effects</h2>
-      </div>
-      <div id="color_links">
-        <h2>Colors</h2>
-      </div>
-      
-      <div id="version">
-           <span>10.6.2018</span>
-      </div>
+       <div class="row no-gutters">
+              <canvas id="canvas_id" width="100%" height="473" style="width: 1280px; height: 473.5px;"> </canvas>
+       </div>
 
-      <div class=output>
+      <div class="row no-gutters">
+        <div class="col col-md-8">
+          <div class="controls">
+            <input name="Power" type="button" value="Power" onclick="STATE_ON = !STATE_ON; STATE_LOCKUP=0;">
+            <input name="Clash" type="button" value="Clash" onclick="STATE_CLASH=1;">
+            <input name="Blast" type="button" value="Blast" onclick="AddBlast()" ;="">
+            <input name="Lockup" type="button" value="Lockup" onclick="STATE_LOCKUP = STATE_LOCKUP == 1 ? 0 : 1;">
+            <input name="Drag" type="button" value="Drag" onclick="STATE_LOCKUP = STATE_LOCKUP == 2 ? 0 : 2;">
+            <input name="Rotate" type="button" value="Rotate" onclick="STATE_ROTATE = !STATE_ROTATE;">
+          </div>       
+          <span id="error_message"></span>
+          <input id="style" type="text" size="100" onkeydown="if (event.keyCode == 13) Run();">
+          <input name="run" type="button" value="Submit" onclick="Run()">
+      
+          <div id="template_links">
+            <h2>Templates</h2>
+          </div>
+          <div id="effect_links">
+            <h2>Effects</h2>
+          </div>
+          <div id="color_links">
+            <h2>Colors</h2>
+          </div>
+          
+          <div id="version">
+               <span>10.6.2018</span>
+          </div>
+        </div>
+
+        <div class="col col-md-3">
+              <div class=output>
           <h4>Structured view, click to edit</h4>
           <input name="Copy" type="button" value="Copy" onclick="Run()">
           <div id="pp">
           </div>
       </div>
-  </div> <!-- end content -->
+        </div>
+
+  
+
+      </div>
+     
+
 
 </body>
 </html>
