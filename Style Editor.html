@@ -1987,85 +1987,16 @@ function FocusOn(id, event) {
     <input name="drag" type="button" value="Rotate" onclick="STATE_ROTATE = !STATE_ROTATE;">
     <span id="error_message"></span>
     <br>
-    <input id="style" type="text" size="100" onkeydown="if (event.keyCode == 13) Run();"><input name="run" type="button" value="Submit" onclick="Run()"><br>
-    <div id="effect_links"><b>Effects</b><br><input type="button" onclick="SetTo(&quot;Rgb&lt;100,100,100&gt;&quot;)" value="Rgb&lt;100,100,100&gt;">
-<input type="button" onclick="SetTo(&quot;Rainbow&quot;)" value="Rainbow">
-<input type="button" onclick="SetTo(&quot;OnSpark&lt;GREEN, WHITE, 200&gt;&quot;)" value="OnSpark&lt;GREEN, WHITE, 200&gt;">
-<input type="button" onclick="SetTo(&quot;Pulsing&lt;BLUE, RED, 800&gt;&quot;)" value="Pulsing&lt;BLUE, RED, 800&gt;">
-<input type="button" onclick="SetTo(&quot;Strobe&lt;BLACK, WHITE, 15, 1&gt;&quot;)" value="Strobe&lt;BLACK, WHITE, 15, 1&gt;">
-<input type="button" onclick="SetTo(&quot;Gradient&lt;RED, BLUE&gt;&quot;)" value="Gradient&lt;RED, BLUE&gt;">
-<input type="button" onclick="SetTo(&quot;AudioFlicker&lt;WHITE, BLUE&gt;&quot;)" value="AudioFlicker&lt;WHITE, BLUE&gt;">
-<input type="button" onclick="SetTo(&quot;Blast&lt;BLUE, WHITE&gt;&quot;)" value="Blast&lt;BLUE, WHITE&gt;">
-<input type="button" onclick="SetTo(&quot;SimpleClash&lt;RED, WHITE, 40&gt;&quot;)" value="SimpleClash&lt;RED, WHITE, 40&gt;">
-<input type="button" onclick="SetTo(&quot;Lockup&lt;GREEN, RED&gt;&quot;)" value="Lockup&lt;GREEN, RED&gt;">
-<input type="button" onclick="SetTo(&quot;InOutHelper&lt;WHITE, 300, 800, BLACK&gt;&quot;)" value="InOutHelper&lt;WHITE, 300, 800, BLACK&gt;">
-<input type="button" onclick="SetTo(&quot;InOutSparkTip&lt;RED, 1000, 800, WHITE&gt;&quot;)" value="InOutSparkTip&lt;RED, 1000, 800, WHITE&gt;">
-<input type="button" onclick="SetTo(&quot;ColorCycle&lt;BLUE,  0, 1, CYAN,  100, 3000, 5000&gt;&quot;)" value="ColorCycle&lt;BLUE,  0, 1, CYAN,  100, 3000, 5000&gt;">
-<input type="button" onclick="SetTo(&quot;Cylon&lt;RED, 5, 20&gt;&quot;)" value="Cylon&lt;RED, 5, 20&gt;">
-<input type="button" onclick="SetTo(&quot;RandomFlicker&lt;YELLOW, BLUE&gt;&quot;)" value="RandomFlicker&lt;YELLOW, BLUE&gt;">
-<input type="button" onclick="SetTo(&quot;RandomPerLEDFlicker&lt;GREEN, Magenta&gt;&quot;)" value="RandomPerLEDFlicker&lt;GREEN, Magenta&gt;">
-<input type="button" onclick="SetTo(&quot;BrownNoiseFlicker&lt;GREEN, Magenta, 50&gt;&quot;)" value="BrownNoiseFlicker&lt;GREEN, Magenta, 50&gt;">
-<input type="button" onclick="SetTo(&quot;HumpFlicker&lt;GREEN, Magenta, 50&gt;&quot;)" value="HumpFlicker&lt;GREEN, Magenta, 50&gt;">
-<input type="button" onclick="SetTo(&quot;RgbCycle&quot;)" value="RgbCycle">
-<input type="button" onclick="SetTo(&quot;StyleFire&lt;BLUE, CYAN&gt;&quot;)" value="StyleFire&lt;BLUE, CYAN&gt;">
+
+<input id="style" type="text" size="100" onkeydown="if (event.keyCode == 13) Run();"><input name="run" type="button" value="Submit" onclick="Run()"><br>
+
+<div id="template_links"><h2>Templates</h2>
 </div>
-    <div id="color_links"><b>Colors</b><br><input type="button" onclick="SetTo(&quot;AliceBlue&quot;)" value="AliceBlue">
-<input type="button" onclick="SetTo(&quot;Aqua&quot;)" value="Aqua">
-<input type="button" onclick="SetTo(&quot;Aquamarine&quot;)" value="Aquamarine">
-<input type="button" onclick="SetTo(&quot;Azure&quot;)" value="Azure">
-<input type="button" onclick="SetTo(&quot;Bisque&quot;)" value="Bisque">
-<input type="button" onclick="SetTo(&quot;Black&quot;)" value="Black">
-<input type="button" onclick="SetTo(&quot;BlanchedAlmond&quot;)" value="BlanchedAlmond">
-<input type="button" onclick="SetTo(&quot;Blue&quot;)" value="Blue">
-<input type="button" onclick="SetTo(&quot;Chartreuse&quot;)" value="Chartreuse">
-<input type="button" onclick="SetTo(&quot;Coral&quot;)" value="Coral">
-<input type="button" onclick="SetTo(&quot;Cornsilk&quot;)" value="Cornsilk">
-<input type="button" onclick="SetTo(&quot;Cyan&quot;)" value="Cyan">
-<input type="button" onclick="SetTo(&quot;DarkOrange&quot;)" value="DarkOrange">
-<input type="button" onclick="SetTo(&quot;DeepPink&quot;)" value="DeepPink">
-<input type="button" onclick="SetTo(&quot;DeepSkyBlue&quot;)" value="DeepSkyBlue">
-<input type="button" onclick="SetTo(&quot;DodgerBlue&quot;)" value="DodgerBlue">
-<input type="button" onclick="SetTo(&quot;FloralWhite&quot;)" value="FloralWhite">
-<input type="button" onclick="SetTo(&quot;GhostWhite&quot;)" value="GhostWhite">
-<input type="button" onclick="SetTo(&quot;Green&quot;)" value="Green">
-<input type="button" onclick="SetTo(&quot;GreenYellow&quot;)" value="GreenYellow">
-<input type="button" onclick="SetTo(&quot;HoneyDew&quot;)" value="HoneyDew">
-<input type="button" onclick="SetTo(&quot;HotPink&quot;)" value="HotPink">
-<input type="button" onclick="SetTo(&quot;Ivory&quot;)" value="Ivory">
-<input type="button" onclick="SetTo(&quot;LavenderBlush&quot;)" value="LavenderBlush">
-<input type="button" onclick="SetTo(&quot;LemonChiffon&quot;)" value="LemonChiffon">
-<input type="button" onclick="SetTo(&quot;LightCyan&quot;)" value="LightCyan">
-<input type="button" onclick="SetTo(&quot;LightPink&quot;)" value="LightPink">
-<input type="button" onclick="SetTo(&quot;LightSalmon&quot;)" value="LightSalmon">
-<input type="button" onclick="SetTo(&quot;LightYellow&quot;)" value="LightYellow">
-<input type="button" onclick="SetTo(&quot;Magenta&quot;)" value="Magenta">
-<input type="button" onclick="SetTo(&quot;MintCream&quot;)" value="MintCream">
-<input type="button" onclick="SetTo(&quot;MistyRose&quot;)" value="MistyRose">
-<input type="button" onclick="SetTo(&quot;Moccasin&quot;)" value="Moccasin">
-<input type="button" onclick="SetTo(&quot;NavajoWhite&quot;)" value="NavajoWhite">
-<input type="button" onclick="SetTo(&quot;Orange&quot;)" value="Orange">
-<input type="button" onclick="SetTo(&quot;OrangeRed&quot;)" value="OrangeRed">
-<input type="button" onclick="SetTo(&quot;PapayaWhip&quot;)" value="PapayaWhip">
-<input type="button" onclick="SetTo(&quot;PeachPuff&quot;)" value="PeachPuff">
-<input type="button" onclick="SetTo(&quot;Pink&quot;)" value="Pink">
-<input type="button" onclick="SetTo(&quot;Red&quot;)" value="Red">
-<input type="button" onclick="SetTo(&quot;SeaShell&quot;)" value="SeaShell">
-<input type="button" onclick="SetTo(&quot;Snow&quot;)" value="Snow">
-<input type="button" onclick="SetTo(&quot;SpringGreen&quot;)" value="SpringGreen">
-<input type="button" onclick="SetTo(&quot;SteelBlue&quot;)" value="SteelBlue">
-<input type="button" onclick="SetTo(&quot;Tomato&quot;)" value="Tomato">
-<input type="button" onclick="SetTo(&quot;White&quot;)" value="White">
-<input type="button" onclick="SetTo(&quot;Yellow&quot;)" value="Yellow">
+
+<div id="effect_links"><h2>Effects</h2>
 </div>
-    <div id="template_links"><b>Templates</b><br><input type="button" onclick="SetTo(&quot;InOutHelper&lt;SimpleClash&lt;Lockup&lt;Blast&lt;Blue,White&gt;,AudioFlicker&lt;Blue,WHITE&gt;&gt;,White&gt;, 300, 800&gt;&quot;)" value="InOutHelper&lt;SimpleClash&lt;Lockup&lt;Blast&lt;Blue,White&gt;,AudioFlicker&lt;Blue,WHITE&gt;&gt;,White&gt;, 300, 800&gt;">
-<input type="button" onclick="SetTo(&quot;InOutHelper&lt;EasyBlade&lt;OnSpark&lt;GREEN&gt;, WHITE&gt;, 300, 800&gt; &gt;&quot;)" value="InOutHelper&lt;EasyBlade&lt;OnSpark&lt;GREEN&gt;, WHITE&gt;, 300, 800&gt; &gt;">
-<input type="button" onclick="SetTo(&quot;StyleNormalPtr&lt;AudioFlicker&lt;YELLOW, WHITE&gt;, BLUE, 300, 800&gt;&quot;)" value="StyleNormalPtr&lt;AudioFlicker&lt;YELLOW, WHITE&gt;, BLUE, 300, 800&gt;">
-<input type="button" onclick="SetTo(&quot;InOutSparkTip&lt;EasyBlade&lt;MAGENTA, WHITE&gt;, 300, 800&gt; &gt;&quot;)" value="InOutSparkTip&lt;EasyBlade&lt;MAGENTA, WHITE&gt;, 300, 800&gt; &gt;">
-<input type="button" onclick="SetTo(&quot;StyleNormalPtr&lt;Gradient&lt;RED, BLUE&gt;, Gradient&lt;CYAN, YELLOW&gt;, 300, 800&gt;&quot;)" value="StyleNormalPtr&lt;Gradient&lt;RED, BLUE&gt;, Gradient&lt;CYAN, YELLOW&gt;, 300, 800&gt;">
-<input type="button" onclick="SetTo(&quot;StyleNormalPtr&lt;Pulsing&lt;RED, Rgb&lt;50,0,0&gt;, 5000&gt;, WHITE, 300, 800, RED&gt;&quot;)" value="StyleNormalPtr&lt;Pulsing&lt;RED, Rgb&lt;50,0,0&gt;, 5000&gt;, WHITE, 300, 800, RED&gt;">
-<input type="button" onclick="SetTo(&quot;StyleRainbowPtr&lt;300, 800&gt;&quot;)" value="StyleRainbowPtr&lt;300, 800&gt;">
-<input type="button" onclick="SetTo(&quot;StyleStrobePtr&lt;WHITE, Rainbow, 15, 300, 800&gt;&quot;)" value="StyleStrobePtr&lt;WHITE, Rainbow, 15, 300, 800&gt;">
-<input type="button" onclick="SetTo(&quot;StyleFirePtr&lt;RED, YELLOW&gt;&quot;)" value="StyleFirePtr&lt;RED, YELLOW&gt;">
+
+<div id="color_links"><h2>Colors</h2>
 </div>
     <div>
       <font face="helvetica,arial" size="-1">
