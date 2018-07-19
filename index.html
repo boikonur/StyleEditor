@@ -1,15 +1,19 @@
-
-<!-- saved from url=(0054)https://fredrik.hubbe.net/lightsaber/style_editor.html -->
-<html>
+<!doctype html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Style Editor</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">    
+    <meta name="description" content="ProffieOS style Configurator">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="css/style.css">
-
-
-<title>Style Editor</title>
 
 <script id="vertex-shader" type="x-shader/x-vertex">
 precision highp float;
@@ -202,6 +206,21 @@ var height;
 
 var startup_template="InOutHelper<SimpleClash<Lockup<Blast<Blue,White>,AudioFlicker<Blue,White>>,White>, 300, 800>";
 
+function resizeGL(canvas) {
+    // Lookup the size the browser is displaying the canvas.
+    var displayWidth  = canvas.clientWidth;
+    var displayHeight = canvas.clientHeight;
+
+    // Check if the canvas is not the same size.
+    if (canvas.width  != displayWidth ||
+        canvas.height != displayHeight) {
+
+      // Make the canvas the same size
+      canvas.width  = displayWidth;
+      canvas.height = displayHeight;
+    }
+  }
+
 // Create n textures of about 1MB each.
 function initGL()
 { 
@@ -216,7 +235,7 @@ function initGL()
     dpr = 1;
   }
 
-  width = width * 2 / 3;
+  //width = width * 2 / 3;
   height /= 2;
   canvas.width = width * dpr;
   canvas.height = height * dpr;
@@ -1733,6 +1752,8 @@ function drawScene() {
   current_micros = actual_millis() * 1000;
   current_style.run(blade);
   var pixels = new Uint8Array(144 * 4 * 2);
+
+  resizeGL(gl.canvas);
   for (var i = 0; i < 144; i++) {
       c = current_style.getColor(i);
       pixels[i*4 + 0] = Math.round(c.r * 255);
@@ -2003,62 +2024,103 @@ $(document).ready(function(){
   <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 
+
+<nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Brand</a>
+      </div>
+  
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+          <li><a href="#">Link</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">One more separated link</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
   <div class="container-fluid">
+  
     <div class="row top-buffer">
-      <canvas id="canvas_id" width="100%" height="473" style="width: 1280px; height: 473.5px;"> </canvas>
+      <canvas id="canvas_id" > </canvas>
     </div>
+
+    
 
     <div class="row top-buffer">
       <div class="col col-md-8">
         <div class="controls"  aria-label="...">
-          <input type="button" name="Power" data-toggle="tooltip" title="On/Off" type="button" value="Power" onclick="STATE_ON = !STATE_ON; STATE_LOCKUP=0;">
-          <input type="button" name="Clash" type="button" value="Clash" onclick="STATE_CLASH=1;">
-          <input type="button" name="Blast" type="button" value="Blast" onclick="AddBlast()" ;="">
-          <input type="button" name="Lockup" type="button" value="Lockup" onclick="STATE_LOCKUP = STATE_LOCKUP == 1 ? 0 : 1;">
-          <input type="button" name="Drag" type="button" value="Drag" onclick="STATE_LOCKUP = STATE_LOCKUP == 2 ? 0 : 2;">
-          <input type="button" name="Rotate" type="button" value="Rotate" onclick="STATE_ROTATE = !STATE_ROTATE;">
+          <input type="button" name="Power" value="Power" data-toggle="tooltip" title="On/Off" onclick="STATE_ON = !STATE_ON; STATE_LOCKUP=0;">
+          <input type="button" name="Clash" value="Clash" onclick="STATE_CLASH=1;">
+          <input type="button" name="Blast" value="Blast" onclick="AddBlast()">
+          <input type="button" name="Lockup" value="Lockup" onclick="STATE_LOCKUP = STATE_LOCKUP == 1 ? 0 : 1;">
+          <input type="button" name="Drag" value="Drag" onclick="STATE_LOCKUP = STATE_LOCKUP == 2 ? 0 : 2;">
+          <input type="button" name="Rotate" value="Rotate" onclick="STATE_ROTATE = !STATE_ROTATE;">
         </div>            
-      <div class="row  top-buffer">
-        <span id="error_message"></span>
-      </div>
-
-      <div class="row">
-        <div class="col-sm-11">
-          <div class="input-group">
-            <input id="style" type="text" class="form-control" placeholder="Search for..." onkeydown="if (event.keyCode == 13) Run();">
-            <span class="input-group-btn">
-              <button class="btn btn-secondary" name="run" type="button" value="Submit" onclick="Run()">Update</button>
-              <button class="btn btn-secondary" name="copy" type="button" onclick="Copy()">Copy</button>
-            </span>
-          </div>
+        <div class="row  top-buffer">
+          <span id="error_message"></span>
         </div>
-      </div>  
+
+        <div class="row">
+          <div class="col-sm-11">
+            <div class="input-group">
+              <input id="style" type="text" class="form-control" placeholder="Search for..." onkeydown="if (event.keyCode == 13) Run();">
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" name="run" type="button" value="Submit" onclick="Run()">Update</button>
+                <button class="btn btn-secondary" name="copy" type="button" onclick="Copy()">Copy</button>
+              </span>
+            </div>
+          </div>
+        </div>  
       
-      <div class="row" id="template_links">
-        <h2>Templates</h2>
-      </div>
+        <div class="row" id="template_links">
+          <h2>Templates</h2>
+        </div>
 
-      <div class="row" id="effect_links">
-        <h2>Effects</h2>
-      </div>
+        <div class="row" id="effect_links">
+          <h2>Effects</h2>
+        </div>
 
-      <div class="row" id="color_links">
-         <h2>Colors</h2>
-      </div>
+        <div class="row" id="color_links">
+          <h2>Colors</h2>
+        </div>
 
-      <div id="version">
-        <span>10.6.2018</span>
+        <div  class="row" id="version">
+          <span>10.6.2018</span>
+        </div>
       </div>
-
-    </div>
-    <div class="col-sm-12 col-md-4 output">
+    
+      <div class="col-sm-12 col-md-4 output">
       <!-- <h4>Structured view, click to edit</h4> -->
-      <div id="pp">
-      </div>
-    </div> 
-  </div> <!--end container -->
-     
+        <div id="pp">
+        </div>
+      </div> 
+    </div>
+  </div> <!--end container -->  
 
+ 
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 </body>
 </html>

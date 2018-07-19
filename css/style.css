@@ -2,29 +2,28 @@ body{
 width:100%;
 background-color: #202020;
 color: #202020;
+padding-top:-10px;
 /*font-family: Arial, Helvetica, sans-serif;*/
-}
-
-
-
-input[type="button" i] {
-border: 0;
-padding: 1px !important;
 }
 
 input:focus, input:active {
 outline:none !important;
-
 }
 
 h2{
 color:red;
 font-size: 1.3em;
-
 }
 
+/* make the canvas the size of the viewport */
+canvas {
+	width: 100vw;
+	height: 100vh;
+	display: block;
+  }
+
 .btn{
-	border-radius: none;
+	border-radius: 0;
 }
 
 #template_links, #effect_links, #color_links{
