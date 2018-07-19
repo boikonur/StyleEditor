@@ -527,9 +527,9 @@ class CONFIG extends STYLE {
   }
 };
 
-var qlinks = "<b>Colors</b><br>";
-var effect_links = "<b>Effects</b><br>";
-var template_links = "<b>Templates</b><br>";
+var qlinks = "<h2>Colors</h2>";
+var effect_links = "<h2>Effects</h2>";
+var template_links = "<h2>Templates</h2>";
 var all_colors = {};
 var colorNames = {};
 
@@ -563,6 +563,10 @@ class RgbClass extends STYLE {
 
 function Rgb(r,g,b) {
   return new RgbClass(r,g,b);
+}
+
+function rgbToHex(r, g, b) {
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 
 class Rgb16Class extends STYLE {
@@ -606,20 +610,23 @@ function enc(s) {
   return s.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
-function mkbutton(name) {
-  return "<input type=button onclick='SetTo(\""+name+"\")' value='"+enc(name)+"'>\n";
+function mkbutton(name, type, color) {
+  return "<input class=\"" + type + "\" type=button style=\"background-color:" + color + ";\" onclick='SetTo(\""+name+"\")' value='"+enc(name)+"'>\n";
   //  return "<span class=btn onclick='SetTo(\""+name+"\")'>"+enc(name)+"</span>\n";
 }
 function AddTemplate(name) {
-  template_links += mkbutton(name);
+  template_links += mkbutton(name, "template", "#FFF");
 }
 function AddEffect(name) {
-  effect_links += mkbutton(name);
+  effect_links += mkbutton(name, "effect", "#FFF");
 }
 function AddColor(name, r, g, b) {
   colorNames[r+","+g+","+b] = name;
-  qlinks += mkbutton(name);
-  all_colors[name] = new RgbClass(r, g, b);
+ 
+  var color = new RgbClass(r, g, b);
+   all_colors[name] = color;
+  qlinks += mkbutton(name, "color", rgbToHex(r,g,b));
+  
 }
 
 AddTemplate("InOutHelper<SimpleClash<Lockup<Blast<Blue,White>,AudioFlicker<Blue,WHITE>>,White>, 300, 800>");
@@ -1998,6 +2005,9 @@ function FocusOn(id, event) {
 
 <div id="color_links"><h2>Colors</h2>
 </div>
+
+
+
     <div>
       <font face="helvetica,arial" size="-1">
       This page has been accessed 946 times since
