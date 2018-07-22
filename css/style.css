@@ -19,7 +19,7 @@ h2{
 margin-top: 8px;
 margin-bottom: 4px;
 color:red;
-font-size: 1.1em;
+font-size: 1em;
 }
 
 /* make the canvas the size of the viewport */
@@ -54,18 +54,18 @@ height: 30px;
 #template_links input:hover
 {
 	border: 1px solid gray;
-	z-index: 999; 
+	z-index: 10; 
 
 }
 #effect_links input:hover
 {
 	border: 1px solid gray;
-	z-index: 999; 
+	z-index: 10; 
 }
 
 #color_links input:hover{
 	border: 1px solid gray;
-	z-index: 999; 
+	z-index: 10; 
 }
 
 
@@ -124,9 +124,7 @@ border-radius: 10px;
 
 #pp div:hover{
 	outline: none;
-    border-color: #9ecaed;
-	box-shadow: 0 0 3px #9ecaed;
-	z-index: 999; 
+
 }
 #error_message{
 font-size: 1em;
@@ -147,6 +145,7 @@ color: red;
 border: 1px solid red;
 height:30px;
 min-width: 100px;
+
 }
 
 .output{
@@ -168,4 +167,49 @@ width: 100%;
 	color: #202020;
 	font-weight: 600;
 }
+
+
+.rainbow{
+	width:100%;
+	height:100px;
+	background: -webkit-linear-gradient(left, red,orange,yellow,green,blue,indigo,violet);
+	background: -moz-linear-gradient(left, red,orange,yellow,green,blue,indigo,violet,red);
+	background: -o-linear-gradient(left, red,orange,yellow,green,blue,indigo,violet,red);
+	background: -ms-linear-gradient(left, red,orange,yellow,green,blue,indigo,violet,red);
+	background: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet,red);
+	background-repeat:repeat-x;
+	
+	-webkit-animation:go 1s linear infinite;
+	-moz-animation:go 1s linear infinite;
+	-o-animation:go 1s linear infinite;
+	-ms-animation:go 1s linear infinite;
+	animation:go 1s linear infinite;
+  }
+  
+  @-webkit-keyframes go{
+	0%{background-position:0;}
+	100%{background-position:200px 0;}
+  
+  }
+  @-moz-keyframes go{
+	0%{background-position:0;}
+	50%{background-position:100px 0;}
+	100%{background-position:200px 0;}
+  
+  }
+  @-o-keyframes go{
+	0%{background-position:0;}
+	100%{background-position:200px 0;}
+  
+  }
+  @-ms-keyframes go{
+	0%{background-position:0;}
+	100%{background-position:200px 0;}
+  
+  }
+  @keyframes go{
+	0%{background-position:0;}
+	100%{background-position:200px 0;}
+  
+  }
 

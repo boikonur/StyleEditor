@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">    
     <meta name="description" content="ProffieOS style Configurator">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -256,7 +258,7 @@ function initGL()
 
   Run();
 
-  document.getElementById("color_links").innerHTML = qlinks;
+  // document.getElementById("color_links").innerHTML = qlinks;
   document.getElementById("effect_links").innerHTML = effect_links;
   document.getElementById("template_links").innerHTML = template_links;
 
@@ -560,7 +562,7 @@ class CONFIG extends STYLE {
   }
 };
 
-var qlinks = "<h2>Colors</h2>";
+// var qlinks = "<h2>Colors</h2>";
 var effect_links = "<h2>Effects</h2>";
 var template_links = "<h2>Templates</h2>";
 var all_colors = {};
@@ -1933,8 +1935,8 @@ function ReplaceCurrentFocus(str) {
     current_focus = focus_catcher;
     var id = current_focus.get_id();
     var container = document.getElementById("X"+id);
-    container.style.backgroundColor = '#d0d0d0';
-    container.style.color = '#202020';
+    container.style.backgroundColor = '#202020';
+    container.style.color = 'rgb(255, 200, 200)';
   }
 }
 
@@ -2013,9 +2015,9 @@ function FocusOn(id, event) {
   return true;
 }
 
-$(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();   
-});
+// $(document).ready(function(){
+//     $('[data-toggle="tooltip"]').tooltip();   
+// });
 
 </script>
 </head>
@@ -2102,12 +2104,9 @@ $(document).ready(function(){
         <div class="row" id="effect_links">
           <h2>Effects</h2>
         </div>
-        <div class="row" id="color_links">
-          </div>
-        
-
-        <div  class="row" id="version">
-          <span>10.6.2018</span>
+        <div class="row" id="color_links1">
+            <h2>Colors</h2>
+            <div class="rainbow"></div>        
         </div>
       </div>
     
