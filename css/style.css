@@ -12,7 +12,7 @@ outline:none !important;
 
 input{
 	border-radius:0px !important;
-	color:white;
+	color:#D0D0D0;
 }
 
 h2{
@@ -21,22 +21,22 @@ font-size: 1.2em;
 }
 
 /* make the canvas the size of the viewport */
-canvas {
+/* canvas {
 	width: 100vw;
 	height: 100vh;
 	display: block;
-  }
+  } */
 
 .btn{
 	border-radius: 0;
 }
 
 .comment{
-	color: #F0F0F1;
+	color: #D0D0D0;
 	font-size: 0.8em;
 }
 .comment2{
-	color: #F0F0F1;
+	color: #D0D0D0;
 }
 #template_links, #effect_links, #color_links{
 
@@ -53,8 +53,8 @@ height: 33px;
 #template_links input:hover
 {
 	outline: none;
-    border-color: #ed9e9e;
-	box-shadow: 0 0 10px #ff5757;
+    border-color: #9ecaed;
+	box-shadow: 0 0 10px #9ecaed;
 	z-index: 999; 
 
 }
@@ -99,6 +99,9 @@ filter: brightness(85%);
 color: #5e5e5e;
 background-color: #202020;
 margin-top: 2px;
+
+overflow: auto;
+max-height: 100vh;
 }
 
 #pp.div{
@@ -113,13 +116,11 @@ border-right: 0px !important;
 
 #pp div:focus{
 color: #202020;
-background-color: #5e5e5e;
+background-color: #404040;
 -webkit-border-radius: 10px;
 -moz-border-radius: 10px;
 border-radius: 10px;
--webkit-box-shadow: 0px 0px 30px 0px rgba(0, 255, 0, 0.67);
--moz-box-shadow:    0px 0px 30px 0px rgba(0, 255, 0, 0.67);
-box-shadow:         0px 0px 30px 0px rgba(0, 255, 0, 0.67);
+
 }
 
 #pp span{
@@ -149,7 +150,7 @@ background-color: red;
 
 .controls input[type="button" i]
 {
-background-color: black;
+background-color: #202020;
 color: red;
 border: 1px solid red;
 height:35px;
@@ -168,6 +169,7 @@ width: 100%;
 
 #style{
 	background-color: #d0d0d0;
-	color: #000;
+	color: #202020;
+	font-weight: 600;
 }
 
