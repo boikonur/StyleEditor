@@ -43,15 +43,36 @@ canvas {
 }
 
 #template_links input, #effect_links input, #color_links input{
-border: 1px solid #202020;
+border: 0px solid #202020;
 
 background-color:#5e5e5e !important;
 height: 33px;
 
 }
 
-#template_links{
+#template_links input:hover
+{
+	outline: none;
+    border-color: #ed9e9e;
+	box-shadow: 0 0 10px #ff5757;
+	z-index: 999; 
+
 }
+#effect_links input:hover
+{
+	outline: none;
+    border-color: #9ecaed;
+	box-shadow: 0 0 10px #9ecaed;
+	z-index: 999; 
+}
+
+#color_links input:hover{
+	outline: none;
+    border-color: #9ecaed;
+	box-shadow: 0 0 10px #7ec5ff;
+	z-index: 999; 
+}
+
 
 #effect_links{
 }
@@ -104,6 +125,13 @@ box-shadow:         0px 0px 30px 0px rgba(0, 255, 0, 0.67);
 #pp span{
 	padding: 6px;
 	font-weight: 600;
+}
+
+#pp div:hover{
+	outline: none;
+    border-color: #9ecaed;
+	box-shadow: 0 0 10px #9ecaed;
+	z-index: 999; 
 }
 #error_message{
 font-size: 1.2em;
