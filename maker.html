@@ -1,0 +1,216 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="">
+<!--<![endif]-->
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <style>
+    body {
+      padding-top: 50px;
+      padding-bottom: 20px;
+    }
+  </style>
+  <link rel="stylesheet" href="css/bootstrap-theme.css">
+  <link rel="stylesheet" href="css/maker.css">
+
+  <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+
+</head>
+
+<body>
+  <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+          aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Configurator</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+
+      </div>
+      <!--/.navbar-collapse -->
+    </div>
+  </nav>
+
+
+
+  <div class="container">
+    <!-- Example row of columns -->
+    <div class="row">
+      <b>Configurator</b>
+      <br/> Select your configuration below. Note that while this tool can show many different configurations for the TeensySaber
+      V3 board, there are many many more possible configurations.
+      <form id="ConfigForm">
+        <table class="table table-hover">
+          <tr>
+            <th>Blades / LEDs</th>
+            <th>Buttons</th>
+            <th>Other</th>
+          </tr>
+          <tr>
+            <td>
+              <select class="selectpicker" id="blade1" name="blade1" onchange='conf();'>
+
+                <option value="ws2811">WS2811 / Neopixel</option>
+                <option value="rgb">3-channel LED star</option>
+                <option value="rgbw">4-channel LED star</option>
+                <option value="connector">Blade Connector</option>
+                <option value="segmented">6-segment string blade</option>
+                <option value="segmented2">6-segment + flash</option>
+              </select>
+            </td>
+            <td>
+              <select class="selectpicker" id="button1" name="button1" onchange='conf();'>
+                <option value="click">Momentary Button</option>
+                <option value="latch">Latching Button</option>
+                <option value="touch">Touchbutton</option>
+                <option value="none">None</option>
+              </select>
+            </td>
+            <td>
+              <input type=checkbox name=pli id=pli onchange='conf();'> OLED Display / PLI
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <select class="selectpicker" id="blade2" name="blade2" onchange='conf()'>
+                <option value="none">None</option>
+                <option value="ws2811">Neopixel Dual</option>
+                <option value="ws2811x2">Neopixel CrossGuard</option>
+                <option value="rgb">LED Star Dual</option>
+                <option value="rgbx2">LED Star CrossGuard</option>
+              </select>
+            </td>
+            <td>
+              <select class="selectpicker" id="button2" name="button2" onchange='conf()'>
+                <option value="click">Momentary Button</option>
+                <option value="touch">Touchbutton</option>
+                <option value="none">None</option>
+              </select>
+            </td>
+            <td>
+              <input type=checkbox name=ble id=ble onchange='conf()'> Bluetooth
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <select class="selectpicker" id="blade3" name="blade3" onchange='conf()'>
+                <option value="none">None</option>
+                <option value="pl9823">PL9823 crystal chamber</option>
+                <option value="rgb">RGB crystal chamber</option>
+                <option value="led">Single-color crystal chamber</option>
+              </select>
+            </td>
+            <td>
+              <select class="selectpicker" id="button3" name="button3" onchange='conf()'>
+                <option value="none">None</option>
+                <option value="click">Momentary Button</option>
+                <option value="touch">Touchbutton</option>
+              </select>
+            </td>
+          </tr>
+
+        </table>
+
+
+        <div id=diagram>
+          <object type="image/svg+xml" data="Wiring-Editor-icons.svg">
+            Your browser does not support SVG
+          </object>
+        </div>
+
+        <span>Config file, cut-and-paste this into a new file called my_saber1.h</span>
+        <br>
+        <textarea rows=25 cols=100 id="configuration" name="configuration">
+</textarea>
+      </form>
+
+
+      <div id="ConfigFileCrossGuardPresets" style="display:none;">
+
+        // Fire speed, valid values are 1 - 10 #define FIRE1_SPEED 2 // How long to wait before firing up crossguards. #define FIRE1_DELAY
+        800 // Each of these have three values: A, B, C // A = non-random intensity // B = random intensity // C = cooling
+        // The first two control temperature, and as we add // A + rnd(B) to the base of the blade each animation frame.
+        // The second controls how rapidly the fire cools down // This is used during normal operation. #define FIRE1_NORMAL
+        0, 1000, 2 // This is used when a clash occurs #define FIRE1_CLASH 3000, 0, 0 // This is used during lockup. #define
+        FIRE1_LOCKUP 0, 5000, 10 // Helper #define FIRE1PTR(NUM, DELAY) \ StyleFirePtr&lt;RED, YELLOW, NUM, DELAY, FIRE1_SPEED,
+        \ FIRE1_NORMAL, FIRE1_CLASH, FIRE1_LOCKUP>() Preset presets[] = { { "fontdir", "tracks/mars.wav", FIRE1PTR(0, 0),
+        FIRE1PTR(1, FIRE1_DELAY), FIRE1PTR(2, FIRE1_DELAY), }, { "fontdir", "track..wav", StyleNormalPtr&lt;RED, WHITE, 200,
+        300>(), StyleNormalPtr&lt;RED, WHITE, 200, 300>(), StyleNormalPtr&lt;RED, WHITE, 200, 300>() }, { "fontdir", "track.wav",
+        StyleRainbowPtr&lt;300, 800>(), StyleRainbowPtr&lt;300, 800>(), StyleRainbowPtr&lt;300, 800>() }, { "fontdir", "track.wav",
+        StyleNormalPtr&lt;CYAN, WHITE, 300, 800>(), StyleNormalPtr&lt;CYAN, WHITE, 300, 800>(), StyleNormalPtr&lt;CYAN, WHITE,
+        300, 800>() }, { "fontdir", "track.wav", StylePtr&lt;InOutSparkTip&lt;EASYBLADE(BLUE, WHITE), 300, 800> >(), StylePtr&lt;InOutSparkTip&lt;EASYBLADE(BLUE,
+        WHITE), 300, 800> >(), StylePtr&lt;InOutSparkTip&lt;EASYBLADE(BLUE, WHITE), 300, 800> >() }, { "fontdir", "track.wav",
+        StyleFirePtr&lt;BLUE, CYAN, 0>(), StyleFirePtr&lt;BLUE, CYAN, 1>(), StyleFirePtr&lt;BLUE, CYAN, 2>() }, { "fontdir",
+        "track.wav", StylePtr&lt;InOutHelper&lt;EASYBLADE(OnSpark&lt;GREEN>, WHITE), 300, 800> >(), StylePtr&lt;InOutHelper&lt;EASYBLADE(OnSpark&lt;GREEN>,
+        WHITE), 300, 800> >(), StylePtr&lt;InOutHelper&lt;EASYBLADE(OnSpark&lt;GREEN>, WHITE), 300, 800> >() }, { "fontdir",
+        "track.wav", StyleNormalPtr&lt;WHITE, RED, 300, 800, RED>(), StyleNormalPtr&lt;WHITE, RED, 300, 800, RED>(), StyleNormalPtr&lt;WHITE,
+        RED, 300, 800, RED>() }, { "fontdir", "track.wav", StyleNormalPtr&lt;AudioFlicker&lt;YELLOW, WHITE>, BLUE, 300, 800>(),
+        StyleNormalPtr&lt;AudioFlicker&lt;YELLOW, WHITE>, BLUE, 300, 800>(), StyleNormalPtr&lt;AudioFlicker&lt;YELLOW, WHITE>,
+        BLUE, 300, 800>() }, { "fontdir", "track.wav", StylePtr&lt;InOutSparkTip&lt;EASYBLADE(MAGENTA, WHITE), 300, 800>
+        >(), StylePtr&lt;InOutSparkTip&lt;EASYBLADE(MAGENTA, WHITE), 300, 800> >(), StylePtr&lt;InOutSparkTip&lt;EASYBLADE(MAGENTA,
+        WHITE), 300, 800> >() }, { "fontdir", "track.wav", StyleNormalPtr&lt;Gradient&lt;RED, BLUE>, Gradient&lt;CYAN, YELLOW>,
+        300, 800>(), StyleNormalPtr&lt;Gradient&lt;RED, BLUE>, Gradient&lt;CYAN, YELLOW>, 300, 800>(), StyleNormalPtr&lt;Gradient&lt;RED,
+        BLUE>, Gradient&lt;CYAN, YELLOW>, 300, 800>() }, { "fontdir", "track.wav", StyleStrobePtr&lt;WHITE, Rainbow, 15,
+        300, 800>(), StyleStrobePtr&lt;WHITE, Rainbow, 15, 300, 800>(), StyleStrobePtr&lt;WHITE, Rainbow, 15, 300, 800>()
+        }, { "fontdir", "track.wav", &amp;style_pov, StyleNormalPtr&lt;BLACK, BLACK, 100,100>(), StyleNormalPtr&lt;BLACK,
+        BLACK, 100,100>(), }, { "charging", "notrack.wav", &amp;style_charging, StyleNormalPtr&lt;BLACK, BLACK, 100,100>(),
+        StyleNormalPtr&lt;BLACK, BLACK, 100,100>(), }, }; // Hook up the main blade as normal. // Hook up one of the crossguards
+        like this: // NEOPIXEL + &lt;--> positive power (probably from charge port) // NEOPIXEL - &lt;--> LED4 pad on the
+        bottom of the teensysaber // NEOPIXEL data &lt;--> Pin 7 on the teensy (through a 100ohm resistor) // Hook up the
+        other crossguards like this: // NEOPIXEL + &lt;--> positive power (probably from charge port) // NEOPIXEL - &lt;-->
+        LED5 pad on the bottom of the teensysaber // NEOPIXEL data &lt;--> Pin 8 on the teensy (through a 100ohm resistor)
+        BladeConfig blades[] = { { 0, // blade ID resistor not used // Main blade, 118 LEDs WS2811BladePtr&lt;118, WS2811_800kHz
+        | WS2811_GRB>(), // First crossguard, 26 LEDS, power on LED4, data on pin 7 WS2811BladePtr&lt;26, WS2811_800kHz |
+        WS2811_GRB, 7, PowerPINS&lt;bladePowerPin4> >(), // First crossguard, 26 LEDS, power on LED5, data on pin 8 WS2811BladePtr&lt;26,
+        WS2811_800kHz | WS2811_GRB, 8, PowerPINS&lt;bladePowerPin5> >(), CONFIGARRAY(presets) }, };
+      </div>
+
+      <div id="ConfigFile" style="display:none;">#ifdef CONFIG_TOP #include "v3_config.h" #define NUM_BLADES $NUM_BLADES$ #define NUM_BUTTONS $NUM_BUTTONS$ #define
+        VOLUME 1000 const unsigned int maxLedsPerStrip = 144; #define CLASH_THRESHOLD_G 1.0 #define ENABLE_AUDIO #define
+        ENABLE_MOTION #define ENABLE_WS2811 #define ENABLE_SD $DISPLAY$ #endif #ifdef CONFIG_PRESETS $PRESETS$ #endif #ifdef
+        CONFIG_BUTTONS $BUTTONS$ #endif
+      </div>
+    </div>
+
+    <hr>
+
+    <footer>
+      <p>&copy; 2018</p>
+    </footer>
+  </div>
+  <!-- /container -->
+  <script src="js/maker.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+
+  <script src="js/vendor/bootstrap.min.js"></script>
+
+
+
+  
+
+</body>
+
+</html>

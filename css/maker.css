@@ -1,0 +1,25 @@
+*:focus {
+    outline: none;
+}
+.selectpicker
+{
+    border-radius: 5px;
+    min-height: 30px;
+}
+
+
+#diagram{
+
+    background-color: #202020;
+    
+}
+
+svg {
+    fill: white;
+}
+
+body{
+    /* background-color: #202020; */
+
+}
+
