@@ -16,8 +16,10 @@ input{
 }
 
 h2{
+margin-top: 8px;
+margin-bottom: 4px;
 color:red;
-font-size: 1.2em;
+font-size: 1.1em;
 }
 
 /* make the canvas the size of the viewport */
@@ -44,10 +46,9 @@ font-size: 1.2em;
 
 #template_links input, #effect_links input, #color_links input{
 border: 0px solid #202020;
-
 background-color:#5e5e5e !important;
-height: 33px;
-
+font-size: 10px;
+height: 30px;
 }
 
 #template_links input:hover
@@ -99,7 +100,6 @@ filter: brightness(85%);
 color: #5e5e5e;
 background-color: #202020;
 margin-top: 2px;
-
 overflow: auto;
 max-height: 100vh;
 }
@@ -135,28 +135,30 @@ border-radius: 10px;
 	z-index: 999; 
 }
 #error_message{
-font-size: 1.2em;
+font-size: 1em;
 color: #000;
 background-color: red;
 }
 
 .controls{
+	z-index: 10;
+	position: relative;
+	top: -50px;
 }
-
-.output{
-	padding-right:0px;
-}
-.top-buffer { margin-top:20px; }
 
 .controls input[type="button" i]
 {
 background-color: #202020;
 color: red;
 border: 1px solid red;
-height:35px;
+height:30px;
 min-width: 100px;
 }
 
+.output{
+	padding-right:0px;
+}
+.top-buffer { margin-top:20px; }
 
 .container-full {
 margin: 0 auto;

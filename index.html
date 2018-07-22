@@ -2065,7 +2065,7 @@ $(document).ready(function(){
           <div class="row ">
               <canvas id="canvas_id" > </canvas>
             </div>
-        <div class="row">
+        <div class="row" style="height:0px;">
 
     
         <div class="controls"  aria-label="...">
@@ -2082,12 +2082,7 @@ $(document).ready(function(){
 
         </div>
         </div>   
-        
-        
-        <div class="row  top-buffer">
-          <span id="error_message"></span>
-        </div>
-
+   
         <div class="row">
           <div class="col-sm-12 input-group">
               <input id="style" type="text" class="form-control" placeholder="Search for..." onkeydown="if (event.keyCode == 13) Run();">
@@ -2096,6 +2091,7 @@ $(document).ready(function(){
                 <button class="btn btn-secondary" name="copy" type="button" onclick="Copy()">Copy</button>
               </span>
           </div>
+          <span id="error_message"></span>
         </div>  
       
         <div class="row" id="template_links">
@@ -2105,17 +2101,16 @@ $(document).ready(function(){
         <div class="row" id="effect_links">
           <h2>Effects</h2>
         </div>
-
         <div class="row" id="color_links">
-          <h2>Colors</h2>
-        </div>
+          </div>
+        
 
         <div  class="row" id="version">
           <span>10.6.2018</span>
         </div>
       </div>
     
-      <div class="col-sm-12 col-md-4 output">
+      <div class="col-sm-12 col-md-4 no-float output">
       <!-- <h4>Structured view, click to edit</h4> -->
         <div id="pp">
         </div>
