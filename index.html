@@ -235,7 +235,7 @@ function initGL()
     dpr = 1;
   }
 
-  //width = width * 2 / 3;
+  width = width * 2 / 3;
   height /= 2;
   canvas.width = width * dpr;
   canvas.height = height * dpr;
@@ -464,11 +464,11 @@ class STYLE {
     var id = this.get_id();
     var ret = "";
     ret += "<div id=X"+id+" style='border-style:solid;border-width:1px;border-color:gray;' onclick='FocusOn("+id+",event)'>\n";
-    ret += "<span title='"+ note +"'>" + name + "</span>&lt;\n";
+    ret += "<span title='"+ note +"'>" + name + "</span>\n";
     ret += "<div style='margin-left:2em'>\n";
     var comma = false;
     for (var i = 2; i < arguments.length; i += 2) {
-      if (comma) ret += ",<br>";
+      if (comma) ret += "<br>";
       comma = true;
       var arg = arguments[i];
       var note = arguments[i+1];
@@ -478,12 +478,12 @@ class STYLE {
 	arg = arg.pp();
       }
       if (arg.indexOf("<br>") == -1 && arg.indexOf("<div") == -1) {
-	ret += arg+" /* "+note+" */\n";
+	ret += arg+" <span class=\"comment\"> "+note+"</span>\n";
       } else {
-	ret += "/* "+note+" */<br>\n" + arg;
+	ret += "<span class=\"comment2\"> "+note+"</span><br>\n" + arg;
       }
     }
-    ret += "</div>&gt;</div>\n";
+    ret += "</div><br></div>\n";
 
     return ret;
   }
@@ -497,7 +497,7 @@ class STYLE {
     ret += "<span title='"+ note +"'>" + name + "</span>\n";
 
     if (arguments.length > 2) {
-      ret += "&lt;";
+      //ret += "&lt;";
       var comma = false;
       for (var i = 2; i < arguments.length; i += 2) {
 	if (comma) ret += ",";
@@ -511,7 +511,7 @@ class STYLE {
 	  ret += arg.pp();
 	}
       }
-      ret += "&gt;";
+      // ret += "&gt;";
     }
     ret += "</div>\n";
 
@@ -643,22 +643,22 @@ function enc(s) {
   return s.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
-function mkbutton(name, type, color, value) {
-  return "<input class=\"col col-sm-12 col-md-4 " + type + "\" type=button style=\"background-color:" + color + ";\" onclick='SetTo(\""+value+"\")' value='"+enc(name)+"'>\n";
+function mkbutton(name, type, color, value, columns) {
+  return "<input class=\"col col-sm-12 col-md-"+ columns + " " + type + "\" type=button style=\"background-color:" + color + ";\" onclick='SetTo(\""+value+"\")' value='"+enc(name)+"'>\n";
   //  return "<span class=btn onclick='SetTo(\""+name+"\")'>"+enc(name)+"</span>\n";
 }
 function AddTemplate(name) {
-  template_links += mkbutton(name, "template", "#FFF", name);
+  template_links += mkbutton(name, "template", "#FFF", name, 6);
 }
 function AddEffect(name, value) {
-  effect_links += mkbutton(name, "effect", "#FFF", value);
+  effect_links += mkbutton(name, "effect", "#FFF", value,3);
 }
 function AddColor(value, r, g, b) {
-  colorNames[r+","+g+","+b] = value; 
-  var color = new RgbClass(r, g, b);
-  all_colors[value] = color;
+  // colorNames[r+","+g+","+b] = value; 
+  // var color = new RgbClass(r, g, b);
+  // all_colors[value] = color;
 
-  qlinks += mkbutton("", "color", rgbToHex(r,g,b), value); //name, type, color, value
+  // qlinks += mkbutton("", "color", rgbToHex(r,g,b), value, 1); //name, type, color, value
   
 }
 
@@ -2035,61 +2035,66 @@ $(document).ready(function(){
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Brand</a>
+        <a class="navbar-brand" href="#">Style Editor</a>
       </div>
   
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-          <li><a href="#">Link</a></li>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">File <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="#">Separated link</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="#">One more separated link</a></li>
+              <li><a href="#">Open File</a></li>
+              <li><a href="#">Save As...</a></li>
             </ul>
-          </li>
+
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Help</a></li>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
   <div class="container-fluid">
   
-    <div class="row top-buffer">
-      <canvas id="canvas_id" > </canvas>
-    </div>
-
+  
     
 
-    <div class="row top-buffer">
+    <div class="row ">
       <div class="col col-md-8">
+
+          <div class="row ">
+              <canvas id="canvas_id" > </canvas>
+            </div>
+        <div class="row">
+
+    
         <div class="controls"  aria-label="...">
-          <input type="button" name="Power" value="Power" data-toggle="tooltip" title="On/Off" onclick="STATE_ON = !STATE_ON; STATE_LOCKUP=0;">
-          <input type="button" name="Clash" value="Clash" onclick="STATE_CLASH=1;">
-          <input type="button" name="Blast" value="Blast" onclick="AddBlast()">
-          <input type="button" name="Lockup" value="Lockup" onclick="STATE_LOCKUP = STATE_LOCKUP == 1 ? 0 : 1;">
-          <input type="button" name="Drag" value="Drag" onclick="STATE_LOCKUP = STATE_LOCKUP == 2 ? 0 : 2;">
-          <input type="button" name="Rotate" value="Rotate" onclick="STATE_ROTATE = !STATE_ROTATE;">
-        </div>            
+          <div class="col-sm-9">
+              <input type="button" name="Power" value="Power" data-toggle="tooltip" title="On/Off" onclick="STATE_ON = !STATE_ON; STATE_LOCKUP=0;">
+              <input type="button" name="Clash" value="Clash" onclick="STATE_CLASH=1;">
+              <input type="button" name="Blast" value="Blast" onclick="AddBlast()">
+              <input type="button" name="Lockup" value="Lockup" onclick="STATE_LOCKUP = STATE_LOCKUP == 1 ? 0 : 1;">
+              <input type="button" name="Drag" value="Drag" onclick="STATE_LOCKUP = STATE_LOCKUP == 2 ? 0 : 2;">
+          </div>
+          <div class="col-sm-1">
+              <input type="button" name="Rotate" value="Rotate" onclick="STATE_ROTATE = !STATE_ROTATE;">
+          </div>
+
+        </div>
+        </div>   
+        
+        
         <div class="row  top-buffer">
           <span id="error_message"></span>
         </div>
 
         <div class="row">
-          <div class="col-sm-11">
-            <div class="input-group">
+          <div class="col-sm-12 input-group">
               <input id="style" type="text" class="form-control" placeholder="Search for..." onkeydown="if (event.keyCode == 13) Run();">
               <span class="input-group-btn">
                 <button class="btn btn-secondary" name="run" type="button" value="Submit" onclick="Run()">Update</button>
                 <button class="btn btn-secondary" name="copy" type="button" onclick="Copy()">Copy</button>
               </span>
-            </div>
           </div>
         </div>  
       

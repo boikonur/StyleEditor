@@ -2,7 +2,7 @@ body{
 width:100%;
 background-color: #202020;
 color: #202020;
-padding-top:-10px;
+padding-top:50px;
 /*font-family: Arial, Helvetica, sans-serif;*/
 }
 
@@ -10,9 +10,14 @@ input:focus, input:active {
 outline:none !important;
 }
 
+input{
+	border-radius:0px !important;
+	color:white;
+}
+
 h2{
 color:red;
-font-size: 1.3em;
+font-size: 1.2em;
 }
 
 /* make the canvas the size of the viewport */
@@ -26,13 +31,23 @@ canvas {
 	border-radius: 0;
 }
 
+.comment{
+	color: #F0F0F1;
+	font-size: 0.8em;
+}
+.comment2{
+	color: #F0F0F1;
+}
 #template_links, #effect_links, #color_links{
 
 }
 
 #template_links input, #effect_links input, #color_links input{
 border: 1px solid #202020;
-height: 40px;
+
+background-color:#5e5e5e !important;
+height: 33px;
+
 }
 
 #template_links{
@@ -60,8 +75,9 @@ filter: brightness(85%);
 }
 
 #pp{
-color: #d0d0d0;
+color: #5e5e5e;
 background-color: #202020;
+margin-top: 2px;
 }
 
 #pp.div{
@@ -69,14 +85,20 @@ border-top-left-radius: 5px;
 border-bottom-left-radius: 5px;
 padding-left: 5px;
 font-size: 1em;
-color: #d0d0d0;
+color: #5e5e5e;
 background-color: #202020;
 border-right: 0px !important;
 }
 
 #pp div:focus{
 color: #202020;
-background-color: #d0d0d0;
+background-color: #5e5e5e;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+border-radius: 10px;
+-webkit-box-shadow: 0px 0px 30px 0px rgba(0, 255, 0, 0.67);
+-moz-box-shadow:    0px 0px 30px 0px rgba(0, 255, 0, 0.67);
+box-shadow:         0px 0px 30px 0px rgba(0, 255, 0, 0.67);
 }
 
 #pp span{
@@ -112,5 +134,12 @@ margin: 0 auto;
 width: 100%;
 }
 
+.navbar{
+	margin-bottom: 20px !important;
+}
 
+#style{
+	background-color: #d0d0d0;
+	color: #000;
+}
 
