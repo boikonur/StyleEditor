@@ -53,24 +53,18 @@ height: 30px;
 
 #template_links input:hover
 {
-	outline: none;
-    border-color: #9ecaed;
-	box-shadow: 0 0 10px #9ecaed;
+	border: 1px solid gray;
 	z-index: 999; 
 
 }
 #effect_links input:hover
 {
-	outline: none;
-    border-color: #9ecaed;
-	box-shadow: 0 0 10px #9ecaed;
+	border: 1px solid gray;
 	z-index: 999; 
 }
 
 #color_links input:hover{
-	outline: none;
-    border-color: #9ecaed;
-	box-shadow: 0 0 10px #7ec5ff;
+	border: 1px solid gray;
 	z-index: 999; 
 }
 
@@ -131,7 +125,7 @@ border-radius: 10px;
 #pp div:hover{
 	outline: none;
     border-color: #9ecaed;
-	box-shadow: 0 0 10px #9ecaed;
+	box-shadow: 0 0 3px #9ecaed;
 	z-index: 999; 
 }
 #error_message{
