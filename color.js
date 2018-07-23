@@ -1,5 +1,4 @@
 var app = {};
-var app = {};
 var boxie = document.getElementById("color-preview");
 var can= document.getElementById("pal");
 var container = document.getElementById("color_links1");
@@ -10,10 +9,10 @@ app.buildColorPalette = function() {
  
   app.$colors.mousedown(function(e) {
     // Track mouse movement on the canvas if the mouse button is down
-    $(document).mousemove(function(e) {
+    // $(document).mousemove(function(e) {
       app.colorEventX = e.pageX - app.$colors.offset().left;
       app.colorEventY = e.pageY - app.$colors.offset().top;
-    });
+    // });
   
     // Get the color at the current mouse coordinates
     app.colorTimer = setInterval(app.getColor, 50);
@@ -21,8 +20,9 @@ app.buildColorPalette = function() {
   // On mouseup, clear the interval and unbind the mousemove event,
   // it should only happen if the button is down
   .mouseup(function(e) {
-    clearInterval(ms.colorTimer);
+    clearInterval(app.colorTimer);
     $(document).unbind('mousemove');
+    alert("color: "+ app.selectedColor);
   });
 };
 
