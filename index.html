@@ -2083,12 +2083,23 @@ function myAlertBottom(str){
               <li><a href="#" onclick="document.getElementById('file-input').click();">Open File</a>
                 <input id="file-input" type="file" name="name" style="display: none;" />
               </li>
-              <li><a href="#">Save As...</a></li>
+              <li><a href="#" onclick="document.getElementById('file-input').click();">Save as...</a>
+                <input id="file-output" type="file" name="" style="display: none;" />
+              </li>
             </ul>
 
-            <li><a href="#">Settings</a></li>
+            <li><a href="maker.html">Configurator</a></li>
             <li><a href="#">Help</a></li>
         </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li>  <a href="#" id="page-info">
+                Last modified: June 10th, 2018
+                
+             </a></li>
+            
+          </ul>
+      
+      
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
