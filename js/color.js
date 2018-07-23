@@ -28,7 +28,7 @@ app.buildColorPalette = function() {
   });
 };
 
-function draw(){
+function drawColorPicker(){
 
     var gradient = app.colorctx.createLinearGradient(0, 0, app.$colors.width(), 0);
     // Create color gradient
@@ -67,5 +67,5 @@ app.getColor = function(e) {
   };
 //   app.buildColorPalette();
   app.resizeCanvas();
-  draw();
+  drawColorPicker();
   app.buildColorPalette();
