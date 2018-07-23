@@ -1,4 +1,6 @@
 var app = {};
+var app = {};
+var boxie = document.getElementById("color-preview");
 app.$colors  = $('canvas.color-palette');
 app.colorctx = app.$colors[0].getContext('2d');
 // Build Color palette
@@ -28,8 +30,8 @@ app.buildColorPalette = function() {
   app.$colors.mousedown(function(e) {
     // Track mouse movement on the canvas if the mouse button is down
     $(document).mousemove(function(e) {
-      app.colorEventX = e.pageX - ms.$colors.offset().left;
-      app.colorEventY = e.pageY - ms.$colors.offset().top;
+      app.colorEventX = e.pageX - app.$colors.offset().left;
+      app.colorEventY = e.pageY - app.$colors.offset().top;
     });
   
     // Get the color at the current mouse coordinates
@@ -46,7 +48,8 @@ app.buildColorPalette = function() {
 app.getColor = function(e) {
     var newColor;
     imageData = app.colorctx.getImageData(app.colorEventX, app.colorEventY, 1, 1);
-    app.selectedColor = 'rgb(' + imageData.data[4] + ', ' + imageData.data[5] + ', ' + imageData.data[6] + ')'; 
+    app.selectedColor = 'rgb(' + imageData.data[0] + ', ' + imageData.data[1] + ', ' + imageData.data[2] + ')'; 
+    boxie.style.backgroundColor= app.selectedColor;
   };
 
 app.buildColorPalette();
