@@ -271,5 +271,37 @@ function conf(val) {
 //   console.log("ass");
 //   conf();
 // });
-conf();
+
+
+function myAlertTop(str) {
+
+  var notifStr = document.getElementById("info_notif");
+  notifStr.innerHTML = str;
+
+  $(".alert-top").show();
+  setTimeout(function () {
+    $(".alert-top").fadeOut();
+  }, 2000);
+}
+
+function myAlertBottom(str) {
+
+  var alertStr = document.getElementById("error_notif");
+  alertStr.innerHTML = str;
+
+  $(".alert-bottom").show();
+  setTimeout(function () {
+    $(".alert-bottom").fadeOut();
+  }, 1500);
+}
+
+
+$( document ).ready(function() {
+  console.log( "MAKER READY!" );
+  conf();
+
+  });
+  
+  
+
 
