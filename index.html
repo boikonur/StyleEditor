@@ -382,7 +382,8 @@ function Copy() {
   var copyText =  document.getElementById("style");
   copyText.select();
   document.execCommand("copy");
-  alert("Copy to Clipboard" + copyText.value);
+ // alert("Copy to Clipboard" + copyText.value);
+  myAlertTop("Copy to Clipboard");
 }
 
 class ARG {
@@ -1942,12 +1943,10 @@ function ReplaceCurrentFocus(str) {
 
 function Run() {
   var sty = document.getElementById("style");
-  var err = document.getElementById("error_message");
   var str = sty.value;
   var parser = new Parser(str,
 			  classes,
 			  identifiers);
-  err.innerHTML = "";
   try {
     current_style = parser.parse();
   }
@@ -1957,7 +1956,7 @@ function Run() {
     console.log(typeof(e));
       if (typeof(e) == "string") {
 
-	err.innerHTML = e;
+  myAlertBottom(e);
 	sty.focus();
 	sty.setSelectionRange(parser.pos, parser.pos);
 
@@ -2018,6 +2017,29 @@ function FocusOn(id, event) {
 // $(document).ready(function(){
 //     $('[data-toggle="tooltip"]').tooltip();   
 // });
+function myAlertTop(str){
+
+  var notifStr = document.getElementById("info_notif");
+  notifStr.innerHTML = str;
+
+  $(".myAlert-top").show();
+  setTimeout(function(){
+    $(".myAlert-top").hide(); 
+  }, 2000);
+}
+
+function myAlertBottom(str){
+
+  var alertStr = document.getElementById("error_notif");
+  alertStr.innerHTML = str;
+
+  $(".myAlert-bottom").show();
+  setTimeout(function(){
+    $(".myAlert-bottom").hide(); 
+  }, 2000);
+}
+
+
 
 </script>
 </head>
@@ -2030,6 +2052,17 @@ function FocusOn(id, event) {
 
 <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
+
+
+          <div class="myAlert-top alert alert-success">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <span id="info_notif"></span>
+          </div>
+          <div class="myAlert-bottom alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error</strong> <span id="error_notif"></span>
+          </div>
+          
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -2094,7 +2127,6 @@ function FocusOn(id, event) {
                 <button class="btn btn-secondary" name="copy" type="button" onclick="Copy()">Copy</button>
               </span>
           </div>
-          <span id="error_message"></span>
         </div>  
       
         <div class="row" id="template_links">

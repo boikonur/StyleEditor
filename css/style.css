@@ -86,6 +86,34 @@ border: none;
 padding:0px;
 
 }
+
+.myAlert-top{
+    position: fixed;
+    top: 5px; 
+    left:2%;
+    width: 96%;
+}
+
+.myAlert-bottom{
+    position: fixed;
+    bottom: 5px;
+    left:2%;
+    width: 96%;
+}
+
+div.fullscreen {
+  position: absolute;
+  width:100%; 
+  height:960px; 
+  top: 0; 
+  left: 0; 
+ 
+}
+
+.alert{
+    display: none;
+}
+
 input:active{
 filter: brightness(85%);
 }
@@ -126,12 +154,6 @@ border-radius: 10px;
 	outline: none;
 
 }
-#error_message{
-font-size: 1em;
-color: #000;
-background-color: red;
-}
-
 .controls{
 	z-index: 10;
 	position: relative;
