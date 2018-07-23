@@ -6,6 +6,17 @@ body {
   /*font-family: Arial, Helvetica, sans-serif;*/
 }
 
+svg {
+  fill: white;
+}
+
+select{
+    background-color: gray;
+}
+table{
+    color: white;
+}
+
 input {
   border-radius: 0px !important;
   color: #d0d0d0;
@@ -197,3 +208,13 @@ div.fullscreen {
   color: #d0d0d0;
   float: right;
 }
+
+.selectpicker {
+  border-radius: 5px;
+  min-height: 30px;
+}
+
+#diagram {
+  background-color: #202020;
+}
+
