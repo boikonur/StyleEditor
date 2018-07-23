@@ -1,32 +1,12 @@
 var app = {};
 var app = {};
 var boxie = document.getElementById("color-preview");
+var can= document.getElementById("pal");
 app.$colors  = $('canvas.color-palette');
 app.colorctx = app.$colors[0].getContext('2d');
 // Build Color palette
 app.buildColorPalette = function() {
-  var gradient = app.colorctx.createLinearGradient(0, 0, app.$colors.width(), 0);
-  // Create color gradient
-  gradient.addColorStop(0,    "rgb(255,   0,   0)");
-  gradient.addColorStop(0.15, "rgb(255,   0, 255)");
-  gradient.addColorStop(0.33, "rgb(0,     0, 255)");
-  gradient.addColorStop(0.49, "rgb(0,   255, 255)");
-  gradient.addColorStop(0.67, "rgb(0,   255,   0)");
-  gradient.addColorStop(0.84, "rgb(255, 255,   0)");
-  gradient.addColorStop(1,    "rgb(255,   0,   0)");
-  // Apply gradient to canvas
-  app.colorctx.fillStyle = gradient;
-  app.colorctx.fillRect(0, 0, app.colorctx.canvas.width, app.colorctx.canvas.height);
-  
-  // Create semi transparent gradient (white -> trans. -> black)
-  gradient = app.colorctx.createLinearGradient(0, 0, 0, app.$colors.height());
-  gradient.addColorStop(0,   "rgba(255, 255, 255, 1)");
-  gradient.addColorStop(0.5, "rgba(255, 255, 255, 0)");
-  gradient.addColorStop(0.5, "rgba(0,     0,   0, 0)");
-  gradient.addColorStop(1,   "rgba(0,     0,   0, 1)");
-  // Apply gradient to canvas
-  app.colorctx.fillStyle = gradient;
-  app.colorctx.fillRect(0, 0, app.colorctx.canvas.width, app.colorctx.canvas.height);
+ 
   app.$colors.mousedown(function(e) {
     // Track mouse movement on the canvas if the mouse button is down
     $(document).mousemove(function(e) {
@@ -45,11 +25,45 @@ app.buildColorPalette = function() {
   });
 };
 
+function draw(){
+
+    var gradient = app.colorctx.createLinearGradient(0, 0, app.$colors.width(), 0);
+    // Create color gradient
+    gradient.addColorStop(0,    "rgb(255,   0,   0)");
+    gradient.addColorStop(0.15, "rgb(255,   0, 255)");
+    gradient.addColorStop(0.33, "rgb(0,     0, 255)");
+    gradient.addColorStop(0.49, "rgb(0,   255, 255)");
+    gradient.addColorStop(0.67, "rgb(0,   255,   0)");
+    gradient.addColorStop(0.84, "rgb(255, 255,   0)");
+    gradient.addColorStop(1,    "rgb(255,   0,   0)");
+    // Apply gradient to canvas
+    app.colorctx.fillStyle = gradient;
+    app.colorctx.fillRect(0, 0, app.colorctx.canvas.width, app.colorctx.canvas.height);
+    
+    // Create semi transparent gradient (white -> trans. -> black)
+    gradient = app.colorctx.createLinearGradient(0, 0, 0, app.$colors.height());
+    gradient.addColorStop(0,   "rgba(255, 255, 255, 1)");
+    gradient.addColorStop(0.5, "rgba(255, 255, 255, 0)");
+    gradient.addColorStop(0.5, "rgba(0,     0,   0, 0)");
+    gradient.addColorStop(1,   "rgba(0,     0,   0, 1)");
+    // Apply gradient to canvas
+    app.colorctx.fillStyle = gradient;
+    app.colorctx.fillRect(0, 0, app.colorctx.canvas.width, app.colorctx.canvas.height);
+
+}
+
+app.resizeCanvas = function() {
+    can.width = 284;
+    can.height = 155;    
+}
+
 app.getColor = function(e) {
     var newColor;
     imageData = app.colorctx.getImageData(app.colorEventX, app.colorEventY, 1, 1);
     app.selectedColor = 'rgb(' + imageData.data[0] + ', ' + imageData.data[1] + ', ' + imageData.data[2] + ')'; 
     boxie.style.backgroundColor= app.selectedColor;
   };
-
-app.buildColorPalette();
+//   app.buildColorPalette();
+  app.resizeCanvas();
+  draw();
+  app.buildColorPalette();
