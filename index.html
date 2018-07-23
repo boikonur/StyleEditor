@@ -478,7 +478,7 @@ class STYLE {
       var arg = arguments[i];
       var note = arguments[i+1];
       if (typeof(arg) == "number") {
-	arg = "" + arg;
+	arg = "<span class=\"number\">" + arg + "</span>";
       } else {
 	arg = arg.pp();
       }
@@ -659,9 +659,9 @@ function AddEffect(name, value) {
   effect_links += mkbutton(name, "effect", "#FFF", value,3);
 }
 function AddColor(value, r, g, b) {
-  // colorNames[r+","+g+","+b] = value; 
-  // var color = new RgbClass(r, g, b);
-  // all_colors[value] = color;
+   colorNames[r+","+g+","+b] = value; 
+   var color = new RgbClass(r, g, b);
+   all_colors[value] = color;
 
   // qlinks += mkbutton("", "color", rgbToHex(r,g,b), value, 1); //name, type, color, value
   
@@ -1359,8 +1359,8 @@ class BlastClass extends STYLE {
   }
   pp() {
     return this.PP("Blast", "Implements the blast effect",
-		   this.BASE, "base color",
-		   this.BLAST, "blast color");
+		   this.BASE, "Base color",
+		   this.BLAST, "Blast color");
   }
 };
 
@@ -1397,9 +1397,9 @@ class SimpleClashClass extends STYLE {
   }
   pp() {
     return this.PP("SimpleClash", "Implements the clash effect",
-		   this.T, "base color",
+		   this.T, "Base color",
 		   this.CLASH, "Clash color",
-		   this.CLASH_MILLIS, "How many MS to show the clash color for.");
+		   this.CLASH_MILLIS, "How many ms to show the clash color for.");
   }
 };
 
@@ -1410,8 +1410,8 @@ function SimpleClash(T, CLASH, MILLIS) {
 class LockupClass extends STYLE {
   constructor(BASE, LOCKUP) {
     super("Implements the lockup and drag effects.", arguments);
-    this.add_arg("BASE", "COLOR", "base color");
-    this.add_arg("LOCKUP", "COLOR", "lockup color");
+    this.add_arg("BASE", "COLOR", "Base color");
+    this.add_arg("LOCKUP", "COLOR", "Lockup color");
   }
   run(blade) {
     this.BASE.run(blade);
@@ -1579,9 +1579,9 @@ class InOutHelperClass extends STYLE {
   }
   pp() {
     return this.PP("InOutHelper", "Implements extention/retraction",
-		   this.T, "base color",
-		   this.OUT_MILLIS, "extention length in milliseconds",
-		   this.IN_MILLIS, "retraction length in milliseconds",
+		   this.T, "Base color",
+		   this.OUT_MILLIS, "Extention length in milliseconds",
+		   this.IN_MILLIS, "Retraction length in milliseconds",
 		   this.OFF_COLOR, "Color when retracted");
   }
 };
@@ -1593,10 +1593,10 @@ function InOutHelper(T, I, O, OFF) {
 class InOutSparkTipClass extends STYLE {
   constructor(T, OUT_MILLIS, IN_MILLIS, OFF_COLOR) {
     super("Implements extention/retraction", arguments);
-    this.add_arg("T", "COLOR", "base color");
-    this.add_arg("OUT_MILLIS", "INT", "extentions length in ms");
-    this.add_arg("IN_MILLIS", "INT", "retraction length in ms");
-    this.add_arg("SPARK_COLOR", "COLOR", "color of spark tip", WHITE.DOCOPY());
+    this.add_arg("T", "COLOR", "Base color");
+    this.add_arg("OUT_MILLIS", "INT", "Extentions length in ms");
+    this.add_arg("IN_MILLIS", "INT", "Retraction length in ms");
+    this.add_arg("SPARK_COLOR", "COLOR", "Color of spark tip", WHITE.DOCOPY());
     this.last_micros_ = 0;
     this.extension = 0;
   }
@@ -2125,8 +2125,8 @@ function myAlertBottom(str){
               <input type="button" name="Lockup" value="Lockup" onclick="STATE_LOCKUP = STATE_LOCKUP == 1 ? 0 : 1;">
               <input type="button" name="Drag" value="Drag" onclick="STATE_LOCKUP = STATE_LOCKUP == 2 ? 0 : 2;">
           </div>
-          <div class="col-sm-1">
-              <input type="button" name="Rotate" value="Rotate" onclick="STATE_ROTATE = !STATE_ROTATE;">
+          <div class="col-sm-3 nopadding">
+              <input type="button" style="float:right;" name="Rotate" value="Rotate" onclick="STATE_ROTATE = !STATE_ROTATE;">
           </div>
 
         </div>

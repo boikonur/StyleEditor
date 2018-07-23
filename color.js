@@ -1,5 +1,4 @@
 var app = {};
-var boxie = document.getElementById("color-preview");
 var can= document.getElementById("pal");
 var container = document.getElementById("color_links1");
 app.$colors  = $('canvas.color-palette');
@@ -22,7 +21,10 @@ app.buildColorPalette = function() {
   .mouseup(function(e) {
     clearInterval(app.colorTimer);
     $(document).unbind('mousemove');
-    alert("color: "+ app.selectedColor);
+    
+     var templ= "Rgb<"+app.selectedColor[0] + ","+ app.selectedColor[1] + "," + app.selectedColor[2] + ">";
+     console.log("KBAR " + templ)
+     SetTo(templ);
   });
 };
 
@@ -61,8 +63,7 @@ app.resizeCanvas = function() {
 app.getColor = function(e) {
     var newColor;
     imageData = app.colorctx.getImageData(app.colorEventX, app.colorEventY, 1, 1);
-    app.selectedColor = 'rgb(' + imageData.data[0] + ', ' + imageData.data[1] + ', ' + imageData.data[2] + ')'; 
-    boxie.style.backgroundColor= app.selectedColor;
+    app.selectedColor =  imageData.data; 
   };
 //   app.buildColorPalette();
   app.resizeCanvas();
