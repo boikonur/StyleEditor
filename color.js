@@ -2,6 +2,7 @@ var app = {};
 var app = {};
 var boxie = document.getElementById("color-preview");
 var can= document.getElementById("pal");
+var container = document.getElementById("color_links1");
 app.$colors  = $('canvas.color-palette');
 app.colorctx = app.$colors[0].getContext('2d');
 // Build Color palette
@@ -53,8 +54,8 @@ function draw(){
 }
 
 app.resizeCanvas = function() {
-    can.width = 284;
-    can.height = 155;    
+    can.width = container.offsetWidth -10;
+    can.height = 105;    
 }
 
 app.getColor = function(e) {
