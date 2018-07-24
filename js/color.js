@@ -56,7 +56,7 @@ function drawColorPicker(){
 }
 
 app.resizeCanvas = function() {
-    can.width = container.offsetWidth -10;
+    can.width = container.offsetWidth;
     can.height = 105;    
 }
 
@@ -65,7 +65,16 @@ app.getColor = function(e) {
     imageData = app.colorctx.getImageData(app.colorEventX, app.colorEventY, 1, 1);
     app.selectedColor =  imageData.data; 
   };
-//   app.buildColorPalette();
-  app.resizeCanvas();
-  drawColorPicker();
-  app.buildColorPalette();
+
+  
+  $( document ).ready(function() {
+    app.resizeCanvas();
+    drawColorPicker();
+    app.buildColorPalette();
+    
+    $(window).on("resize", function(){                      
+      app.resizeCanvas();
+      drawColorPicker();
+
+    });
+  });

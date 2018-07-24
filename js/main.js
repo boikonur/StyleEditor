@@ -7,7 +7,9 @@ var height;
 
 var startup_template = "InOutHelper<SimpleClash<Lockup<Blast<Blue,White>,AudioFlicker<Blue,White>>,White>, 300, 800>";
 
-function resizeGL(canvas) {
+function resizeGL() {
+
+  var canvas = document.getElementById("canvas_id");
   // Lookup the size the browser is displaying the canvas.
   var displayWidth = canvas.clientWidth;
   var displayHeight = canvas.clientHeight;
@@ -25,7 +27,8 @@ function resizeGL(canvas) {
 // Create n textures of about 1MB each.
 function initGL() {
   var canvas = document.getElementById("canvas_id");
-
+  var container = document.getElementById("canvas_container");
+  var x = $(canvas).parent().width();
   width = window.innerWidth;
   height = window.innerHeight;
 
@@ -35,8 +38,8 @@ function initGL() {
     dpr = 1;
   }
 
-  width = width * 2 / 3;
-  height /= 2.4;
+  width = x;
+  height /= 2.3;
   canvas.width = width * dpr;
   canvas.height = height * dpr;
   canvas.style.width = width + 'px';
@@ -1553,7 +1556,7 @@ function drawScene() {
   current_style.run(blade);
   var pixels = new Uint8Array(144 * 4 * 2);
 
-  resizeGL(gl.canvas);
+  resizeGL();
   for (var i = 0; i < 144; i++) {
     c = current_style.getColor(i);
     pixels[i * 4 + 0] = Math.round(c.r * 255);
@@ -1831,9 +1834,13 @@ function myAlertBottom(str) {
   }, 1500);
 }
 
-
 $( document ).ready(function() {
-console.log( "READY!" );
-initGL();
+  console.log( "READY!" );
+  initGL();
+
+  $(window).on("resize", function(){                      
+    initGL();
+  });
 });
+
 
