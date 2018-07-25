@@ -28,6 +28,7 @@ function conf(val) {
   var ble = document.getElementById("ble");
   var diagram = document.getElementById("diagram");
   var config = document.getElementById("ConfigFile").innerHTML;
+  var board = document.getElementById("board");
 
   var x;
   layers = {};
@@ -153,12 +154,25 @@ function conf(val) {
     blades.push("WS2811BladePtr<26, WS2811_ACTUALLY_800kHz | WS2811_GRB, 7, PowerPINS<bladePowerPin4> >()");
     blades.push("WS2811BladePtr<26, WS2811_ACTUALLY_800kHz | WS2811_GRB, 8, PowerPINS<bladePowerPin5> >()");
   }
+
+  if (board.value == "v2") {
+
+    config = config.replace("$BOARD_CONFIG$", "\"v2_config.h\"");
+  }
+  if (board.value == "v3") {
+
+    config = config.replace("$BOARD_CONFIG$", "\"v3_config.h\"");
+  }
+  if (board.value == "ProffieBoard") {
+
+    config = config.replace("$BOARD_CONFIG$", "\"proffieboard_v1_config.h\"");
+  }
   if (ble.checked) {
     show("BLE");
     use(7);
     use(8);
-    config = config.replace("$DISPLAY$",
-       "$DISPLAY$\n" +
+    config = config.replace("$BLE$",
+       "#define ENABLE_SERIAL\n" +
        "// Max 20 characters\n" +
        "#define BLE_PASSWORD \"your password\"\n" +
        "// Max 32 characters.\n" +
@@ -272,6 +286,30 @@ function conf(val) {
 //   conf();
 // });
 
+function Copy(){
+
+  var copyText = document.getElementById("configuration");
+  copyText.select();
+  document.execCommand("copy");
+  // alert("Copy to Clipboard" + copyText.value);
+  myAlertTop("Copy to Clipboard");
+}
+
+function SaveAs(){
+
+  var copyText = document.getElementById("configuration");
+  var name = document.getElementById("customFile");
+
+
+blob = new Blob([copyText.value], { type: 'text/plain' }),
+anchor = document.createElement('a');
+
+anchor.download = name.value;
+anchor.href = (window.webkitURL || window.URL).createObjectURL(blob);
+anchor.dataset.downloadurl = ['text/plain', anchor.download, anchor.href].join(':');
+anchor.click();
+
+}
 
 function myAlertTop(str) {
 
