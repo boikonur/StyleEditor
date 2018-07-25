@@ -1,0 +1,178 @@
+<!doctype html>
+
+<head>
+    <title>Circuit Maker</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="ProffieOS style Configurator">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+    crossorigin="anonymous"> -->
+
+    <!-- Latest compiled and minified JavaScript -->
+
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+</head>
+
+<body>
+    <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="alert alert-top alert-success">
+                <span id="info_notif"></span>
+            </div>
+            <div class="alert alert-bottom  alert-danger">
+                <strong>Error</strong>
+                <span id="error_notif"></span>
+            </div>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                    aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Configurator</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">File
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="#" onclick="document.getElementById('file-input').click();">Open File</a>
+                                <input id="file-input" type="file" name="openfile" style="display: none;" />
+                            </li>
+                            <li>
+                                <a href="#" onclick="document.getElementById('file-input').click();">Save as...</a>
+                                <input id="file-output" type="file" name="saveas" style="display: none;" />
+                            </li>
+                        </ul>
+                        <li>
+                            <a href="index.html">StyleEditor</a>
+                        </li>
+
+                        <li>
+                            <a href="maker.html">Configurator</a>
+                        </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" id="page-info">
+                            Last modified: June 10th, 2018
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 bg-white">
+                <h1>Manual</h1>
+                <p>
+                    Unlike all the V1 TeensySaber electronics, the V3 board is not something I recommend that most people build themselves. All
+                    the instructions for doing so are available here, but most people should just continue reading to find
+                    out how to use the board. What you will need: Teensy 3.2 - the brains (It is also possible to use a Teensy
+                    3.5 or 3.6, but I think the 3.2 is best because it's smaller.) TeensySaber V3 - light, sound, motion
+                    (you might be able to buy one here or here.)</p>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-action list-group-item-dark">thin colored wire</li>
+                    <li class="list-group-item list-group-item-action list-group-item-dark">thicker colored wire - used where power will flow to the LEDs</li>
+                    <li class="list-group-item list-group-item-action list-group-item-dark">an 3.7v li-ion battery most batteries will work, but make sure it can provide enough amps for whatever
+                        blade(s) you want to power.</li>
+                    <li class="list-group-item list-group-item-action list-group-item-dark">A speaker</li>
+                    <li class="list-group-item list-group-item-action list-group-item-dark">TensySaber Software - makes the hardware actually DO stuff.</li>
+                    <li class="list-group-item list-group-item-action list-group-item-dark">(optional) an SSD1306 display.</li>
+                    <li class="list-group-item list-group-item-action list-group-item-dark">(optional) bluetooth addon</li>
+                    <li class="list-group-item list-group-item-action list-group-item-dark">(optional) 1-3 x auxilary FETs - These can be placed on the bottom of the board to drive additional LEDs.</li>
+                </ul>
+
+                <h2>Putting it together</h2>
+
+                <p>Important! Make sure you cut the lead between VIN and VUSB on the teensy before you solder it to the TeensySaber
+                    V2. Cutting it afterwards is not nearly as fun. (But possible with an exacto knife or similar.) Note
+                    that after you cut VIN/VUSB, you'll need to provide external powre to use or program the teensy. Once
+                    attached to to the TeensySaber, it will draw power from the battery to power the Teensy.</p>
+                <p>Once that's done you need to solder your TeensySaber to a Teensy. For a Teensy 3.2, here is where you place
+                    all the pins:</p>
+                <p>The easiest way to solder the teensy to the teensysaber board is to use header pins. However, once joined
+                    in this way, it's quite difficult to get them apart again, which means that if one of the boards develop
+                    a fault, you pretty much have to throw away both of them. What I recommend doing is to use header pins
+                    only in two corners, then use some regular wire for all the other connections, that way you can cut the
+                    wires and desolder everything fairly easily should you need to. (Full disclosure: I have not tried this
+                    yet, but I have ruined a few boards while trying to get the pins out...)</p>
+                <p>Anyways, put the teensy 3.2 on top and solder the pins/wires into place. (top and bottom) Later, we'll cut
+                    or bend the pins to make sure they aren't in the way. When you're done, it should look something like
+                    this:
+                </p>
+
+                <h2>Pinout</h2>
+                <p>Note: Pins marked with * are ones that you probably want to hook up to something. The rest of the pins are
+                    usually ignored.</p>
+                <p>Battery+ - 2.6 to 4.5 volt input, drives everything except the LEDs</p>
+                <p>Battery- - negative pad for LEDs, needs to be at same level as GND when both are connected.</p>
+                <p>GND - ground for electronics except LEDs. Note that GND is also available on short edge of the teensy. (See
+                    the teensy pinout for details.)</p>
+                <p>Speaker +/- - hooks up to speaker</p>
+                <p>Power / AUX / AUX2 Button- Hook up to closing buttons, or potentially touch buttons.</p>
+                <p>Blade ID / neopixel data - Normally used to measure the blade ID restor, and if it's a neopixel blade, feed
+                    out neopixel data. For a fixed non-neopixel saber, it could be repurposed.</p>
+                <p>LED 1, 2, 3 - Hooks up to negative side of LED (positive side of LED hooks up directly to battery.) These
+                    pads can handle up to 30 volts.</p>
+                <p>LED 4, 5, 6 - Like LED1/2/3, but requires FETs to be placed on the bottom of the board to function. Voltage
+                    is limited by selection of FETs.</p>
+                <p>Power 1, Power 2, Power 3 - These control the FETs which drive LED 1, 2, 3.</p>
+                <p>AUX LED 1, 2, 3 - These are hooked up to pads on the bottom which can be populated with FETs and used to
+                    drive additional LEDs. If the bottom FETs are not populated, these pins are free and can be used for
+                    any purpose.</p>
+                <p>Free pins - these are not used for anyting and could be hooked up as additional inputs or outputs. Pins marked
+                    with "PWM" have hardware PWM support which can be used to control the brightness of LEDs or drive servos.</p>
+                <p>Data In, Data Out, SCK, SD card select - these pins are used to communicate with the SD card.</p>
+                <p>SDA, SCL, Motion Interrupt - these pins are used to communicate with the gyro and accelerometer chip.</p>
+                <p>Battery Volt Sense - used to read battery voltage.</p>
+                <p>Amplifier enable - Used to control the amplifier.</p>
+                <p>5v - generated by the TeensySaber board.</p>
+                <p>3.3v - generated by the Teensy</p>
+                <p>Wire gauges</p>
+                <p>Most pads on the teensy will not need to carry any significant amount of power and can use 30 awg (very thin)
+                    wire if you choose. However, Battery- will carry the combined power of all your LEDs, and LED 1,2,3 (and
+                    4,5,6 on the bottom) will carry a fair amount of power as well. It is recommended to use thicker wires,
+                    for these wires. There is no absolute rules for what wire guages are required, but here is a helpful
+                    chart. (See the "chassis wiring" column.) Keeping the high-power wires short helps as well.
+                </p>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2018</p>
+        </footer>
+    </div>
+    <!-- /container -->
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Bootstrap library -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <!-- User JS -->
+    <script src="js/maker.js"></script>
+
+
+</body>
+
+</html>
