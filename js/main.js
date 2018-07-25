@@ -12,7 +12,7 @@ function initGL() {
   var canvas = document.getElementById("canvas_id");
   var container = document.getElementById("canvas_container");
   var x = $(canvas).parent().width();
-  width = window.innerWidth;
+  width = container.innerWidth;
   height = window.innerHeight;
 
   if (window.devicePixelRatio !== undefined) {
@@ -22,7 +22,7 @@ function initGL() {
   }
 
   width = x;
-  height /= 2.3;
+  height = container.clientHeight;
   canvas.width = width * dpr;
   canvas.height = height * dpr;
   canvas.style.width = width + 'px';

@@ -242,7 +242,7 @@
               <a href="maker.html">Configurator</a>
             </li>
             <li>
-              <a href="help.index">Help</a>
+              <a href="help.html">Help</a>
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -258,25 +258,30 @@
   <div class="container-fluid">
     <div class="row ">
       <div class="col col-md-8">
+          
         <div class="row">
+           
           <div id="canvas_container">
+             
             <canvas id="canvas_id"> </canvas>
+            <div id="canvas_overlay" class="controls" aria-label="...">
+                <div class="row">
+                  <div class="col-sm-9">
+                    <input type="button" name="Power" value="Power" data-toggle="tooltip" title="On/Off" onclick="STATE_ON = !STATE_ON; STATE_LOCKUP=0;">
+                    <input type="button" name="Clash" value="Clash" onclick="STATE_CLASH=1;">
+                    <input type="button" name="Blast" value="Blast" onclick="AddBlast()">
+                    <input type="button" name="Lockup" value="Lockup" onclick="STATE_LOCKUP = STATE_LOCKUP == 1 ? 0 : 1;">
+                    <input type="button" name="Drag" value="Drag" onclick="STATE_LOCKUP = STATE_LOCKUP == 2 ? 0 : 2;">
+                  </div>
+                  <div class="col-sm-3">
+                    <input type="button" style="float:right;" name="Rotate" value="Rotate" onclick="STATE_ROTATE = !STATE_ROTATE;">
+                  </div>
+                </div>
+              </div>
           </div>
         </div>
-        <div class="row" style="height:0px;">
-          <div class="controls" aria-label="...">
-            <div class="col-sm-9">
-              <input type="button" name="Power" value="Power" data-toggle="tooltip" title="On/Off" onclick="STATE_ON = !STATE_ON; STATE_LOCKUP=0;">
-              <input type="button" name="Clash" value="Clash" onclick="STATE_CLASH=1;">
-              <input type="button" name="Blast" value="Blast" onclick="AddBlast()">
-              <input type="button" name="Lockup" value="Lockup" onclick="STATE_LOCKUP = STATE_LOCKUP == 1 ? 0 : 1;">
-              <input type="button" name="Drag" value="Drag" onclick="STATE_LOCKUP = STATE_LOCKUP == 2 ? 0 : 2;">
-            </div>
-            <div class="col-sm-3">
-              <input type="button" style="float:right;" name="Rotate" value="Rotate" onclick="STATE_ROTATE = !STATE_ROTATE;">
-            </div>
-          </div>
-        </div>
+     
+   
         <div class="row">
           <div class="col-sm-12 input-group">
             <input id="template-in" type="text" class="form-control" placeholder="Search for..." onkeydown="if (event.keyCode == 13) Run();">
