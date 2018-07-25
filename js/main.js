@@ -320,26 +320,26 @@ class CONFIG extends STYLE {
     }
     var id = this.get_id();
     var ret = "";
-    ret += "<span title='" + note + "'>" + name + "</span>&lt;\n";
+    ret += "<span title='" + note + "'>" + name + "</span>\n";
     ret += "<div style='margin-left:2em'>\n";
     var comma = false;
     for (var i = 2; i < arguments.length; i += 2) {
-      if (comma) ret += ",<br>";
+      if (comma) ret += "<br>";
       comma = true;
       var arg = arguments[i];
       var note = arguments[i + 1];
       if (typeof (arg) == "number") {
-        arg = "" + arg;
+        arg = "<span class=\"number\"> " + arg + " </span>\n";
       } else {
         arg = arg.pp();
       }
       if (arg.indexOf("<br>") == -1 && arg.indexOf("<div") == -1) {
-        ret += arg + " /* " + note + " */\n";
+        ret += arg + " <span class=\"comment\"> " + note + " </span>\n";
       } else {
-        ret += "/* " + note + " */<br>\n" + arg;
+        ret += "<span class=\"comment\"> " + note + " </span><br>\n" + arg;
       }
     }
-    ret += "</div>&gt;\n";
+    ret += "</div>  \n";
 
     return ret;
   }
@@ -758,7 +758,7 @@ class PulsingClass extends STYLE {
     super("Pulses between A and B every M milliseconds", Array.from(arguments));
     this.add_arg("COLOR1", "COLOR", "A");
     this.add_arg("COLOR2", "COLOR", "B");
-    this.add_arg("PULSE_MILLIS", "INT", "M");
+    this.add_arg("PULSE_MILLIS", "INT", "Milliseconds");
   }
   run(blade) {
     this.COLOR1.run(blade);
@@ -967,7 +967,7 @@ class HumpFlickerClass extends STYLE {
     return this.PP("HumpFlicker", "Randomly selects between A and B but keeps nearby pixels similar",
       this.A, "A",
       this.B, "B",
-      this.hump_width, "hump_width"
+      this.hump_width, "Hump width"
     );
   }
 };
@@ -979,9 +979,9 @@ function HumpFlicker(A, B, hump_width) {
 class FireConfigClass extends CONFIG {
   constructor(INTENSITY_BASE, INTENSITY_RAND, COOLING) {
     super("Fire configuration", Array.from(arguments));
-    this.add_arg("intensity_base", "INT", "intensity base");
-    this.add_arg("intensity_rand", "INT", "intensity random");
-    this.add_arg("cooling", "INT", "cooling");
+    this.add_arg("intensity_base", "INT", "Intensity base");
+    this.add_arg("intensity_rand", "INT", "Intensity random");
+    this.add_arg("cooling", "INT", "Cooling");
   }
 }
 
