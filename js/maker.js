@@ -293,7 +293,7 @@ function Copy(){
   var copyText = document.getElementById("configuration");
   copyText.select();
   document.execCommand("copy");
-  copyText.unselect();
+  copyText.select();
   myAlertTop("Configuration copied to clipboard");
 }
 
