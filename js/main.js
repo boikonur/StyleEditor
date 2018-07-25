@@ -7,23 +7,6 @@ var height;
 
 var startup_template = "InOutHelper<SimpleClash<Lockup<Blast<Blue,White>,AudioFlicker<Blue,White>>,White>, 300, 800>";
 
-function resizeGL() {
-
-  var canvas = document.getElementById("canvas_id");
-  // Lookup the size the browser is displaying the canvas.
-  var displayWidth = canvas.clientWidth;
-  var displayHeight = canvas.clientHeight;
-
-  // Check if the canvas is not the same size.
-  if (canvas.width != displayWidth ||
-    canvas.height != displayHeight) {
-
-    // Make the canvas the same size
-    canvas.width = displayWidth;
-    canvas.height = displayHeight;
-  }
-}
-
 // Create n textures of about 1MB each.
 function initGL() {
   var canvas = document.getElementById("canvas_id");
@@ -1556,7 +1539,6 @@ function drawScene() {
   current_style.run(blade);
   var pixels = new Uint8Array(144 * 4 * 2);
 
-  resizeGL();
   for (var i = 0; i < 144; i++) {
     c = current_style.getColor(i);
     pixels[i * 4 + 0] = Math.round(c.r * 255);
