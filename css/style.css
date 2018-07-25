@@ -188,8 +188,9 @@ div.fullscreen {
   background-color: rgba(0, 0, 0, 0);
   color: #ff5000;
   border: 1px solid #ff5000;
-  height: 30px;
-  min-width: 100px;
+  height: 25px;
+  min-width: 80px;
+  font-size:0.8em;
 }
 
 #canvas_container {
@@ -243,5 +244,9 @@ div.fullscreen {
 }
 
 #configuration {
-  font-size: 8px;
+  font-size: 12px;
+  width:100%;
+  color: white;
+  background-color: #202020;
 }
+
