@@ -24,61 +24,71 @@
     <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="alert alert-top alert-success">
-                <span id="info_notif"></span>
-            </div>
-            <div class="alert alert-bottom  alert-danger">
-                <strong>Error</strong>
-                <span id="error_notif"></span>
-            </div>
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-                    aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Configurator</a>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="dropdown">
+        <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+                <div class="container-fluid">
+                  <div class="alert alert-top alert-success">
+                    <span id="info_notif"></span>
+                  </div>
+                  <div class="alert alert-bottom  alert-danger">
+                    <strong>Error</strong>
+                    <span id="error_notif"></span>
+                  </div>
+                  <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                      aria-expanded="false">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Help</a>
+                  </div>
+                  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                      <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">File
-                            <span class="caret"></span>
+                          <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li>
-                                <a href="#" onclick="document.getElementById('file-input').click();">Open File</a>
-                                <input id="file-input" type="file" name="openfile" style="display: none;" />
-                            </li>
-                            <li>
-                                <a href="#" onclick="document.getElementById('file-input').click();">Save as...</a>
-                                <input id="file-output" type="file" name="saveas" style="display: none;" />
-                            </li>
+                          <li>
+                            <a href="#" onclick="document.getElementById('file-input').click();">Open File</a>
+                            <input id="file-input" type="file" name="openfile" style="display: none;" />
+                          </li>
+                          <li>
+                            <a href="#" onclick="document.getElementById('file-input').click();">Save as...</a>
+                            <input id="file-output" type="file" name="saveas" style="display: none;" />
+                          </li>
                         </ul>
-                        <li>
-                            <a href="index.html">StyleEditor</a>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tools
+                              <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                              <li>
+                                <a href="index.html">Style Editor</a>
+                              </li>
+                              <li>
+                                <a href="maker.html">Configurator</a>
+                              </li>
+                              <li>
+                                <a href="oled.html">OLED Helper</a>
+                              </li>
+                            </ul>
                         </li>
-
                         <li>
-                            <a href="maker.html">Configurator</a>
+                          <a href="help.html">Help</a>
                         </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                      <li>
                         <a href="#" id="page-info">
-                            Last modified: June 10th, 2018
+                          Last modified: June 10th, 2018
                         </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </nav>
 
     <div class="container">
         <div class="row">
