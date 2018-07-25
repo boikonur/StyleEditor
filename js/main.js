@@ -1717,7 +1717,7 @@ function ReplaceCurrentFocus(str) {
     current_focus = focus_catcher;
     var id = current_focus.get_id();
     var container = document.getElementById("X" + id);
-    container.style.backgroundColor = '#202020';
+    container.style.backgroundColor = '#434343';
     container.style.color = '#ff5000';
   }
 }
