@@ -8,10 +8,10 @@ app.buildColorPalette = function() {
  
   app.$colors.mousedown(function(e) {
     // Track mouse movement on the canvas if the mouse button is down
-    // $(document).mousemove(function(e) {
+     $(document).mousemove(function(e) {
       app.colorEventX = e.pageX - app.$colors.offset().left;
       app.colorEventY = e.pageY - app.$colors.offset().top;
-    // });
+    });
   
     // Get the color at the current mouse coordinates
     app.colorTimer = setInterval(app.getColor, 50);
@@ -22,9 +22,7 @@ app.buildColorPalette = function() {
     clearInterval(app.colorTimer);
     $(document).unbind('mousemove');
     
-     var templ= "Rgb<"+app.selectedColor[0] + ","+ app.selectedColor[1] + "," + app.selectedColor[2] + ">";
-     console.log("KBAR " + templ)
-     SetTo(templ);
+
   });
 };
 
@@ -64,6 +62,9 @@ app.getColor = function(e) {
     var newColor;
     imageData = app.colorctx.getImageData(app.colorEventX, app.colorEventY, 1, 1);
     app.selectedColor =  imageData.data; 
+    var templ= "Rgb<"+app.selectedColor[0] + ","+ app.selectedColor[1] + "," + app.selectedColor[2] + ">";
+    console.log("KBAR " + templ)
+    SetTo(templ);
   };
 
   
