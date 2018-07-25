@@ -180,6 +180,9 @@ function conf(val) {
        "// Max 9 characters\n" +
        "#define BLE_SHORTNAME \"Saber\"\n");
   }
+ else {
+    config = config.replace("$BLE$\n", "");
+  }
   if (pli.checked) {
     show("PLI");
     config = config.replace("$DISPLAY$", "#define ENABLE_SSD1306");
@@ -287,28 +290,22 @@ function conf(val) {
 // });
 
 function Copy(){
-
   var copyText = document.getElementById("configuration");
   copyText.select();
   document.execCommand("copy");
-  // alert("Copy to Clipboard" + copyText.value);
-  myAlertTop("Copy to Clipboard");
+  copyText.unselect();
+  myAlertTop("Configuration copied to clipboard");
 }
 
 function SaveAs(){
-
   var copyText = document.getElementById("configuration");
   var name = document.getElementById("customFile");
-
-
-blob = new Blob([copyText.value], { type: 'text/plain' }),
-anchor = document.createElement('a');
-
-anchor.download = name.value;
-anchor.href = (window.webkitURL || window.URL).createObjectURL(blob);
-anchor.dataset.downloadurl = ['text/plain', anchor.download, anchor.href].join(':');
-anchor.click();
-
+  blob = new Blob([copyText.value], { type: 'text/plain' }),
+  anchor = document.createElement('a');
+  anchor.download = name.value;
+  anchor.href = (window.webkitURL || window.URL).createObjectURL(blob);
+  anchor.dataset.downloadurl = ['text/plain', anchor.download, anchor.href].join(':');
+  anchor.click();
 }
 
 function myAlertTop(str) {

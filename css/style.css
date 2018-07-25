@@ -250,3 +250,14 @@ div.fullscreen {
   background-color: #202020;
 }
 
+.conf-file input{
+  width: 100%;
+  border: 1px solid #434343;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  margin:4px 0px;
+  padding: 6px 5px;
+  color: #d0d0d0;
+  background-color: #202020
+}
+
