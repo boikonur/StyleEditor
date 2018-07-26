@@ -261,3 +261,12 @@ div.fullscreen {
   background-color: #202020
 }
 
+#lcd_container{
+  border: 5px solid #434343;
+  width: 100%;
+  display: block;
+}
+
+#lcd_canvas{
+  border: 1px solid #434343;
+}
