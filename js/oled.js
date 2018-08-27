@@ -40,11 +40,13 @@ class Picture {
 class PictureCanvas {
   constructor(picture, pointerDown) {
     this.dom = elt("canvas", {
+      id: "lcd_canvas",
       onmousedown: event => this.mouse(event, pointerDown),
       ontouchstart: event => this.touch(event, pointerDown)
     });
     this.syncState(picture);
-    this.dom.id="lcd_canvas";
+    
+
   }
  
   syncState(picture) {
@@ -124,10 +126,10 @@ class PixelEditor {
       });
       this.controls = controls.map(
         Control => new Control(state, config));
-      this.dom = elt("div", {}, this.canvas.dom, elt("br"),
+      this.dom = elt("div", {id: "lcd_container"}, this.canvas.dom, elt("br"),
                      ...this.controls.reduce(
                        (a, c) => a.concat(" ", c.dom), []));
-    this.dom.id="lcd_container";
+
     }
     syncState(state) {
       this.state = state;
@@ -321,8 +323,8 @@ dispatch({picture: state.picture.draw(drawn)});
 
   const startState = {
     tool: "draw",
-    color: "#FFF",
-    picture: Picture.empty(128, 32, "#000"),
+    color: "#ffffff",
+    picture: Picture.empty(128, 32, "#000000"),
     done: [],
     doneAt: 0
   };
@@ -347,5 +349,9 @@ dispatch({picture: state.picture.draw(drawn)});
     return app.dom;
   }
 
+$( document ).ready(function() {
+  console.log( "READY!" );
   document.querySelector('.lcd')
   .appendChild(startPixelEditor({}));
+
+});
