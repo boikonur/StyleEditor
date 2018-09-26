@@ -447,11 +447,11 @@ function AddColor(value, r, g, b) {
 
 }
 
-AddTemplate("InOutHelper<SimpleClash<Lockup<Blast<Blue,White>,AudioFlicker<Blue,WHITE>>,White>, 300, 800>");
-AddTemplate("InOutHelper<EasyBlade<OnSpark<GREEN>, WHITE>, 300, 800> >");
+AddTemplate("StylePtr<InOutHelper<SimpleClash<Lockup<Blast<Blue,White>,AudioFlicker<Blue,WHITE>>,White>, 300, 800>>()");
+AddTemplate("StylePtr<InOutHelper<EasyBlade<OnSpark<GREEN>, WHITE>, 300, 800>>>()");
 AddTemplate("StyleNormalPtr<AudioFlicker<YELLOW, WHITE>, BLUE, 300, 800>");
 AddTemplate("StyleNormalPtr<AudioFlicker<GREEN, YELLOW>, RED, 300, 800>");
-AddTemplate("InOutSparkTip<EasyBlade<MAGENTA, WHITE>, 300, 800> >");
+AddTemplate("StylePtr<InOutSparkTip<EasyBlade<MAGENTA, WHITE>, 300, 800>>>()");
 AddTemplate("StyleNormalPtr<Gradient<RED, BLUE>, Gradient<CYAN, YELLOW>, 300, 800>");
 AddTemplate("StyleNormalPtr<Pulsing<RED, Rgb<50, 0, 0>, 5000>, WHITE, 300, 800, RED>");
 AddTemplate("StyleRainbowPtr<300, 800>");
@@ -1607,6 +1607,7 @@ var classes = {
   StyleFire: StyleFire,
   StyleRainbowPtr: StyleRainbowPtr,
   StyleStrobePtr: StyleStrobePtr,
+  StylePtr: StylePtr,
   EasyBlade: EasyBlade,
   InOutHelper: InOutHelper,
   InOutSparkTip: InOutSparkTip,
@@ -1791,6 +1792,7 @@ function FocusOn(id, event) {
   pp_is_url--;
   console.log(url);
   current_focus_url = url;
+  url="StylePtr<" + url + ">()";
   SetTo(url);
   return true;
 }
