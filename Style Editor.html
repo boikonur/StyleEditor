@@ -1,6 +1,5 @@
 
-<!-- saved from url=(0054)https://fredrik.hubbe.net/lightsaber/style_editor.html -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"><style id="stndz-style"></style>
+<head>
 <style>
 
 .btn {
@@ -321,6 +320,10 @@ function setvar(variable, val) {
 function Arg(expected_type, arg, default_arg) {
   //console.log(expected_type + " :: " + arg);
   if (arg == undefined) {
+    if (typeof(default_arg) == "number") {
+      // console.log("DEFAULT ARG" + default_arg);
+      return new INTEGER(default_arg);
+    }
     if (default_arg != undefined) {
       // This must copy the argument!
       return default_arg;
@@ -328,7 +331,7 @@ function Arg(expected_type, arg, default_arg) {
     throw "Too few arguments";
   }
   if (expected_type == "INT") {
-    if (typeof(arg) != "number") {
+    if (typeof(arg) != "number" && !arg.getInteger) {
       throw "Expected integer";
     }
     return arg;
@@ -365,7 +368,7 @@ class ARG {
 class STYLE {
   constructor(comment, args) {
     this.comment = comment;
-    if (args) console.log(args);
+    // if (args) console.log(args);
     this.args = args;
     this.argnum = 0;
     this.argdefs = [];
@@ -375,13 +378,13 @@ class STYLE {
   }
 
   add_arg(name, expected_type, comment, default_value) {
-    console.log(name);
-    console.log(this.args);
+    // console.log(name);
+    // console.log(this.args);
     try {
       this[name] = Arg(expected_type, this.args[this.argnum], default_value);
     } catch(e) {
       if (typeof(e) == "string")
-	e = e + "for argument " + (this.argnum + 1) + " (" + name + ")";
+	e = e + " for argument " + (this.argnum + 1) + " (" + name + ")";
       throw e;
     }
     this.argnum++;
@@ -497,6 +500,23 @@ class STYLE {
   }
 }
 
+class INTEGER  extends STYLE {
+  constructor(v) {
+    super();
+    this.value = v;
+  }
+  run(blade) {}
+  getInteger(led) { return this.value; }
+  valueOf() { return this.value; }
+  pp() {
+    if (pp_is_url) {
+      if (this.super_short_desc) return "$";
+      return "" + this.value;
+    }
+    return this.PPshort(this.value, "VALUE");
+  }
+};
+
 class CONFIG extends STYLE {
   PP(name, note) {
     if (pp_is_url) {
@@ -529,7 +549,21 @@ class CONFIG extends STYLE {
   }
 };
 
-var qlinks = "<b>Colors</b><br>";
+function FixColor(c) {
+  console.log(c)
+  return min(65535, Math.floor(Math.pow(parseInt(c, 16) / 255.0, 2.2) * 65536));
+}
+
+function ClickColor() {
+  var color_button = document.getElementById("COLOR");
+  color_button.addEventListener("input", ClickColor, false);
+  var R = FixColor(color_button.value.substr(1,2));
+  var G = FixColor(color_button.value.substr(3,2));
+  var B = FixColor(color_button.value.substr(5,2));
+  SetTo("Rgb16<"+R+","+G+","+B+">");
+}
+
+var qlinks = "<b>Colors</b> <input type=color id=COLOR value='#ff0000' onclick='ClickColor()' /><br>";
 var effect_links = "<b>Effects</b><br>";
 var template_links = "<b>Templates</b><br>";
 var all_colors = {};
@@ -627,6 +661,8 @@ function AddColor(name, r, g, b) {
 AddTemplate("InOutHelper<SimpleClash<Lockup<Blast<Blue,White>,AudioFlicker<Blue,WHITE>>,White>, 300, 800>");
 // AddTemplate("StyleFirePtr<RED, YELLOW>");
 AddTemplate("InOutHelper<EasyBlade<OnSpark<GREEN>, WHITE>, 300, 800> >");
+AddTemplate("InOutHelper<EasyBlade<Sparkle<BLUE>>, 300, 800> >");
+AddTemplate("IgnitionDelay<500, InOutHelper<EasyBlade<OnSpark<GREEN>, WHITE>, 300, 800> > >");
 AddTemplate("StyleNormalPtr<AudioFlicker<YELLOW, WHITE>, BLUE, 300, 800>");
 AddTemplate("InOutSparkTip<EasyBlade<MAGENTA, WHITE>, 300, 800> >");
 AddTemplate("StyleNormalPtr<Gradient<RED, BLUE>, Gradient<CYAN, YELLOW>, 300, 800>");
@@ -635,25 +671,33 @@ AddTemplate("StyleRainbowPtr<300, 800>");
 AddTemplate("StyleStrobePtr<WHITE, Rainbow, 15, 300, 800>");
 AddTemplate("StyleFirePtr<RED, YELLOW>");
 
-AddEffect("Rgb<100,100,100>");
-AddEffect("Rainbow");
-AddEffect("OnSpark<GREEN, WHITE, 200>");
-AddEffect("Pulsing<BLUE, RED, 800>");
-AddEffect("Strobe<BLACK, WHITE, 15, 1>");
-AddEffect("Gradient<RED, BLUE>");
 AddEffect("AudioFlicker<WHITE, BLUE>");
 AddEffect("Blast<BLUE, WHITE>");
-AddEffect("SimpleClash<RED, WHITE, 40>");
-AddEffect("Lockup<GREEN, RED>");
-AddEffect("InOutHelper<WHITE, 300, 800, BLACK>");
-AddEffect("InOutSparkTip<RED, 1000, 800, WHITE>");
+AddEffect("BlastFadeout<BLUE, WHITE>");
+AddEffect("Blinking<RED, BLUE, 1000, 500>");
+AddEffect("BrownNoiseFlicker<GREEN, Magenta, 50>");
 AddEffect("ColorCycle<BLUE,  0, 1, CYAN,  100, 3000, 5000>");
 AddEffect("Cylon<RED, 5, 20>");
+AddEffect("Gradient<BLUE, GREEN, YELLOW, RED>");
+AddEffect("Gradient<RED, BLUE, GREEN>");
+AddEffect("Gradient<RED, BLUE>");
+AddEffect("HumpFlicker<GREEN, Magenta, 50>");
+AddEffect("InOutHelper<WHITE, 300, 800, BLACK>");
+AddEffect("InOutSparkTip<RED, 1000, 800, WHITE>");
+AddEffect("LocalizedClash<RED, WHITE>");
+AddEffect("Lockup<GREEN, RED>");
+AddEffect("OnSpark<GREEN, WHITE, 200>");
+AddEffect("OriginalBlast<BLUE, WHITE>");
+AddEffect("Pulsing<BLUE, RED, 800>");
+AddEffect("Rainbow");
 AddEffect("RandomFlicker<YELLOW, BLUE>");
 AddEffect("RandomPerLEDFlicker<GREEN, Magenta>");
-AddEffect("BrownNoiseFlicker<GREEN, Magenta, 50>");
-AddEffect("HumpFlicker<GREEN, Magenta, 50>");
+AddEffect("Rgb16<0,0,50>");
+AddEffect("Rgb<100,100,100>");
 AddEffect("RgbCycle");
+AddEffect("SimpleClash<RED, WHITE, 40>");
+AddEffect("Sparkle<BLUE>");
+AddEffect("Strobe<BLACK, WHITE, 15, 1>");
 AddEffect("StyleFire<BLUE, CYAN>");
 
 AddColor("AliceBlue", 223, 239, 255);
@@ -740,6 +784,7 @@ var STATE_ON = 0;
 var STATE_LOCKUP = 0;
 var STATE_CLASH = 0;
 var STATE_ROTATE = 0;
+var STATE_NUM_LEDS = 144;
 
 class Range {
   constructor(start, end) {
@@ -940,7 +985,7 @@ class PulsingClass extends STYLE {
   run(blade) {
     this.COLOR1.run(blade);
     this.COLOR2.run(blade);
-    this.var_ = 0.5 + 0.5 * Math.sin(millis() * 3.1415 * 2.0/ this.PULSE_MILLIS);
+    this.var_ = 0.5 + 0.5 * Math.sin(millis() * 3.1415 * 2.0/ this.PULSE_MILLIS.getInteger(0));
   }
   getColor(led) {
     var c = this.COLOR1.getColor(led);
@@ -955,6 +1000,44 @@ function Pulsing(COLOR1, COLOR2, PULSE_MILLIS) {
   console.log(PULSE_MILLIS);
   console.log(arguments);
   return new PulsingClass(COLOR1, COLOR2, PULSE_MILLIS);
+}
+
+class SparkleClass extends STYLE {
+  constructor(BASE, SPARKLE_COLOR, SPARK_CHANCE_PROMILLE, SPARK_INTENSITY) {
+    super("Sparkles!!", Array.from(arguments));
+    this.add_arg("BASE", "COLOR", "Normal blade color");
+    this.add_arg("SPARKLE_COLOR", "COLOR", "Spark color", Rgb(255,255,255));
+    this.add_arg("SPARK_CHANCE_PROMILLE", "INT", "Chance of new sparks.", 300);
+    this.add_arg("SPARK_INTENSITY", "INT", "Initial spark intensity", 1024);
+    this.sparks = new Uint16Array(144 + 4);
+    this.last_update = 0;
+  }
+  run(blade) {
+    this.BASE.run(blade);
+    this.SPARKLE_COLOR.run(blade);
+    var m = millis();
+    if (m - this.last_update >= 10) {
+      this.last_update = m;
+      var fifo = 0
+      var N = blade.num_leds();
+      for (var i = 2; i <= N + 2; i++) {
+	var x = ((this.sparks[i-1] + this.sparks[i+1]) * 200 + this.sparks[i] * 570) / 1024;
+	this.sparks[i-1] = fifo;
+	fifo = x;
+      }
+      this.sparks[N] = fifo;
+      if (random(1000) < this.SPARK_CHANCE_PROMILLE) {
+	this.sparks[random(blade.num_leds()) + 2] += this.SPARK_INTENSITY;
+      }
+    }
+  }
+  getColor(led) {
+    return this.BASE.getColor(led).mix(this.SPARKLE_COLOR.getColor(led), max(0.0, min(1.0, this.sparks[led + 2]/255.0)));
+  }
+}
+
+function Sparkle(BASE, SPARKLE_COLOR, SPARK_CHANCE_PROMILLE, SPARK_INTENSITY) {
+  return new SparkleClass(BASE, SPARKLE_COLOR, SPARK_CHANCE_PROMILLE, SPARK_INTENSITY);
 }
     
 class StrobeClass extends STYLE {
@@ -998,22 +1081,67 @@ function Strobe(T, STROBE_COLOR, STROBE_FREQUENCY, STROBE_MILLIS) {
 }
 
 class GradientClass extends STYLE {
-  constructor(A, B) {
-    super("Color A at base, B at tip, smooth gradient in between.", arguments);
-    this.add_arg("A", "COLOR", "A");
-    this.add_arg("B", "COLOR", "B");
+  constructor(COLORS) {
+    super("COLOR2 at base, COLOR2 at tip, smooth gradient in between.", COLORS);
+    this.COLORS = COLORS;
+    for (var i = 0; i < this.COLORS.length; i++)
+      this.add_arg("COLOR" + (i + 1), "COLOR", "COLOR " + (i + 1));
   }
   run(blade) {
-    this.A.run(blade);
-    this.B.run(blade);
+    for (var i = 0; i < this.COLORS.length; i++)
+      this.COLORS[i].run(blade);
+    this.num_leds_ = 1.0 * blade.num_leds();
   }
   getColor(led) {
-    return this.A.getColor(led).mix(this.B.getColor(led), led / 144.0);
+    var pos = led / this.num_leds_ * (this.COLORS.length - 1);
+    var N = min(this.COLORS.length -2, Math.floor(pos));
+    console.log(N);
+    return this.COLORS[N].getColor(led).mix(this.COLORS[N+1].getColor(led), pos - N) ;
   }
 };
 
-function Gradient(A, B) {
-  return new GradientClass(A, B);
+function Gradient(A, B, C, D) {
+  return new GradientClass(Array.from(arguments));
+}
+
+
+class IgnitionDelayClass extends STYLE {
+  constructor(DELAY_MILLIS, BASE) {
+    super("Delays ignition by DELAY_MILLIS", Array.from(arguments));
+    this.add_arg("DELAY_MILLIS", "INT", "Ignition delay, in milliseconds");
+    this.add_arg("BASE", "COLOR", "Blade style");
+  }
+  is_on() {
+    return this.is_on_;
+  }
+  num_leds() {
+    return this.blade.num_leds()
+  }
+  run(blade) {
+    this.blade = blade;
+    if (blade.is_on()) {
+      if (!this.waiting) {
+	this.waiting = true;
+	this.wait_start_time = millis();
+      }
+      var waited = millis() - this.wait_start_time;
+      if (waited > this.DELAY_MILLIS) {
+	this.is_on_ = true;
+	this.wait_start_time = millis() - this.DELAY_MILLIS - 1;
+      }
+    } else {
+      this.waiting = false;
+      this.is_on_ = false;
+    }
+    this.BASE.run(this)
+  }
+  getColor(led) {
+    return this.BASE.getColor(led);
+  }
+}
+
+function IgnitionDelay(millis, base) {
+  return new IgnitionDelayClass(millis, base);
 }
 
 class AudioFlickerClass extends STYLE {
@@ -1287,23 +1415,99 @@ function AddBlast() {
   start_times.push(millis());
 }
 
+var blast_hump = [ 255,255,252,247,240,232,222,211,
+		   199,186,173,159,145,132,119,106,
+		   94,82,72,62,53,45,38,32,
+		   26,22,18,14,11,9,7,5 ];
+
 class BlastClass extends STYLE {
-  constructor(BASE, BLAST) {
-    super();
-    this.BASE = ColorArg(BASE);
-    this.BLAST = ColorArg(BLAST, WHITE);
+  constructor(BASE, BLAST, FADEOUT_MS, WAVE_SIZE, WAVE_MS) {
+    super("Blast effect", Array.from(arguments));
+    this.add_arg("BASE", "COLOR", "base color");
+    this.add_arg("BLAST", "COLOR", "blast color");
+    this.add_arg("FADEOUT_MS", "INT", "fadeout time in milliseconds", 200);
+    this.add_arg("WAVE_SIZE", "INT", "wave size", 100);
+    this.add_arg("WAVE_MS", "INT", "wave speed", 400);
   }
   run(blade) {
     this.BASE.run(blade);
     this.BLAST.run(blade);
     this.T = millis();
+    this.num_leds_ = 1.0 * blade.num_leds();
   }
   getColor(led) {
     var base = this.BASE.getColor(led);
     var blast = this.BLAST.getColor(led);
     var b = 0.0;
     for (var i = 0; i < 5; i++) {
-      var x = (locations[i] - led/144.0) * 30.0;
+      var T = (this.T - start_times[i]) * 1000;
+      var M = 1000 - T / this.FADEOUT_MS;
+      if (M > 0) {
+	var dist = Math.abs(locations[i] - led / this.num_leds_);
+	var N = Math.floor(Math.abs(dist - T / (this.WAVE_MS * 1000.0)) * this.WAVE_SIZE);
+	if (N < 32) {
+	  b += blast_hump[N] * M / 1000.0 / 255.0;
+	}
+      }
+    }
+    return base.mix(blast, max(min(b, 1.0), 0.0));
+  }
+};
+
+function Blast(BASE, BLAST, FADEOUT_MS, WAVE_SIZE, WAVE_MS) {
+  return new BlastClass(BASE, BLAST, FADEOUT_MS, WAVE_SIZE, WAVE_MS);
+}
+
+class BlastFadeoutClass extends STYLE {
+  constructor(BASE, BLAST, FADEOUT_MS) {
+    super("BlastFadeout effect", Array.from(arguments));
+    this.add_arg("BASE", "COLOR", "base color");
+    this.add_arg("BLAST", "COLOR", "blast color");
+    this.add_arg("FADEOUT_MS", "INT", "fadeout time in milliseconds", 200);
+  }
+  run(blade) {
+    this.BASE.run(blade);
+    this.BLAST.run(blade);
+    this.T = millis();
+    this.num_leds_ = 1.0 * blade.num_leds();
+  }
+  getColor(led) {
+    var base = this.BASE.getColor(led);
+    var blast = this.BLAST.getColor(led);
+    var b = 0.0;
+    for (var i = 0; i < 5; i++) {
+      var T = (this.T - start_times[i]) * 1000;
+      var M = 1000 - T / this.FADEOUT_MS;
+      if (M > 0) {
+	b += M / 1000.0;
+      }
+    }
+    return base.mix(blast, max(min(b, 1.0), 0.0));
+  }
+};
+
+function BlastFadeout(BASE, BLAST, FADEOUT_MS) {
+  return new BlastFadeoutClass(BASE, BLAST, FADEOUT_MS);
+}
+
+class OriginalBlastClass extends STYLE {
+  constructor(BASE, BLAST,) {
+    super("Original blast effect", Array.from(arguments));
+    this.add_arg("BASE", "COLOR", "base color");
+    this.add_arg("BLAST", "COLOR", "blast color");
+  }
+  run(blade) {
+    this.BASE.run(blade);
+    this.BLAST.run(blade);
+    this.T = millis();
+    this.num_leds_ = 1.0 * blade.num_leds();
+  }
+  getColor(led) {
+    var base = this.BASE.getColor(led);
+    var blast = this.BLAST.getColor(led);
+    var b = 0.0;
+    for (var i = 0; i < 5; i++) {
+      var x = (locations[i] - led/this.num_leds_) * 30.0;
       var T = this.T - start_times[i];
       var t = 0.5 + T / 200.0;
       if (x == 0.0) {
@@ -1314,15 +1518,52 @@ class BlastClass extends STYLE {
     }
     return base.mix(blast, min(b, 1.0));
   }
-  pp() {
-    return this.PP("Blast", "Implements the blast effect",
-		   this.BASE, "base color",
-		   this.BLAST, "blast color");
+};
+
+function OriginalBlast(BASE, BLAST) {
+  return new OriginalBlastClass(BASE, BLAST);
+}
+
+class BlinkingClass extends STYLE {
+  constructor(BASE, BLAST,) {
+    super("Blinks between A and B", Array.from(arguments));
+    this.add_arg("COLOR1", "COLOR", "A");
+    this.add_arg("COLOR2", "COLOR", "B");
+    this.add_arg("BLINK_MILLIS", "INT", "milliseconds between blinks");
+    this.add_arg("BLINK_PROMILLE", "INT", "0 = off, 1000 = on");
+    this.on_ = false;
+    this.pulse_start_micros_ = 0;
+  }
+  run(blade) {
+    this.COLOR1.run(blade);
+    this.COLOR2.run(blade);
+    this.BLINK_MILLIS.run(blade);
+    this.BLINK_PROMILLE.run(blade);
+    var now = micros();
+    var pulse_millis = this.BLINK_MILLIS.getInteger(0);
+    if (pulse_millis <= 0) return;
+    var pulse_progress_micros = now - this.pulse_start_micros_;
+    if (pulse_progress_micros > pulse_millis * 1000) {
+      // Time to start a new pulse
+      if (pulse_progress_micros < pulse_millis * 2000) {
+	this.pulse_start_micros_ += pulse_millis * 1000;
+      } else {
+	this.pulse_start_micros_ = now;
+      }
+      pulse_progress_micros = now - this.pulse_start_micros_;
+    }
+    var pulse_progress_promille = pulse_progress_micros / pulse_millis;
+    this.on_ = pulse_progress_promille <= this.BLINK_PROMILLE.getInteger(0);
+  }
+  getColor(led) {
+    var a = this.COLOR1.getColor(led);
+    var b = this.COLOR2.getColor(led);
+    return this.on_ ? a : b;
   }
 };
 
-function Blast(BASE, BLAST) {
-  return new BlastClass(BASE, BLAST);
+function Blinking(A, B, BM, BP) {
+  return new BlinkingClass(A, B, BM, BP);
 }
 
 class SimpleClashClass extends STYLE {
@@ -1364,15 +1605,58 @@ function SimpleClash(T, CLASH, MILLIS) {
   return new SimpleClashClass(T, CLASH, MILLIS);
 }
 
+
+class LocalizedClashClass extends STYLE {
+  constructor(T, CLASH_COLOR, CLASH_MILLIS, CLASH_WIDTH_PERCENT) {
+    super("Localized clash", arguments);
+    this.add_arg("T", "COLOR", "base color");
+    this.add_arg("CLASH_COLOR", "COLOR", "Clash color", WHITE.DOCOPY());
+    this.add_arg("CLASH_MILLIS", "INT", "Clash duration in milliseconds", 40);
+    this.add_arg("CLASH_WIDTH_PERCENT", "INT", "Clash width in percent of entire blade", 50);
+  }
+  run(blade) {
+    this.T.run(blade);
+    this.CLASH_COLOR.run(blade);
+
+    var m = millis();
+    var clashing = 0;
+    if (STATE_CLASH) {
+      STATE_CLASH = 0;
+      this.clash_millis = m;
+      this.mult = blast_hump.length * 2 * 102400 / this.CLASH_WIDTH_PERCENT / blade.num_leds();
+      this.clash_location = random(blade.num_leds() * this.mult / 2) + blade.num_leds() * this.mult / 4;
+    }
+    this.clash = m - this.clash_millis < this.CLASH_MILLIS.getInteger(0);
+  }
+  getColor(led) {
+    if (this.clash) {
+      var ret = this.T.getColor(led);
+      var dist = Math.floor(Math.abs(led * this.mult - this.clash_location) / 1024);
+      if (dist < blast_hump.length) {
+	ret = ret.mix(this.CLASH_COLOR.getColor(led), blast_hump[dist]/255.0);
+      }
+      return ret;
+    } else {
+      return this.T.getColor(led);
+    }
+  } 
+}
+
+function LocalizedClash(T, CLASH_COLOR, CLASH_MILLIS, CLASH_WIDTH_PERCENT) {
+  return new LocalizedClashClass(T, CLASH_COLOR, CLASH_MILLIS, CLASH_WIDTH_PERCENT);
+}
+
 class LockupClass extends STYLE {
-  constructor(BASE, LOCKUP) {
+  constructor(BASE, LOCKUP, DRAG_COLOR) {
     super("Implements the lockup and drag effects.", arguments);
     this.add_arg("BASE", "COLOR", "base color");
     this.add_arg("LOCKUP", "COLOR", "lockup color");
+    this.add_arg("DRAG_COLOR", "COLOR", "drag color", this.LOCKUP.DOCOPY());
   }
   run(blade) {
     this.BASE.run(blade);
     this.LOCKUP.run(blade);
+    this.DRAG_COLOR.run(blade);
     if (STATE_LOCKUP == 0) {
       this.thres = blade.num_leds() * 2;
     } else if (STATE_LOCKUP == 1) {
@@ -1384,7 +1668,11 @@ class LockupClass extends STYLE {
     
   getColor(led) {
     if (led >= this.thres) {
-      return this.LOCKUP.getColor(led);
+      if (STATE_LOCKUP == 2) {
+        return this.DRAG_COLOR.getColor(led);
+      } else {
+	return this.LOCKUP.getColor(led);
+      }
     } else {
       return this.BASE.getColor(led);
     }
@@ -1392,8 +1680,8 @@ class LockupClass extends STYLE {
 };
 
 
-function Lockup(BASE, LOCKUP) {
-  return new LockupClass(BASE, LOCKUP);
+function Lockup(BASE, LOCKUP, DRAG) {
+  return new LockupClass(BASE, LOCKUP, DRAG);
 }
 
 const start_millis = new Date().getTime();
@@ -1421,7 +1709,7 @@ class Blade {
     return STATE_ON;
   }
   num_leds() {
-    return 144;
+    return STATE_NUM_LEDS;
   }
 };
 
@@ -1492,7 +1780,6 @@ function StyleFirePtr(COLOR1, COLOR2,
     FireConfig(OFF_BASE, OFF_RAND, OFF_COOL));
 }
 
-
 //--
 class InOutHelperClass extends STYLE {
   constructor(T, OUT_MILLIS, IN_MILLIS, OFF_COLOR) {
@@ -1546,6 +1833,7 @@ class InOutHelperClass extends STYLE {
 function InOutHelper(T, I, O, OFF) {
   return new InOutHelperClass(T, I, O, OFF);
 }
+
 
 class InOutSparkTipClass extends STYLE {
   constructor(T, OUT_MILLIS, IN_MILLIS, OFF_COLOR) {
@@ -1605,9 +1893,6 @@ function InOutSparkTip(T, I, O, S) {
 
 var start = new Date().getTime();
 
-var current_style = InOutHelper(SimpleClash(Lockup(new BlastClass(BLUE, WHITE), new AudioFlickerClass(BLUE, WHITE)), WHITE, 40), 300, 800);
-//var current_style = InOutHelper(SimpleClash(Lockup(new BlastClass(new RainbowClass(), WHITE), new AudioFlickerClass(BLUE, WHITE)), WHITE, 40), 300, 800);
-
 var current_focus;
 var current_focus_url;
 var style_tree;
@@ -1616,193 +1901,40 @@ function newCall(Cls) {
   return new (Function.prototype.bind.apply(Cls, arguments));
 }
 
-class Parser {
-  constructor(str, classes, identifiers) {
-    console.log("PARSING: " + str);
-    this.str = str;
-    this.pos = 0;
-    this.classes = classes;
-    this.identifiers = identifiers;
-  }
-  peek() {
-    if (this.pos >= this.str.length) return ""
-    return this.str[this.pos]
-  }
-  skipspace() {
-    while (this.peek() == ' ' || this.peek() == '\t') this.pos++;
-  }
-
-  identifier() {
-    var ret = "";
-    while (true) {
-      var c = this.peek();
-      if ((c >= 'a' && c <= 'z') ||
-	  (c >= 'A' && c <= 'Z') ||
-	  (c >= '0' && c <= '9')) {
-	ret += c;
-	this.pos++;
-      } else {
-	return ret;
-      }
-    }
-  }
-
-  // recursive descent parser
-  parse() {
-    this.skipspace();
-    var id = this.identifier();
-    if (id == "") {
-      throw "Expected identifier or number";
-    }
-    if (id[0] >= '0' && id[0] <= '9') {
-      return parseInt(id);
-    }
-    this.skipspace();
-    var args = 0;
-    if (this.peek() == "<") {
-      this.pos++;
-      this.skipspace();
-      args = [null];
-      while (true) {
-	args.push(this.parse());
-	this.skipspace();
-	if (this.peek() == '>') {
-	  this.pos++;
-	  break;
-	}
-	if (this.peek() == "") {
-	  throw "Missing > or ,";
-	}
-	if (this.peek() != ',') {
-	  throw "Comma expected";
-	}
-	this.pos++;
-	this.skipspace();
-      }
-    }
-    if (this.identifiers[id]) {
-      if (args != 0) {
-	throw "Unexpected arguments";
-      }
-      return this.identifiers[id]();
-    }
-    if (this.classes[id]) {
-      console.log(id);
-      console.log(this.classes[id]);
-      console.log(args);
-      // var ret = new (Function.prototype.bind.apply(this.classes[id], args));
-      var ret;
-      try {
-	ret = classes[id].apply(args[0], args.slice(1));
-      } catch(e) {
-	if (typeof(e) == "string")
-	  e = id +":" + e;
-	throw e;
-      }
-      console.log(ret);
-      return ret;
-    }
-    throw  "Unknown identifier:" + id;
-  }
-};
-
-var blade = new Blade();
-var rotate_start;
-var last_micros;
-
-function drawScene() {
-  last_micros = current_micros;
-  current_micros = actual_millis() * 1000;
-  current_style.run(blade);
-  var pixels = new Uint8Array(144 * 4 * 2);
-  for (var i = 0; i < 144; i++) {
-      c = current_style.getColor(i);
-      pixels[i*4 + 0] = Math.round(c.r * 255);
-      pixels[i*4 + 1] = Math.round(c.g * 255);
-      pixels[i*4 + 2] = Math.round(c.b * 255);
-      pixels[i*4 + 3] = 255;
-  }
-  if (last_micros != 0) {
-    current_micros += (current_micros - last_micros) / 2;
-  }
-  current_style.run(blade);
-  for (var i = 0; i < 144; i++) {
-      c = current_style.getColor(i);
-      pixels[i*4 + 0 + 144 * 4] = Math.round(c.r * 255);
-      pixels[i*4 + 1+ 144 * 4] = Math.round(c.g * 255);
-      pixels[i*4 + 2+ 144 * 4] = Math.round(c.b * 255);
-      pixels[i*4 + 3+ 144 * 4] = 255;
-  }
-  // TODO: Generate mipmaps, then adjust level based on distance from blade
-  gl.texImage2D(
-      gl.TEXTURE_2D,
-      0,	// level
-      gl.RGBA,  // internalFormat
-      144, 2,   // width, height
-      0,        // border
-      gl.RGBA,   // source format
-      gl.UNSIGNED_BYTE, // source type
-      pixels);
-
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-
-  // Draw these textures to the screen, offset by 1 pixel increments
-  gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-  gl.viewport(0, 0, width * dpr, height * dpr);
-  gl.clearColor(0.0, 1.0, 0.0, 1.0);
-  gl.clear(gl.COLOR_BUFFER_BIT);
-
-  gl.viewport(0, 0, width * dpr, height * dpr);
-  if (STATE_ROTATE) {
-    gl.uniform1f(gl.getUniformLocation(shaderProgram, "u_value"), 
-		 (new Date().getTime() - rotate_start) / 3000.0);
-  } else {
-    rotate_start = new Date().getTime();
-    gl.uniform1f(gl.getUniformLocation(shaderProgram, "u_value"), 0.0);
-  }
-  gl.uniform1f(gl.getUniformLocation(shaderProgram, "u_time"), 
-               (new Date().getTime() - start) / 1000.0);
-  gl.uniform1f(gl.getUniformLocation(shaderProgram, "u_width"), width);
-  gl.uniform1f(gl.getUniformLocation(shaderProgram, "u_height"), height);
-  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-
-  t += 1;
-}
-
-function tick() {
-  window.requestAnimationFrame(tick);
-  drawScene();
-}
 
   var classes = {
-    StyleNormalPtr : StyleNormalPtr,
-    StyleFirePtr : StyleFirePtr,
-    StyleFire : StyleFire,
-    StyleRainbowPtr : StyleRainbowPtr,
-    StyleStrobePtr : StyleStrobePtr,
-    EasyBlade : EasyBlade,
-    InOutHelper : InOutHelper,
-    InOutSparkTip : InOutSparkTip,
-    Rgb : Rgb,
-    OnSpark : OnSpark,
-    Pulsing : Pulsing,
-    Strobe : Strobe,
-    Gradient : Gradient,
     AudioFlicker : AudioFlicker,
-    RandomFlicker : RandomFlicker,
-    RandomPerLEDFlicker : RandomPerLEDFlicker,
-    BrownNoiseFlicker : BrownNoiseFlicker,
-    HumpFlicker : HumpFlicker,
     Blast : Blast,
-    SimpleClash : SimpleClash,
-    Lockup : Lockup,
-    FOCUS : Focus,
+    BlastFadeout : BlastFadeout,
+    Blinking : Blinking,
+    BrownNoiseFlicker : BrownNoiseFlicker,
     ColorCycle : ColorCycle,
     Cylon : Cylon,
+    EasyBlade : EasyBlade,
+    FOCUS : Focus,
     FireConfig : FireConfig,
+    Gradient : Gradient,
+    HumpFlicker : HumpFlicker,
+    IgnitionDelay : IgnitionDelay,
+    InOutHelper : InOutHelper,
+    InOutSparkTip : InOutSparkTip,
+    LocalizedClash : LocalizedClash,
+    Lockup : Lockup,
+    OnSpark : OnSpark,
+    OriginalBlast : OriginalBlast,
+    Pulsing : Pulsing,
+    RandomFlicker : RandomFlicker,
+    RandomPerLEDFlicker : RandomPerLEDFlicker,
+    Rgb : Rgb,
+    Rgb16 : Rgb16,
+    SimpleClash : SimpleClash,
+    Sparkle : Sparkle,
+    Strobe : Strobe,
+    StyleFire : StyleFire,
+    StyleFirePtr : StyleFirePtr,
+    StyleNormalPtr : StyleNormalPtr,
+    StyleRainbowPtr : StyleRainbowPtr,
+    StyleStrobePtr : StyleStrobePtr,
   };
   var identifiers = {
       RgbCycle : RgbCycle,
@@ -1870,6 +2002,173 @@ function tick() {
       Yellow : Rgb.bind(null, 255, 255, 0),
       };
 
+
+
+class Parser {
+  constructor(str, classes, identifiers) {
+    console.log("PARSING: " + str);
+    this.str = str;
+    this.pos = 0;
+    this.classes = classes;
+    this.identifiers = identifiers;
+  }
+  peek() {
+    if (this.pos >= this.str.length) return ""
+    return this.str[this.pos]
+  }
+  skipspace() {
+    while (this.peek() == ' ' || this.peek() == '\t') this.pos++;
+  }
+
+  identifier() {
+    var ret = "";
+    while (true) {
+      var c = this.peek();
+      if ((c >= 'a' && c <= 'z') ||
+	  (c >= 'A' && c <= 'Z') ||
+	  (c >= '0' && c <= '9')) {
+	ret += c;
+	this.pos++;
+      } else {
+	return ret;
+      }
+    }
+  }
+
+  // recursive descent parser
+  parse() {
+    this.skipspace();
+    var id = this.identifier();
+    if (id == "") {
+      throw "Expected identifier or number";
+    }
+    if (id[0] >= '0' && id[0] <= '9') {
+      return new INTEGER(parseInt(id));
+    }
+    this.skipspace();
+    var args = 0;
+    if (this.peek() == "<") {
+      this.pos++;
+      this.skipspace();
+      args = [null];
+      while (true) {
+	args.push(this.parse());
+	this.skipspace();
+	if (this.peek() == '>') {
+	  this.pos++;
+	  break;
+	}
+	if (this.peek() == "") {
+	  throw "Missing > or ,";
+	}
+	if (this.peek() != ',') {
+	  throw "Comma expected";
+	}
+	this.pos++;
+	this.skipspace();
+      }
+    }
+    if (this.identifiers[id]) {
+      if (args != 0) {
+	throw "Unexpected arguments";
+      }
+      return this.identifiers[id]();
+    }
+    if (this.classes[id]) {
+      // console.log(id);
+      // console.log(this.classes[id]);
+      // console.log(args);
+      // var ret = new (Function.prototype.bind.apply(this.classes[id], args));
+      var ret;
+      try {
+	ret = classes[id].apply(args[0], args.slice(1));
+      } catch(e) {
+	if (typeof(e) == "string")
+	  e = id +":" + e;
+	throw e;
+      }
+      // console.log(ret);
+      return ret;
+    }
+    throw  "Unknown identifier:" + id;
+  }
+};
+
+var current_style = InOutHelper(SimpleClash(Lockup(new BlastClass(BLUE, WHITE), new AudioFlickerClass(BLUE, WHITE)), WHITE, 40), 300, 800);
+//var current_style = InOutHelper(SimpleClash(Lockup(new BlastClass(new RainbowClass(), WHITE), new AudioFlickerClass(BLUE, WHITE)), WHITE, 40), 300, 800);
+var blade = new Blade();
+var rotate_start;
+var last_micros;
+
+function drawScene() {
+  last_micros = current_micros;
+  current_micros = actual_millis() * 1000;
+  current_style.run(blade);
+  num_leds = blade.num_leds()
+  var pixels = new Uint8Array(num_leds * 4 * 2);
+  if (current_style.getColor) {
+    for (var i = 0; i < num_leds; i++) {
+        c = current_style.getColor(i);
+        pixels[i*4 + 0] = Math.round(c.r * 255);
+        pixels[i*4 + 1] = Math.round(c.g * 255);
+        pixels[i*4 + 2] = Math.round(c.b * 255);
+        pixels[i*4 + 3] = 255;
+    }
+    if (last_micros != 0) {
+      current_micros += (current_micros - last_micros) / 2;
+    }
+    current_style.run(blade);
+    for (var i = 0; i < num_leds; i++) {
+        c = current_style.getColor(i);
+        pixels[i*4 + 0 + num_leds * 4] = Math.round(c.r * 255);
+        pixels[i*4 + 1 + num_leds * 4] = Math.round(c.g * 255);
+        pixels[i*4 + 2 + num_leds * 4] = Math.round(c.b * 255);
+       pixels[i*4 + 3 + num_leds * 4] = 255;
+    }
+  }
+  // TODO: Generate mipmaps, then adjust level based on distance from blade
+  gl.texImage2D(
+      gl.TEXTURE_2D,
+      0,	// level
+      gl.RGBA,  // internalFormat
+      num_leds, 2,   // width, height
+      0,        // border
+      gl.RGBA,   // source format
+      gl.UNSIGNED_BYTE, // source type
+      pixels);
+
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+
+  // Draw these textures to the screen, offset by 1 pixel increments
+  gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+  gl.viewport(0, 0, width * dpr, height * dpr);
+  gl.clearColor(0.0, 1.0, 0.0, 1.0);
+  gl.clear(gl.COLOR_BUFFER_BIT);
+
+  gl.viewport(0, 0, width * dpr, height * dpr);
+  if (STATE_ROTATE) {
+    gl.uniform1f(gl.getUniformLocation(shaderProgram, "u_value"), 
+		 (new Date().getTime() - rotate_start) / 3000.0);
+  } else {
+    rotate_start = new Date().getTime();
+    gl.uniform1f(gl.getUniformLocation(shaderProgram, "u_value"), 0.0);
+  }
+  gl.uniform1f(gl.getUniformLocation(shaderProgram, "u_time"), 
+               (new Date().getTime() - start) / 1000.0);
+  gl.uniform1f(gl.getUniformLocation(shaderProgram, "u_width"), width);
+  gl.uniform1f(gl.getUniformLocation(shaderProgram, "u_height"), height);
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+
+  t += 1;
+}
+
+function tick() {
+  window.requestAnimationFrame(tick);
+  drawScene();
+}
 var overall_string;
 
 function ReplaceCurrentFocus(str) {
@@ -1886,6 +2185,7 @@ function ReplaceCurrentFocus(str) {
 
   current_focus = 0;
   focus_catcher = 0;
+  console.log(str);
   var parser = new Parser(str, classes, identifiers);
   style_tree = parser.parse();
   document.getElementById("pp").innerHTML = style_tree.pp();
@@ -1893,6 +2193,7 @@ function ReplaceCurrentFocus(str) {
     current_focus = focus_catcher;
     var id = current_focus.get_id();
     var container = document.getElementById("X"+id);
+    console.log(id);
     container.style.backgroundColor = 'lightblue';
   }
 }
@@ -1955,12 +2256,14 @@ function SetTo(str) {
 }
 
 function FocusOn(id, event) {
+  console.log("FOCUSON: " + id);
   event.stopPropagation();
   var style = style_ids[id];
   console.log(id);
   console.log(style);
   current_focus = style;
   var container = document.getElementById("X"+id);
+  console.log(container);
   container.style.backgroundColor = 'lightblue';
   pp_is_url++;
   var url = style.pp();
@@ -1971,173 +2274,102 @@ function FocusOn(id, event) {
   return true;
 }
 
+function ClickRotate() {
+  STATE_ROTATE = !STATE_ROTATE;
+  var rotate_button = document.getElementById("ROTATE_BUTTON");
+  rotate_button.style.backgroundColor = STATE_ROTATE ? "lightblue" : "";
+  console.log("ROTATE");
+}
+
+function ClickPower() {
+  STATE_ON = !STATE_ON; STATE_LOCKUP=0;
+  var power_button = document.getElementById("POWER_BUTTON");
+  power_button.style.backgroundColor = STATE_ON ? "lightblue" : "";
+  console.log("POWER");
+}
+
+function ClickLockup() {
+  STATE_LOCKUP = STATE_LOCKUP == 1 ? 0 : 1;
+  var button = document.getElementById("LOCKUP_BUTTON");
+  button.style.backgroundColor = STATE_LOCKUP == 1 ? "lightblue" : "";
+  var button = document.getElementById("DRAG_BUTTON");
+  button.style.backgroundColor = STATE_LOCKUP == 2 ? "lightblue" : "";
+}
+
+function ClickDrag() {
+  STATE_LOCKUP = STATE_LOCKUP == 2 ? 0 : 2;
+  var button = document.getElementById("LOCKUP_BUTTON");
+  button.style.backgroundColor = STATE_LOCKUP == 1 ? "lightblue" : "";
+  var button = document.getElementById("DRAG_BUTTON");
+  button.style.backgroundColor = STATE_LOCKUP == 2 ? "lightblue" : "";
+}
+
+function ClickInhilt() {
+  STATE_NUM_LEDS = 145 - STATE_NUM_LEDS;
+  var button = document.getElementById("INHILT_BUTTON");
+  button.style.backgroundColor = STATE_NUM_LEDS == 1 ? "lightblue" : "";
+}
+
+
+function Copy() {
+  var copyText = document.getElementById("style");
+  if(copyText.value.includes("StylePtr") ||
+     copyText.value.includes("StyleNormalPtr") ||
+     copyText.value.includes("StyleFirePtr") ||
+     copyText.value.includes("StyleRainbowPtr"))
+    {
+      if(!copyText.value.endsWith("()"))
+	copyText.value = copyText.value + "()";
+    }
+  else{
+    copyText.value = "StylePtr<" + copyText.value + ">" + "()";
+  }
+  copyText.select();
+  document.execCommand("copy");
+  // alert("Copy to Clipboard" + copyText.value);
+  // myAlertTop("Copy to Clipboard");
+}
+
 
 </script>
 </head>
 
 <body onload="initGL()">
 <table>
-<tbody><tr>
-  <td valign="top" width="50%">
-    <canvas id="canvas_id" width="1280" height="473" style="width: 1280px; height: 473.5px;"> </canvas>
+<tr>
+  <td valign=top width=50%>
+    <canvas id="canvas_id" width=256px height=256px style="width:256px; height:256px;"> </canvas>
     <br>
-    <input name="on" type="button" value="Power" onclick="STATE_ON = !STATE_ON; STATE_LOCKUP=0;">
-    <input name="clash" type="button" value="Clash" onclick="STATE_CLASH=1;">
-    <input name="blast" type="button" value="Blast" onclick="AddBlast()" ;="">
-    <input name="lockup" type="button" value="Lockup" onclick="STATE_LOCKUP = STATE_LOCKUP == 1 ? 0 : 1;">
-    <input name="drag" type="button" value="Drag" onclick="STATE_LOCKUP = STATE_LOCKUP == 2 ? 0 : 2;">
-    <input name="drag" type="button" value="Rotate" onclick="STATE_ROTATE = !STATE_ROTATE;">
-    <span id="error_message"></span>
+    <input id=POWER_BUTTON name=on type=button value="Power" onclick="ClickPower();" >
+    <input name=clash type=button value="Clash" onclick="STATE_CLASH=1;" >
+    <input name=blast type=button value="Blast" onclick="AddBlast()"; >
+    <input id=LOCKUP_BUTTON name=lockup type=button value="Lockup" onclick="ClickLockup()" >
+    <input id=DRAG_BUTTON name=drag type=button value="Drag"  onclick="ClickDrag()" >
+    <input id=ROTATE_BUTTON name=rotate type=button value="Rotate"  onclick="ClickRotate()" >
+    <input id=INHILT_BUTTON name=inhilt type=button value="Inhilt"  onclick="ClickInhilt()" >
+    <span id=error_message></span>
     <br>
-    <input id="style" type="text" size="100" onkeydown="if (event.keyCode == 13) Run();"><input name="run" type="button" value="Submit" onclick="Run()"><br>
-    <div id="effect_links"><b>Effects</b><br><input type="button" onclick="SetTo(&quot;Rgb&lt;100,100,100&gt;&quot;)" value="Rgb&lt;100,100,100&gt;">
-<input type="button" onclick="SetTo(&quot;Rainbow&quot;)" value="Rainbow">
-<input type="button" onclick="SetTo(&quot;OnSpark&lt;GREEN, WHITE, 200&gt;&quot;)" value="OnSpark&lt;GREEN, WHITE, 200&gt;">
-<input type="button" onclick="SetTo(&quot;Pulsing&lt;BLUE, RED, 800&gt;&quot;)" value="Pulsing&lt;BLUE, RED, 800&gt;">
-<input type="button" onclick="SetTo(&quot;Strobe&lt;BLACK, WHITE, 15, 1&gt;&quot;)" value="Strobe&lt;BLACK, WHITE, 15, 1&gt;">
-<input type="button" onclick="SetTo(&quot;Gradient&lt;RED, BLUE&gt;&quot;)" value="Gradient&lt;RED, BLUE&gt;">
-<input type="button" onclick="SetTo(&quot;AudioFlicker&lt;WHITE, BLUE&gt;&quot;)" value="AudioFlicker&lt;WHITE, BLUE&gt;">
-<input type="button" onclick="SetTo(&quot;Blast&lt;BLUE, WHITE&gt;&quot;)" value="Blast&lt;BLUE, WHITE&gt;">
-<input type="button" onclick="SetTo(&quot;SimpleClash&lt;RED, WHITE, 40&gt;&quot;)" value="SimpleClash&lt;RED, WHITE, 40&gt;">
-<input type="button" onclick="SetTo(&quot;Lockup&lt;GREEN, RED&gt;&quot;)" value="Lockup&lt;GREEN, RED&gt;">
-<input type="button" onclick="SetTo(&quot;InOutHelper&lt;WHITE, 300, 800, BLACK&gt;&quot;)" value="InOutHelper&lt;WHITE, 300, 800, BLACK&gt;">
-<input type="button" onclick="SetTo(&quot;InOutSparkTip&lt;RED, 1000, 800, WHITE&gt;&quot;)" value="InOutSparkTip&lt;RED, 1000, 800, WHITE&gt;">
-<input type="button" onclick="SetTo(&quot;ColorCycle&lt;BLUE,  0, 1, CYAN,  100, 3000, 5000&gt;&quot;)" value="ColorCycle&lt;BLUE,  0, 1, CYAN,  100, 3000, 5000&gt;">
-<input type="button" onclick="SetTo(&quot;Cylon&lt;RED, 5, 20&gt;&quot;)" value="Cylon&lt;RED, 5, 20&gt;">
-<input type="button" onclick="SetTo(&quot;RandomFlicker&lt;YELLOW, BLUE&gt;&quot;)" value="RandomFlicker&lt;YELLOW, BLUE&gt;">
-<input type="button" onclick="SetTo(&quot;RandomPerLEDFlicker&lt;GREEN, Magenta&gt;&quot;)" value="RandomPerLEDFlicker&lt;GREEN, Magenta&gt;">
-<input type="button" onclick="SetTo(&quot;BrownNoiseFlicker&lt;GREEN, Magenta, 50&gt;&quot;)" value="BrownNoiseFlicker&lt;GREEN, Magenta, 50&gt;">
-<input type="button" onclick="SetTo(&quot;HumpFlicker&lt;GREEN, Magenta, 50&gt;&quot;)" value="HumpFlicker&lt;GREEN, Magenta, 50&gt;">
-<input type="button" onclick="SetTo(&quot;RgbCycle&quot;)" value="RgbCycle">
-<input type="button" onclick="SetTo(&quot;StyleFire&lt;BLUE, CYAN&gt;&quot;)" value="StyleFire&lt;BLUE, CYAN&gt;">
-</div>
-    <div id="color_links"><b>Colors</b><br><input type="button" onclick="SetTo(&quot;AliceBlue&quot;)" value="AliceBlue">
-<input type="button" onclick="SetTo(&quot;Aqua&quot;)" value="Aqua">
-<input type="button" onclick="SetTo(&quot;Aquamarine&quot;)" value="Aquamarine">
-<input type="button" onclick="SetTo(&quot;Azure&quot;)" value="Azure">
-<input type="button" onclick="SetTo(&quot;Bisque&quot;)" value="Bisque">
-<input type="button" onclick="SetTo(&quot;Black&quot;)" value="Black">
-<input type="button" onclick="SetTo(&quot;BlanchedAlmond&quot;)" value="BlanchedAlmond">
-<input type="button" onclick="SetTo(&quot;Blue&quot;)" value="Blue">
-<input type="button" onclick="SetTo(&quot;Chartreuse&quot;)" value="Chartreuse">
-<input type="button" onclick="SetTo(&quot;Coral&quot;)" value="Coral">
-<input type="button" onclick="SetTo(&quot;Cornsilk&quot;)" value="Cornsilk">
-<input type="button" onclick="SetTo(&quot;Cyan&quot;)" value="Cyan">
-<input type="button" onclick="SetTo(&quot;DarkOrange&quot;)" value="DarkOrange">
-<input type="button" onclick="SetTo(&quot;DeepPink&quot;)" value="DeepPink">
-<input type="button" onclick="SetTo(&quot;DeepSkyBlue&quot;)" value="DeepSkyBlue">
-<input type="button" onclick="SetTo(&quot;DodgerBlue&quot;)" value="DodgerBlue">
-<input type="button" onclick="SetTo(&quot;FloralWhite&quot;)" value="FloralWhite">
-<input type="button" onclick="SetTo(&quot;GhostWhite&quot;)" value="GhostWhite">
-<input type="button" onclick="SetTo(&quot;Green&quot;)" value="Green">
-<input type="button" onclick="SetTo(&quot;GreenYellow&quot;)" value="GreenYellow">
-<input type="button" onclick="SetTo(&quot;HoneyDew&quot;)" value="HoneyDew">
-<input type="button" onclick="SetTo(&quot;HotPink&quot;)" value="HotPink">
-<input type="button" onclick="SetTo(&quot;Ivory&quot;)" value="Ivory">
-<input type="button" onclick="SetTo(&quot;LavenderBlush&quot;)" value="LavenderBlush">
-<input type="button" onclick="SetTo(&quot;LemonChiffon&quot;)" value="LemonChiffon">
-<input type="button" onclick="SetTo(&quot;LightCyan&quot;)" value="LightCyan">
-<input type="button" onclick="SetTo(&quot;LightPink&quot;)" value="LightPink">
-<input type="button" onclick="SetTo(&quot;LightSalmon&quot;)" value="LightSalmon">
-<input type="button" onclick="SetTo(&quot;LightYellow&quot;)" value="LightYellow">
-<input type="button" onclick="SetTo(&quot;Magenta&quot;)" value="Magenta">
-<input type="button" onclick="SetTo(&quot;MintCream&quot;)" value="MintCream">
-<input type="button" onclick="SetTo(&quot;MistyRose&quot;)" value="MistyRose">
-<input type="button" onclick="SetTo(&quot;Moccasin&quot;)" value="Moccasin">
-<input type="button" onclick="SetTo(&quot;NavajoWhite&quot;)" value="NavajoWhite">
-<input type="button" onclick="SetTo(&quot;Orange&quot;)" value="Orange">
-<input type="button" onclick="SetTo(&quot;OrangeRed&quot;)" value="OrangeRed">
-<input type="button" onclick="SetTo(&quot;PapayaWhip&quot;)" value="PapayaWhip">
-<input type="button" onclick="SetTo(&quot;PeachPuff&quot;)" value="PeachPuff">
-<input type="button" onclick="SetTo(&quot;Pink&quot;)" value="Pink">
-<input type="button" onclick="SetTo(&quot;Red&quot;)" value="Red">
-<input type="button" onclick="SetTo(&quot;SeaShell&quot;)" value="SeaShell">
-<input type="button" onclick="SetTo(&quot;Snow&quot;)" value="Snow">
-<input type="button" onclick="SetTo(&quot;SpringGreen&quot;)" value="SpringGreen">
-<input type="button" onclick="SetTo(&quot;SteelBlue&quot;)" value="SteelBlue">
-<input type="button" onclick="SetTo(&quot;Tomato&quot;)" value="Tomato">
-<input type="button" onclick="SetTo(&quot;White&quot;)" value="White">
-<input type="button" onclick="SetTo(&quot;Yellow&quot;)" value="Yellow">
-</div>
-    <div id="template_links"><b>Templates</b><br><input type="button" onclick="SetTo(&quot;InOutHelper&lt;SimpleClash&lt;Lockup&lt;Blast&lt;Blue,White&gt;,AudioFlicker&lt;Blue,WHITE&gt;&gt;,White&gt;, 300, 800&gt;&quot;)" value="InOutHelper&lt;SimpleClash&lt;Lockup&lt;Blast&lt;Blue,White&gt;,AudioFlicker&lt;Blue,WHITE&gt;&gt;,White&gt;, 300, 800&gt;">
-<input type="button" onclick="SetTo(&quot;InOutHelper&lt;EasyBlade&lt;OnSpark&lt;GREEN&gt;, WHITE&gt;, 300, 800&gt; &gt;&quot;)" value="InOutHelper&lt;EasyBlade&lt;OnSpark&lt;GREEN&gt;, WHITE&gt;, 300, 800&gt; &gt;">
-<input type="button" onclick="SetTo(&quot;StyleNormalPtr&lt;AudioFlicker&lt;YELLOW, WHITE&gt;, BLUE, 300, 800&gt;&quot;)" value="StyleNormalPtr&lt;AudioFlicker&lt;YELLOW, WHITE&gt;, BLUE, 300, 800&gt;">
-<input type="button" onclick="SetTo(&quot;InOutSparkTip&lt;EasyBlade&lt;MAGENTA, WHITE&gt;, 300, 800&gt; &gt;&quot;)" value="InOutSparkTip&lt;EasyBlade&lt;MAGENTA, WHITE&gt;, 300, 800&gt; &gt;">
-<input type="button" onclick="SetTo(&quot;StyleNormalPtr&lt;Gradient&lt;RED, BLUE&gt;, Gradient&lt;CYAN, YELLOW&gt;, 300, 800&gt;&quot;)" value="StyleNormalPtr&lt;Gradient&lt;RED, BLUE&gt;, Gradient&lt;CYAN, YELLOW&gt;, 300, 800&gt;">
-<input type="button" onclick="SetTo(&quot;StyleNormalPtr&lt;Pulsing&lt;RED, Rgb&lt;50,0,0&gt;, 5000&gt;, WHITE, 300, 800, RED&gt;&quot;)" value="StyleNormalPtr&lt;Pulsing&lt;RED, Rgb&lt;50,0,0&gt;, 5000&gt;, WHITE, 300, 800, RED&gt;">
-<input type="button" onclick="SetTo(&quot;StyleRainbowPtr&lt;300, 800&gt;&quot;)" value="StyleRainbowPtr&lt;300, 800&gt;">
-<input type="button" onclick="SetTo(&quot;StyleStrobePtr&lt;WHITE, Rainbow, 15, 300, 800&gt;&quot;)" value="StyleStrobePtr&lt;WHITE, Rainbow, 15, 300, 800&gt;">
-<input type="button" onclick="SetTo(&quot;StyleFirePtr&lt;RED, YELLOW&gt;&quot;)" value="StyleFirePtr&lt;RED, YELLOW&gt;">
-</div>
+    <input id=style type=text size=100 onkeydown="if (event.keyCode == 13) Run();"><input name='run' type=button value="Submit" onclick="Run()"><input name='copy' type=button value="Copy" onclick="Copy()"><br>
+    <div id=effect_links></div>
+    <div id=color_links></div>
+    <div id=template_links></div>
     <div>
-      <font face="helvetica,arial" size="-1">
-      This page has been accessed 946 times since
+      <font face="helvetica,arial" size=-1>
+      This page has been accessed 3,830 times since
  	March
          30th,
          2018.<br>
       Last modified:
- 	June
-         10th,
+ 	November
+         20th,
          2018
       </font>
     </div>
   </td>
-  <td valign="top">
+  <td valign=top>
     <b>Structured view, click to edit</b>
-    <div id="pp"><div id="X102914" style="border-style:solid;border-width:1px;border-color:gray;" onclick="FocusOn(102914,event)">
-<span title="Implements extention/retraction">InOutHelper</span>&lt;
-<div style="margin-left:2em">
-/* base color */<br>
-<div id="X102913" style="border-style:solid;border-width:1px;border-color:gray;" onclick="FocusOn(102913,event)">
-<span title="Implements the clash effect">SimpleClash</span>&lt;
-<div style="margin-left:2em">
-/* base color */<br>
-<div id="X102911" style="border-style:solid;border-width:1px;border-color:gray;" onclick="FocusOn(102911,event)">
-<span title="Implements the lockup and drag effects.">Lockup</span>&lt;
-<div style="margin-left:2em">
-/* base color */<br>
-<div id="X102907" style="border-style:solid;border-width:1px;border-color:gray;" onclick="FocusOn(102907,event)">
-<span title="Implements the blast effect">Blast</span>&lt;
-<div style="margin-left:2em">
-/* base color */<br>
-<div id="X102905" style="border-style:solid;border-width:1px;border-color:gray;" onclick="FocusOn(102905,event)">
-<span title="Color">Blue</span>
-</div>
-,<br>/* blast color */<br>
-<div id="X102906" style="border-style:solid;border-width:1px;border-color:gray;" onclick="FocusOn(102906,event)">
-<span title="Color">White</span>
-</div>
-</div>&gt;</div>
-,<br>/* lockup color */<br>
-<div id="X102910" style="border-style:solid;border-width:1px;border-color:gray;" onclick="FocusOn(102910,event)">
-<span title="Selects between A and B based on audio. Higher volumes means more B.">AudioFlicker</span>&lt;
-<div style="margin-left:2em">
-/* A */<br>
-<div id="X102908" style="border-style:solid;border-width:1px;border-color:gray;" onclick="FocusOn(102908,event)">
-<span title="Color">Blue</span>
-</div>
-,<br>/* B */<br>
-<div id="X102909" style="border-style:solid;border-width:1px;border-color:gray;" onclick="FocusOn(102909,event)">
-<span title="Color">White</span>
-</div>
-</div>&gt;</div>
-</div>&gt;</div>
-,<br>/* Clash color */<br>
-<div id="X102912" style="border-style:solid;border-width:1px;border-color:gray;" onclick="FocusOn(102912,event)">
-<span title="Color">White</span>
-</div>
-,<br>40 /* How many MS to show the clash color for. */
-</div>&gt;</div>
-,<br>300 /* extention length in milliseconds */
-,<br>800 /* retraction length in milliseconds */
-,<br>/* Color when retracted */<br>
-<div id="X102889" style="border-style:solid;border-width:1px;border-color:gray;" onclick="FocusOn(102889,event)">
-<span title="Color">Black</span>
-</div>
-</div>&gt;</div>
-</div>
+    <div id=pp></div>
   </td>
   </tr>
-</tbody></table>
-
-</body></html>
+</table>
+</body>
