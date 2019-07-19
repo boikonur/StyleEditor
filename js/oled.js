@@ -38,7 +38,7 @@ class Picture {
   }
 
 
-  const scale = 7;
+  const scale = 8;
 
 class PictureCanvas {
   constructor(picture, pointerDown) {
@@ -77,7 +77,7 @@ class PictureCanvas {
 }
 
   debugOutput(arr){
-  var output="const uint32_t test[] =";
+  var output="const uint32_t test[] = {\n";
   console.log("START ARRAY");
 
   for(let i=0; i<this.picture.width; i++){  

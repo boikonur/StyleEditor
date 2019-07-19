@@ -260,10 +260,13 @@ div.fullscreen {
   color: #d0d0d0;
   background-color: #202020
 }
-
+canvas{
+  margin:20px auto;
+  display: block;
+}
 #lcd_container{
-  border: 3px solid #434343;
-
+  border-bottom: 3px solid #434343;
+float: left;
   display: block;
   margin: 0 auto;
 }
