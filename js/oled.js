@@ -62,14 +62,12 @@ class PictureCanvas {
   //}
 
   convertPixel(pixel){
-    if(pixel === "#000" || pixel === undefined ){
+    if(pixel === "#000" || pixel === "#000000" || pixel === undefined ){
       return "0";
     }
     else
-    if(pixel === "#FFF")
       return "1";
-    else 
-    console.error("UNKNOWN COLOR");
+    //console.error("UNKNOWN COLOR:" + pixel);
   }
 
   addText(txt) {
@@ -206,7 +204,7 @@ class PixelEditor {
         classList: "btn btn-light",
         value: state.color,
         onclick: () => {console.log("erv sux"); this.toggleColor(); dispatch({color: this.dom.value})} 
-      },  state.color);
+      },  "White");
     }
 
     toggleColor(){
@@ -216,13 +214,13 @@ class PixelEditor {
         this.dom.value = "#000";
         this.dom.classList.remove( "btn-light");
         this.dom.classList.add( "btn-danger");
-        this.dom.innerText =this.dom.value;
+        this.dom.innerText ="Black";
       }
       else{
         this.dom.value = "#FFF";
         this.dom.classList.remove( "btn-danger");
         this.dom.classList.add( "btn-light");
-        this.dom.innerText =this.dom.value;
+        this.dom.innerText ="White";
       }
      
     }
@@ -419,3 +417,10 @@ dispatch({picture: state.picture.draw(drawn)});
   }
 
   document.querySelector('.lcd').appendChild(startPixelEditor({}));
+
+  
+
+  $( "#copyArtConfig" ).click(function() {
+    $( "#configuration" ).select(); 
+    document.execCommand("copy");
+  });

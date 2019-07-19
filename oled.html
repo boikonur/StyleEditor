@@ -96,12 +96,18 @@
             </div>
 
             <div class="col col-xs-12 col-sm-12 col-lg-3">
-                <div class="conf-file">
-                    <input type="text" value="myConfig.h" id="customFile">
+               <div class="row">
+                    <div class="col-sm-12 input-group conf-file">
+                      <input id="fileName" type="text" class="form-control " placeholder="myPixelArt.h">
+                      <span class="input-group-btn">
+                        <button id="copyArtConfig" class="btn btn-secondary" name="copy" type="button">Copy</button>
+                      </span>
+                    </div>
                 </div>
-                
-                <textarea rows=25 cols=100 id="configuration" name="configuration">
-                </textarea>
+                <div class="row">
+                    <textarea rows=25 cols=100 id="configuration" name="configuration">
+                    </textarea>
+                </div>
             </div>
         </div>
     </div>
