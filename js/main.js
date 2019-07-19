@@ -164,6 +164,17 @@ var style_ids = {};
 
 function Copy() {
   var copyText = document.getElementById("template-in");
+  if(copyText.value.includes("StylePtr") || 
+  copyText.value.includes("StyleNormalPtr") ||  
+  copyText.value.includes("StyleFirePtr") ||  
+  copyText.value.includes("StyleRainbowPtr")) 
+  {
+    if(!copyText.value.endsWith("()"))
+      copyText.value = copyText.value + "()";
+  }
+  else{
+    copyText.value = "StylePtr<" + copyText.value + ">" + "()";
+  }
   copyText.select();
   document.execCommand("copy");
   // alert("Copy to Clipboard" + copyText.value);
@@ -197,7 +208,7 @@ class STYLE {
       this[name] = Arg(expected_type, this.args[this.argnum], default_value);
     } catch (e) {
       if (typeof (e) == "string")
-        e = e + "for argument " + (this.argnum + 1) + " (" + name + ")";
+        e = e + " for argument " + (this.argnum + 1) + " (" + name + ")";
       throw e;
     }
     this.argnum++;

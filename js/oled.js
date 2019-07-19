@@ -43,11 +43,13 @@ class Picture {
 class PictureCanvas {
   constructor(picture, pointerDown) {
     this.dom = elt("canvas", {
+      id: "lcd_canvas",
       onmousedown: event => this.mouse(event, pointerDown),
       ontouchstart: event => this.touch(event, pointerDown)
     });
     this.syncState(picture);
-    this.dom.id="lcd_canvas";
+    
+
   }
  
   // resizeCanvas(){
@@ -172,10 +174,10 @@ class PixelEditor {
       });
       this.controls = controls.map(
         Control => new Control(state, config));
-      this.dom = elt("div", {}, this.canvas.dom, elt("br"),
+      this.dom = elt("div", {id: "lcd_container"}, this.canvas.dom, elt("br"),
                      ...this.controls.reduce(
                        (a, c) => a.concat(" ", c.dom), []));
-    this.dom.id="lcd_container";
+
     }
     syncState(state) {
       this.state = state;
