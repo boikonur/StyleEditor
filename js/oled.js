@@ -59,10 +59,46 @@ class PictureCanvas {
   //       this.dom.height = Math.round(width * aspect);
   //}
 
+  convertPixel(pixel){
+    if(pixel === "#000" || pixel === undefined ){
+      return "0";
+    }
+    else
+    if(pixel === "#FFF")
+      return "1";
+    else 
+    console.error("UNKNOWN COLOR");
+  }
+
+  addText(txt) {
+    document.getElementById("configuration").value = txt;
+}
+
+  debugOutput(arr){
+  var output="const uint32_t test[] =";
+  console.log("START ARRAY");
+
+  for(let i=0; i<this.picture.width; i++){  
+    output+="0b"
+    for(let j=this.picture.height-1; j>=0; j--){
+      output += this.convertPixel(arr[j*this.picture.width +i]);
+    }
+    
+    console.log(output);
+    this.addText(output);
+    output+=",\n";
+  }
+  output+="};"
+  this.addText(output);
+  console.log("end ARRAY");
+    
+  }
   syncState(picture) {
     if (this.picture == picture) return;
     this.picture = picture;
+
     drawPicture(this.picture, this.dom, scale);
+    this.debugOutput(this.picture.pixels);
   }
 }
 
