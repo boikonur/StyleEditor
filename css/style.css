@@ -262,9 +262,10 @@ div.fullscreen {
 }
 
 #lcd_container{
-  border: 5px solid #434343;
-  width: 100%;
+  border: 3px solid #434343;
+
   display: block;
+  margin: 0 auto;
 }
 
 #lcd_canvas{

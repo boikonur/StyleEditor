@@ -17,7 +17,7 @@
     <!-- Latest compiled and minified JavaScript -->
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <script src="js/oled.js"></script>
+
 </head>
 
 <body>
@@ -91,18 +91,26 @@
     </nav>
     <div class="container-fluid">
         <div class="row">
-            <div class="lcd"></div>
+            <div class="col col-md-8">
+                <div class="lcd"></div>
+            </div>
+
+            <div class="col col-md-4">
+                <div class="conf-file">
+                    <input type="text" value="myConfig.h" id="customFile">
+                </div>
+                
+                <textarea rows=25 cols=100 id="configuration" name="configuration">
+                </textarea>
+            </div>
         </div>
     </div>
-
-    <script>
-        document.querySelector('.lcd')
-            .appendChild(startPixelEditor({}));
-    </script>
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Bootstrap library -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
+
+        <script src="js/oled.js"></script>
 </body>

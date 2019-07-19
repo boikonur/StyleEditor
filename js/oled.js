@@ -1,3 +1,6 @@
+var SSD_1306Small = {max_width:"128", max_height:"32"};
+var SSD_1306High= {max_width:"128", max_height:"64"};
+
 class Picture {
     constructor(width, height, pixels) {
       this.width = width;
@@ -35,7 +38,7 @@ class Picture {
   }
 
 
-  const scale = 10;
+  const scale = 7;
 
 class PictureCanvas {
   constructor(picture, pointerDown) {
@@ -47,6 +50,15 @@ class PictureCanvas {
     this.dom.id="lcd_canvas";
   }
  
+  // resizeCanvas(){
+  //   var con =  this.dom.width.parentNode,        
+  //       aspect = this.dom.height/this.dom.width,    
+  //       width = con.offsetWidth,
+  //       height = con.offsetHeight;
+  //       this.dom.width = width;
+  //       this.dom.height = Math.round(width * aspect);
+  //}
+
   syncState(picture) {
     if (this.picture == picture) return;
     this.picture = picture;
@@ -140,6 +152,7 @@ class PixelEditor {
   class ToolSelect {
     constructor(state, {tools, dispatch}) {
       this.select = elt("select", {
+        classList: "form-control",
         onchange: () => dispatch({tool: this.select.value})
       }, ...Object.keys(tools).map(name => elt("option", {
         selected: name == state.tool
@@ -151,14 +164,31 @@ class PixelEditor {
 
   class ColorSelect {
     constructor(state, {dispatch}) {
-      this.input = elt("input", {
-        type: "color",
+      this.dom = elt("button", {
+        classList: "btn btn-light",
         value: state.color,
-        onchange: () => dispatch({color: this.input.value})
-      });
-      this.dom = elt("label", null, "Color: ", this.input);
+        onclick: () => {console.log("erv sux"); this.toggleColor(); dispatch({color: this.dom.value})} 
+      },  state.color);
     }
-    syncState(state) { this.input.value = state.color; }
+
+    toggleColor(){
+      console.log( "test" +  this.dom.value );
+      if ( this.dom.value == "#FFF")
+      {
+        this.dom.value = "#000";
+        this.dom.classList.remove( "btn-light");
+        this.dom.classList.add( "btn-danger");
+        this.dom.innerText =this.dom.value;
+      }
+      else{
+        this.dom.value = "#FFF";
+        this.dom.classList.remove( "btn-danger");
+        this.dom.classList.add( "btn-light");
+        this.dom.innerText =this.dom.value;
+      }
+     
+    }
+    syncState(state) { this.dom.value = state.color; }
   }
 
   function draw(pos, state, dispatch) {
@@ -218,8 +248,9 @@ dispatch({picture: state.picture.draw(drawn)});
     constructor(state) {
       this.picture = state.picture;
       this.dom = elt("button", {
+        classList: "btn btn-default",
         onclick: () => this.save()
-      }, "💾 Save");
+      }, "Save");
     }
     save() {
       let canvas = elt("canvas");
@@ -238,8 +269,9 @@ dispatch({picture: state.picture.draw(drawn)});
   class LoadButton {
     constructor(_, {dispatch}) {
       this.dom = elt("button", {
+        classList: "btn btn-default",
         onclick: () => startLoad(dispatch)
-      }, "📁 Load");
+      }, "Load");
     }
     syncState() {}
   }
@@ -269,8 +301,8 @@ dispatch({picture: state.picture.draw(drawn)});
   }
 
   function pictureFromImage(image) {
-    let width = Math.min(100, image.width);
-    let height = Math.min(100, image.height);
+    let width =SSD_1306Small.max_width;
+    let height = SSD_1306Small.max_height;
     let canvas = elt("canvas", {width, height});
     let cx = canvas.getContext("2d");
     cx.drawImage(image, 0, 0);
@@ -310,6 +342,7 @@ dispatch({picture: state.picture.draw(drawn)});
   class UndoButton {
     constructor(state, {dispatch}) {
       this.dom = elt("button", {
+        classList: "btn btn-default",
         onclick: () => dispatch({undo: true}),
         disabled: state.done.length == 0
       }, "⮪ Undo");
@@ -322,7 +355,7 @@ dispatch({picture: state.picture.draw(drawn)});
   const startState = {
     tool: "draw",
     color: "#FFF",
-    picture: Picture.empty(128, 32, "#000"),
+    picture: Picture.empty(SSD_1306Small.max_width, SSD_1306Small.max_height, "#000"),
     done: [],
     doneAt: 0
   };
@@ -347,5 +380,4 @@ dispatch({picture: state.picture.draw(drawn)});
     return app.dom;
   }
 
-  document.querySelector('.lcd')
-  .appendChild(startPixelEditor({}));
+  document.querySelector('.lcd').appendChild(startPixelEditor({}));
